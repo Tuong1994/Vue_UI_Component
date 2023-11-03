@@ -1,0 +1,32 @@
+.grid-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid-row-start {
+  justify-content: flex-start;
+}
+
+.grid-row-end {
+  justify-content: flex-end;
+}
+
+.grid-row-center {
+  justify-content: center;
+}
+
+.grid-row-between {
+  justify-content: space-between;
+}
+
+.grid-row-around {
+  justify-content: space-around;
+}
+
+.grid-row-evenly {
+  justify-content: space-evenly;
+}
+
+.grid-col {
+  flex-shrink: 0;
+}

@@ -1,0 +1,58 @@
+.spinner {
+  animation: spin $transition-time-md $transition-fn infinite;
+}
+
+// Color
+.spinner-blue {
+  path {
+    color: $text-blue;
+  }
+}
+
+.spinner-green {
+  path {
+    color: $text-green;
+  }
+}
+
+.spinner-red {
+  path {
+    color: $text-red;
+  }
+}
+
+.spinner-orange {
+  path {
+    color: $text-orange;
+  }
+}
+
+.spinner-yellow {
+  path {
+    color: $text-yellow;
+  }
+}
+
+.spinner-purple {
+  path {
+    color: $text-purple;
+  }
+}
+
+.spinner-pink {
+  path {
+    color: $text-pink;
+  }
+}
+
+.spinner-black {
+  path {
+    color: $text-black;
+  }
+}
+
+.spinner-white {
+  path {
+    color: $text-white;
+  }
+}

@@ -1,0 +1,16 @@
+export type ComponentSize = 'sm' | 'md' | 'lg'
+
+export type ComponentColor =
+  | 'blue'
+  | 'green'
+  | 'red'
+  | 'orange'
+  | 'yellow'
+  | 'purple'
+  | 'pink'
+  | 'black'
+  | 'white'
+
+export type ComponentJustify = 'start' | 'center' | 'middle' | 'between' | 'around' | 'evenly'
+
+export type ComponentAligns = 'top' | 'middle' | 'bottom' | 'baseline'
