@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, withDefaults, type StyleValue, watchEffect } from 'vue'
-import { ComponentJustify, ComponentAligns } from '@/common/type.ts'
+import type { ComponentJustify, ComponentAligns } from '@/common/type.ts'
 import useGridStore from './GridStore.ts'
 
 export interface GridRowProps {

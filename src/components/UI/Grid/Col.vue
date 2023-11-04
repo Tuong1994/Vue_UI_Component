@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, type StyleValue, watchEffect } from 'vue'
-import { ColSpan } from './type.ts'
+import type { ColSpan } from './type.ts'
 import useGridStore from './GridStore.ts'
 import useViewPoint from '@/hooks/useViewPoint.ts'
 

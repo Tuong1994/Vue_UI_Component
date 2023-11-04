@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, defineExpose, type StyleValue } from 'vue'
+import { ref, computed, withDefaults, type StyleValue } from 'vue'
 
 export interface CardProps {
   rootClassName?: string

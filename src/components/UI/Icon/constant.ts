@@ -1,8 +1,10 @@
 export const iconType = {
-  FAS: 'fas'
+  FAS: 'fas',
+  FAR: 'far'
 }
 
 export const iconName = {
   SPINNER: 'spinner',
-  X_MARK: 'xmark'
+  X_MARK: 'xmark',
+  USER: 'user'
 }
