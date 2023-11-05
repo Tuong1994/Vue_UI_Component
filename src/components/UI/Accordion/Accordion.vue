@@ -1,0 +1,67 @@
+<script setup lang="ts">
+import { ref, computed, withDefaults, useSlots, watch, type StyleValue } from 'vue'
+import { iconName } from '@/components/UI/Icon/constant.ts'
+import Icon from '@/components/UI/Icon/Icon.vue'
+
+export interface AccordionProps {
+  rootClassName?: string
+  labelClassName?: string
+  contentClassName?: string
+  rootStyle?: StyleValue
+  labelStyle?: StyleValue
+  contentStyle?: StyleValue
+  label?: string
+  labelIcon?: string
+  extraIcon?: string
+  bordered?: boolean
+}
+
+const props = withDefaults(defineProps<AccordionProps>(), {
+  rootClassName: '',
+  labelClassName: '',
+  contentClassName: '',
+  label: 'Accordion',
+  labelIcon: iconName.ANGLE_DOWN,
+  bordered: true
+})
+
+const emits = defineEmits(['onCollapse'])
+
+const slots = useSlots()
+
+const collapsed = ref<boolean>(false)
+
+const hasContent = computed<boolean>(() => slots.default !== undefined)
+
+const borderedClassName = computed<string>(() => (props.bordered ? 'accordion-bordered' : ''))
+
+const collapsedClassName = computed<string>(() => (collapsed.value ? 'accordion-collapsed' : ''))
+
+const handleCollapse = () => {
+  const el = document.getElementById('accordionContent')
+  if (!el) return
+  if (el.style.maxHeight) el.style.maxHeight = ''
+  else el.style.maxHeight = `${el.scrollHeight}px`
+  collapsed.value = !collapsed.value
+}
+
+watch(collapsed, (newValue) => emits('onCollapse', newValue))
+</script>
+
+<template>
+  <div :style="rootStyle" :class="['accordion', borderedClassName, collapsedClassName, rootClassName]">
+    <div :style="labelStyle" :class="['accordion-label', labelClassName]" @click="handleCollapse">
+      <div class="label-title">
+        <Icon :iconName="labelIcon" rootClassName="title-icon" />
+        <span>{{ label }}</span>
+      </div>
+      <Icon v-if="extraIcon" :iconName="extraIcon" />
+    </div>
+
+    <div id="accordionContent" :style="contentStyle" :class="['accordion-content', contentClassName]">
+      <div v-if="hasContent" class="content-inner">
+        <slot></slot>
+      </div>
+    </div>
+  </div>
+</template>

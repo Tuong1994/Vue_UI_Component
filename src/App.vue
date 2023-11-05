@@ -2,11 +2,11 @@
 import { ref, computed, onMounted } from 'vue'
 import { UI } from './components'
 
-const { Section } = UI
+const { Section, Pagination } = UI
 </script>
 
 <template>
   <Section>
-    
+    <Pagination />
   </Section>
 </template>
