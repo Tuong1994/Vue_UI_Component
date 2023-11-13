@@ -8,6 +8,9 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    * {
+      margin: 0;
+    }
   }
   .avatar-dot {
     width: $w-1;

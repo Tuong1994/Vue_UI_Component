@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { withDefaults } from 'vue'
+import { withDefaults, type StyleValue } from 'vue'
 
 export interface SectionProps {
   rootClassName?: string
+  rootStyle?: StyleValue
 }
 
 withDefaults(defineProps<SectionProps>(), {
@@ -11,7 +12,7 @@ withDefaults(defineProps<SectionProps>(), {
 </script>
 
 <template>
-  <section :class="['section', rootClassName]">
+  <section :style="rootStyle" :class="['section', rootClassName]">
     <slot></slot>
   </section>
 </template>

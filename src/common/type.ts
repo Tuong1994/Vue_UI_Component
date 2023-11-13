@@ -16,3 +16,5 @@ export type ComponentColor =
 export type ComponentJustify = 'start' | 'center' | 'middle' | 'between' | 'around' | 'evenly'
 
 export type ComponentAligns = 'top' | 'middle' | 'bottom' | 'baseline'
+
+export type ComponentPlacement = 'left' | 'right' | 'top' | 'bottom'

@@ -1,3 +1,4 @@
 import * as UI from './UI'
+import * as Control from './Control'
 
-export { UI }
+export { UI, Control }

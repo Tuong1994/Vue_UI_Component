@@ -9,6 +9,7 @@
   position: relative;
   transition: all $transition-time-xs $transition-fn;
   * {
+    margin: 0;
     transition: all $transition-time-xs $transition-fn;
   }
   &::after,

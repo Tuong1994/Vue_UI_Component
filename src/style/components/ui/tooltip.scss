@@ -1,0 +1,103 @@
+.tooltip {
+  width: max-content;
+  position: relative;
+  &:hover .tooltip-label .label-arrow,
+  &:hover .tooltip-content {
+    opacity: 1;
+    visibility: visible;
+  }
+  .tooltip-label {
+    position: relative;
+    .label-arrow {
+      border: 6px solid transparent;
+      position: absolute;
+      z-index: 5;
+      opacity: 0;
+      visibility: hidden;
+      transition: all $transition-time-sm $transition-fn;
+    }
+  }
+  .tooltip-content {
+    width: max-content;
+    max-width: $w-10 * 2;
+    padding: $p-1 - 0.2;
+    background: $bg-black;
+    border-radius: $rounded;
+    color: $text-white;
+    font-size: $text-xs;
+    position: absolute;
+    z-index: 5;
+    opacity: 0;
+    visibility: hidden;
+    transition: all $transition-time-sm $transition-fn;
+    * {
+      color: $text-white;
+      font-size: $text-xs;
+    }
+  }
+}
+
+// Placement
+.tooltip-left {
+  .tooltip-label {
+    .label-arrow {
+      border-left-color: $bg-black;
+      top: 50%;
+      left: -6px;
+      transform: translateY(-50%);
+    }
+  }
+  .tooltip-content {
+    top: 50%;
+    right: calc(100% + 6px);
+    transform: translateY(-50%);
+  }
+}
+
+.tooltip-right {
+  .tooltip-label {
+    .label-arrow {
+      border-right-color: $bg-black;
+      top: 50%;
+      right: -8px;
+      transform: translateY(-50%);
+    }
+  }
+  .tooltip-content {
+    top: 50%;
+    left: calc(100% + 8px);
+    transform: translateY(-50%);
+  }
+}
+
+.tooltip-top {
+  .tooltip-label {
+    .label-arrow {
+      border-top-color: $bg-black;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  .tooltip-content {
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.tooltip-bottom {
+  .tooltip-label {
+    .label-arrow {
+      border-bottom-color: $bg-black;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  .tooltip-content {
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

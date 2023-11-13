@@ -10,7 +10,16 @@ import {
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
-  faAngleRight
+  faAngleRight,
+  faEye,
+  faEyeSlash,
+  faTrash,
+  faSearchMinus,
+  faSearchPlus,
+  faRotate,
+  faCheck,
+  faMinus,
+  faBoxArchive
 } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import './style/main.scss'
@@ -23,7 +32,16 @@ library.add(
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
-  faAngleRight
+  faAngleRight,
+  faEye,
+  faEyeSlash,
+  faTrash,
+  faRotate,
+  faSearchMinus,
+  faSearchPlus,
+  faCheck,
+  faMinus,
+  faBoxArchive
 )
 
 const app = createApp(App)

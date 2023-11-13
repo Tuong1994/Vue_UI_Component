@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { UI } from './components'
+import { UI, Control } from './components'
+import { TableColumns } from '@/components/UI/Table/type.ts'
 
-const { Section, Pagination } = UI
+const { Section, Table } = UI
+
+const {} = Control
+
+
 </script>
 
 <template>
   <Section>
-    <Pagination />
+  
   </Section>
 </template>
