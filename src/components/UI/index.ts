@@ -19,6 +19,8 @@ import Image from './Image/Image.vue'
 import Table from './Table/Table.vue'
 import Switch from './Switch/Switch.vue'
 import Space from './Space/Space.vue'
+import Drawer from './Drawer/Drawer.vue'
+import Breadcrumb from './Breadcrumb/Breadcrumb.vue'
 
 export {
   Grid,
@@ -41,5 +43,7 @@ export {
   Image,
   Table,
   Switch,
-  Space
+  Space,
+  Drawer,
+  Breadcrumb,
 }

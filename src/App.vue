@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { UI, Control } from './components'
-import { TableColumns } from '@/components/UI/Table/type.ts'
+import { BreadcrumbItems } from '@/components/UI/Breadcrumb/type.ts'
 
-const { Section, Space } = UI
+const { Section } = UI
 
 const {} = Control
 </script>
 
 <template>
-  <Section>
-  </Section>
+  <Section> </Section>
 </template>

@@ -22,6 +22,7 @@ import {
   faBoxArchive
 } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
+import router from './router'
 import './style/main.scss'
 
 library.add(
@@ -47,6 +48,8 @@ library.add(
 const app = createApp(App)
 
 app.use(createPinia())
+
+app.use(router)
 
 app.component('fa', FontAwesomeIcon)
 
