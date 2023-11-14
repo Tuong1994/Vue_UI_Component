@@ -17,6 +17,8 @@ import Divider from './Divider/Divider.vue'
 import Draggable from './Draggable/Draggable.vue'
 import Image from './Image/Image.vue'
 import Table from './Table/Table.vue'
+import Switch from './Switch/Switch.vue'
+import Space from './Space/Space.vue'
 
 export {
   Grid,
@@ -37,5 +39,7 @@ export {
   Divider,
   Draggable,
   Image,
-  Table
+  Table,
+  Switch,
+  Space
 }
