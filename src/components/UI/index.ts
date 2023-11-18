@@ -1,6 +1,7 @@
 import * as Grid from './Grid'
 import * as Loading from './Loading'
 import * as Typography from './Typography'
+import * as Carousel from './Carousel'
 import Section from './Section/Section.vue'
 import Avatar from './Avatar/Avatar.vue'
 import Accordion from './Accordion/Accordion.vue'
@@ -21,11 +22,13 @@ import Switch from './Switch/Switch.vue'
 import Space from './Space/Space.vue'
 import Drawer from './Drawer/Drawer.vue'
 import Breadcrumb from './Breadcrumb/Breadcrumb.vue'
+import NoteMessage from './NoteMessage/NoteMessage.vue'
 
 export {
   Grid,
   Loading,
   Typography,
+  Carousel,
   Section,
   Avatar,
   Accordion,
@@ -46,4 +49,5 @@ export {
   Space,
   Drawer,
   Breadcrumb,
+  NoteMessage
 }

@@ -7,6 +7,7 @@ export const iconName = {
   SPINNER: 'spinner',
   X_MARK: 'xmark',
   USER: 'user',
+  ANGLE_UP: 'angle-up',
   ANGLE_DOWN: 'angle-down',
   ANGLE_LEFT: 'angle-left',
   ANGLE_RIGHT: 'angle-right',
@@ -20,5 +21,6 @@ export const iconName = {
   ROTATE: 'rotate',
   CHECK: 'check',
   MINUS: 'minus',
-  BOX_ARCHIVE: "box-archive"
+  BOX_ARCHIVE: "box-archive",
+  LIST: "list"
 }

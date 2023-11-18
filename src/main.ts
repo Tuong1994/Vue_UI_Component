@@ -6,6 +6,7 @@ import {
   faSpinner,
   faXmark,
   faUser,
+  faAngleUp,
   faAngleDown,
   faAngleDoubleLeft,
   faAngleDoubleRight,
@@ -19,7 +20,8 @@ import {
   faRotate,
   faCheck,
   faMinus,
-  faBoxArchive
+  faBoxArchive,
+  faList,
 } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import router from './router'
@@ -29,6 +31,7 @@ library.add(
   faSpinner,
   faXmark,
   faUser,
+  faAngleUp,
   faAngleDown,
   faAngleDoubleLeft,
   faAngleDoubleRight,
@@ -42,7 +45,8 @@ library.add(
   faSearchPlus,
   faCheck,
   faMinus,
-  faBoxArchive
+  faBoxArchive,
+  faList
 )
 
 const app = createApp(App)

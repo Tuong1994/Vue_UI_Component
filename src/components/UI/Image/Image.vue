@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<ImageProps>(), {
   hasRemove: false
 })
 
-const emits = defineEmits(['onRemove'])
+const emits = defineEmits(['onClick', 'onRemove'])
 
 const { src } = toRefs(props)
 
@@ -33,11 +33,11 @@ const view = ref<string>('')
 const loading = ref<boolean>(true)
 
 const imageSize = computed<StyleValue>(() => {
-  if (typeof props.sizes === 'number') return { width: `${size}px`, height: `${size}px` }
+  if (typeof props.sizes === 'number') return { width: `${props.sizes}px`, height: `${props.sizes}px` }
   if (props.sizes === 'sm') return { width: '100px', height: '100px' }
   if (props.sizes === 'md') return { width: '200px', height: '200px' }
   if (props.sizes === 'lg') return { width: '300px', height: '300px' }
-  return { width: size, height: size }
+  return { width: props.sizes, height: props.sizes }
 })
 
 const inlineStyle = computed<StyleValue>(() => ({ ...props.rootStyle, imageSize }))
@@ -45,10 +45,12 @@ const inlineStyle = computed<StyleValue>(() => ({ ...props.rootStyle, imageSize 
 const handleLoad = () => (loading.value = false)
 
 const handleRemove = () => emits('onRemove')
+
+const handleClick = () => emits('onClick')
 </script>
 
 <template>
-  <div id="image" :style="inlineStyle" :class="['image', rootClassName]">
+  <div id="image" :style="inlineStyle" :class="['image', rootClassName]" @click="handleClick">
     <ImageLoading v-if="loading" :imageSize="imageSize" />
     <ImageView
       :loading="loading"
