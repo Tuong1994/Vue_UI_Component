@@ -21,6 +21,10 @@ export const iconName = {
   ROTATE: 'rotate',
   CHECK: 'check',
   MINUS: 'minus',
-  BOX_ARCHIVE: "box-archive",
-  LIST: "list"
+  BOX_ARCHIVE: 'box-archive',
+  LIST: 'list',
+  CIRCLE_CHECK: 'circle-check',
+  X_MARK_CIRCLE: 'xmark-circle',
+  CIRCLE_INFO: 'circle-info',
+  CIRCLE_EXCLAMATION: 'circle-exclamation'
 }

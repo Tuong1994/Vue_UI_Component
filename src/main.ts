@@ -22,6 +22,10 @@ import {
   faMinus,
   faBoxArchive,
   faList,
+  faCircleCheck,
+  faXmarkCircle,
+  faCircleInfo,
+  faCircleExclamation
 } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import router from './router'
@@ -46,7 +50,11 @@ library.add(
   faCheck,
   faMinus,
   faBoxArchive,
-  faList
+  faList,
+  faCircleCheck,
+  faXmarkCircle,
+  faCircleInfo,
+  faCircleExclamation
 )
 
 const app = createApp(App)

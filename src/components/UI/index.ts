@@ -23,6 +23,7 @@ import Space from './Space/Space.vue'
 import Drawer from './Drawer/Drawer.vue'
 import Breadcrumb from './Breadcrumb/Breadcrumb.vue'
 import NoteMessage from './NoteMessage/NoteMessage.vue'
+import ToastMessage from './ToastMessage/ToastMessage.vue'
 
 export {
   Grid,
@@ -49,5 +50,6 @@ export {
   Space,
   Drawer,
   Breadcrumb,
-  NoteMessage
+  NoteMessage,
+  ToastMessage,
 }
