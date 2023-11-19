@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watchEffect, toRefs } from 'vue'
+import { ref, computed, withDefaults, watchEffect, toRefs, type StyleValue } from 'vue'
 import type { ToastMessage } from './type.ts'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
@@ -7,15 +7,21 @@ import useToastStore from './ToastStore.ts'
 
 interface ToastItemProps {
   toast: ToastMessage
+  itemClassName?: string
+  itemStyle?: StyleValue
+  showProgress?: boolean
 }
 
 let timeOut: any
 
 const ANIMATION_TIME = 4000
 
-const props = defineProps<ToastItemProps>()
+const props = withDefaults(defineProps<ToastItemProps>(), {
+  itemClassName: '',
+  showProgress: true
+})
 
-const toastStore = useToastStore()
+const { options, removeToast } = useToastStore()
 
 const { toast } = toRefs(props)
 
@@ -31,7 +37,7 @@ const removeClassName = computed<string>(() => (removed.value ? 'message-item-hi
 
 const handleRemove = () => {
   removed.value = true
-  setTimeout(() => toastStore.removeToast(id), 400)
+  setTimeout(() => removeToast(id), 400)
 }
 
 const handleMouseEnter = () => {
@@ -57,22 +63,23 @@ watchEffect((onStop) => {
 
 <template>
   <div
-    :class="['message-item', typeClassName, removeClassName]"
+    :style="itemStyle"
+    :class="['message-item', typeClassName, removeClassName, itemClassName]"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
     <div className="item-content">
       <div className="content-icon">
-        <Icon v-if="type === 'success'" :iconName="iconName.CIRCLE_CHECK" />
-        <Icon v-if="type === 'error'" :iconName="iconName.X_MARK_CIRCLE" />
-        <Icon v-if="type === 'info'" :iconName="iconName.CIRCLE_INFO" />
-        <Icon v-if="type === 'warning'" :iconName="iconName.CIRCLE_EXCLAMATION" />
+        <Icon v-if="type === 'success'" :iconName="options.successIconName" />
+        <Icon v-if="type === 'error'" :iconName="options.errorIconName" />
+        <Icon v-if="type === 'warning'" :iconName="options.warningIconName" />
+        <Icon v-if="type === 'info'" :iconName="options.infoIconName" />
       </div>
 
       <div className="content-message">
         <p className="message-text">{{ message }}</p>
 
-        <div className="message-progress">
+        <div v-if="showProgress" className="message-progress">
           <div ref="barRef" className="progress-bar" />
         </div>
       </div>

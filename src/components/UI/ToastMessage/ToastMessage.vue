@@ -6,11 +6,16 @@ import useRender from '@/hooks/useRender.ts'
 
 export interface ToastMessageProps {
   rootClassName?: string
+  itemClassName?: string
   rootStyle?: StyleValue
+  itemStyle?: StyleValue
+  showProgress?: boolean
 }
 
 withDefaults(defineProps<ToastMessageProps>(), {
-  rootClassName: ''
+  rootClassName: '',
+  itemClassName: '',
+  showProgress: true
 })
 
 const toastStore = useToastStore()
@@ -23,7 +28,14 @@ const render = useRender(hasToast)
 <template>
   <Teleport to="#portal">
     <div v-if="render" :style="rootStyle" :class="['toast-message', rootClassName]">
-      <ToastItem v-for="toast in toastStore.toastMessages" :key="toast.id" :toast="toast" />
+      <ToastItem
+        v-for="toast in toastStore.toastMessages"
+        :key="toast.id"
+        :toast="toast"
+        :itemStyle="itemStyle"
+        :itemClassName="itemClassName"
+        :showProgress="showProgress"
+      />
     </div>
   </Teleport>
 </template>

@@ -1,7 +1,12 @@
-import useToastStore from './ToastStore'
+import { watchEffect } from 'vue'
+import useToastStore, { type ToastOptions } from './ToastStore'
 
-const useMessage = () => {
+const useMessage = (options?: ToastOptions) => {
   const toastStore = useToastStore()
+
+  watchEffect(() => {
+    if (options) toastStore.configOptions(options)
+  })
 
   const success = (message: string) => toastStore.addToast('success', message)
 
