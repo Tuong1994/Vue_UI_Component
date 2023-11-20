@@ -5,6 +5,7 @@ import * as Carousel from './Carousel'
 import Section from './Section/Section.vue'
 import Avatar from './Avatar/Avatar.vue'
 import Accordion from './Accordion/Accordion.vue'
+import Alert from './Alert/Alert.vue'
 import Badge from './Badge/Badge.vue'
 import Button from './Button/Button.vue'
 import Modal from './Modal/Modal.vue'
@@ -52,4 +53,5 @@ export {
   Breadcrumb,
   NoteMessage,
   ToastMessage,
+  Alert,
 }

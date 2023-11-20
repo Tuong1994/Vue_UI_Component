@@ -12,5 +12,7 @@ const open = ref<boolean>(false)
 </script>
 
 <template>
-  <Section> </Section>
+  <Section>
+   
+  </Section>
 </template>
