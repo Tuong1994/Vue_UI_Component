@@ -5,6 +5,7 @@ import type { TableColumns, TableRowKey } from './type.ts'
 import TableHead from './TableHead.vue'
 import TableBody from './TableBody.vue'
 import TableEmpty from './TableEmpty.vue'
+import TableLoading from "./TableLoading.vue"
 
 export interface TableProps {
   rootClassName?: string
@@ -15,6 +16,7 @@ export interface TableProps {
   dataSource: M[]
   columns: TableColumns<M>
   rowKey?: TableRowKey
+  loading?: boolean
   hasSelectRow?: boolean
   hasExpand?: boolean
   expand?: TableExpand
@@ -79,5 +81,7 @@ watchEffect(() => emits('onRowSelect', rowSelectedKeys.value))
       </table>
       <TableEmpty v-if="dataSource.length === 0" />
     </div>
+    
+    <TableLoading v-if="loading" />
   </div>
 </template>

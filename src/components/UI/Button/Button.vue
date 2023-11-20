@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, withDefaults } from 'vue'
 import type { ComponentColor, ComponentSize } from '@/common/type'
-import Spinner from '@/components/UI/Loading/Spinner/Spinner.vue'
+import Spinner from '@/components/UI/Loading/Spinner.vue'
 
 export interface ButtonProps {
   rootClassName?: string

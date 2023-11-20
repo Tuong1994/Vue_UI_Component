@@ -4,21 +4,13 @@ import { UI, Control } from './components'
 import { CarouselItems } from '@/components/UI/Carousel/type.ts'
 import useMessage from '@/components/UI/ToastMessage/useMessage.ts'
 
-const { Section, Button, ToastMessage } = UI
+const { Section } = UI
 
 const {} = Control
 
 const open = ref<boolean>(false)
-
-const messageApi = useMessage()
 </script>
 
 <template>
-  <Section>
-    <Button color="green" @click="() => messageApi.success('Success')">Success</Button>
-    <Button color="red" @click="() => messageApi.error('Error')">Error</Button>
-    <Button color="orange" @click="() => messageApi.warning('Warning')">Warning</Button>
-    <Button color="blue" @click="() => messageApi.info('Info')">Info</Button>
-    <ToastMessage />
-  </Section>
+  <Section> </Section>
 </template>
