@@ -1,0 +1,144 @@
+<script setup lang="ts">
+import { ref, computed, withDefaults, useSlots, toRef, watchEffect, type StyleValue } from 'vue'
+import { useField } from 'vee-validate'
+import type { ComponentSize, ComponentColor } from '@/common/type.ts'
+import type { FormRule } from '@/components/Control/type.ts'
+import { iconName } from '@/components/UI/Icon/constant.ts'
+import Icon from '@/components/UI/Icon/Icon.vue'
+import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
+import useFormStore from '@/components/Control/Form/FormStore.ts'
+
+export interface InputProps {
+  rootClassName?: string
+  labelClassName?: string
+  inputClassName?: string
+  rootStyle?: StyleValue
+  labelStyle?: StyleValue
+  inputStyle?: StyleValue
+  sizes?: ComponentSize
+  color?: ComponentSize
+  modelValue?: string
+  placeholder?: string
+  name?: string
+  disabled?: boolean
+  rule?: FormRule
+}
+
+const props = withDefaults(defineProps<InputProps>(), {
+  rootClassName: '',
+  labelClassName: '',
+  inputClassName: '',
+  sizes: 'md',
+  color: 'blue',
+  placeholder: 'Type...',
+  name: ''
+})
+
+const form = useFormStore()
+
+const name = toRef(props, 'name')
+
+const {
+  value: veeValue,
+  errorMessage,
+  handleChange: veeOnChange,
+  handleBlur: veeOnBlur,
+  setValue
+} = useField(name, !props.disabled ? props.rule : undefined, {
+  initialValue: form.formData[name.value]
+})
+
+const slots = useSlots()
+
+const emits = defineEmits(['update:modelValue'])
+
+const inputRef = ref<HTMLInputElement | null>(null)
+
+const controlValue = computed<string>(() => (form.isVee ? veeValue?.value : props.modelValue))
+
+const hasLabel = computed<boolean>(() => slots.label !== undefined)
+
+const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
+
+const hasAddonAfter = computed<boolean>(() => slots.addonAfter !== undefined)
+
+const showClearIcon = computed<boolean>(() => (form.isVee ? Boolean(veeValue?.value) : props.modelValue))
+
+const colorClassName = computed<string>(() => `input-${props.color}`)
+
+const sizeClassName = computed<string>(() => `input-${props.sizes}`)
+
+const inputGapClassName = computed<string>(() => (form.isVee ? 'input-gap' : ''))
+
+const errorClassName = computed<string>(() => (errorMessage?.value ? 'input-error' : ''))
+
+const disabledClassName = computed<string>(() => (props.disabled ? 'input-disabled' : ''))
+
+const iconSize = computed<number>(() => {
+  if (props.sizes === 'sm') return 12
+  if (props.sizes === 'lg') return 16
+  return 14
+})
+
+const handleChange = (e: Event) => {
+  const value = (e.target as HTMLInputElement).value
+  emits('update:modelValue', value)
+}
+
+const handleClearInput = () => (form.isVee ? setValue('') : emits('update:modelValue', ''))
+
+const onChangeFn = form.isVee ? veeOnChange : handleChange
+
+watchEffect(() => {
+  if (errorMessage?.value) inputRef.value.click()
+})
+</script>
+
+<template>
+  <div
+    :style="rootStyle"
+    :class="[
+      'input',
+      inputGapClassName,
+      colorClassName,
+      sizeClassName,
+      errorClassName,
+      rootClassName,
+      disabledClassName
+    ]"
+  >
+    <label>
+      <div v-if="hasLabel" :style="labelStyle" :class="['input-label', labelClassName]">
+        <slot name="label"></slot>
+      </div>
+
+      <div ref="inputRef" class="input-group">
+        <div v-if="hasAddonBefore" class="group-addon group-addon-before">
+          <slot name="addonBefore"></slot>
+        </div>
+
+        <div class="group-control">
+          <input
+            type="text"
+            :name="name"
+            :value="controlValue"
+            :placeholder="placeholder"
+            :class="['control-box', inputClassName]"
+            @input="onChangeFn"
+            @blur="veeOnBlur"
+          />
+
+          <div v-if="showClearIcon" class="control-action" @click="handleClearInput">
+            <Icon :size="iconSize" :iconName="iconName.X_MARK_CIRCLE" />
+          </div>
+        </div>
+
+        <div v-if="hasAddonAfter" className="group-addon group-addon-after">
+          <slot name="addonAfter"></slot>
+        </div>
+      </div>
+    </label>
+
+    <NoteMessage v-if="errorMessage" type="error" :message="errorMessage" />
+  </div>
+</template>

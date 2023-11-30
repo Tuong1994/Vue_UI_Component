@@ -10,11 +10,13 @@ export interface ButtonProps {
   ghost?: boolean
   loading?: boolean
   disabled?: boolean
+  type?: 'submit' | 'button' | 'reset'
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   rootClassName: '',
-  sizes: 'md'
+  sizes: 'md',
+  type: 'button'
 })
 const buttonDisabled = computed<boolean>(() => props.disabled || props.loading)
 
@@ -34,6 +36,7 @@ const colorClassName = computed<string>(() => {
 
 <template>
   <button
+    :type="type"
     :disabled="buttonDisabled"
     :class="['button', sizeClassName, colorClassName, loadingClassName, disabledClassName, rootClassName]"
   >
