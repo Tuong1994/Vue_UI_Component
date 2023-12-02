@@ -1,9 +1,9 @@
-.select {
-  .select-label {
+.datepicker {
+  .datepicker-label {
     display: block;
     margin-bottom: $m-1 - 0.5;
   }
-  .select-wrap {
+  .datepicker-wrap {
     position: relative;
     .wrap-group {
       display: flex;
@@ -82,117 +82,137 @@
         }
       }
     }
-    .wrap-option {
-      min-width: max-content;
-      width: $w-full;
-      border: 0.5px solid $bg-gray;
+    .wrap-calendar {
+      width: $w-10 * 3.1;
+      background: $bg-white;
       box-shadow: 0 0 10px $bg-gray;
       border-radius: $rounded;
-      background: $bg-white;
-      overflow: hidden;
       position: absolute;
       top: 110%;
       left: 0;
       z-index: 10;
       opacity: 0;
-      transition: all $transition-time-xs $transition-fn;
-      .option-list {
-        width: $w-full;
-        .list-item {
-          padding: $p-1 - 0.6 $p-1;
-          margin: 0;
-          border-bottom: 0.5px solid $bg-gray;
-          cursor: pointer;
+      transition: opacity $transition-time-xs $transition-fn;
+      .calendar-header {
+        padding: $p-1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .header-action {
+          width: $w-2;
+          height: $h-2;
+          border: unset;
+          background: transparent;
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          transition: all $transition-time-sm $transition-fn;
-          &:last-child {
-            border: unset;
+          justify-content: center;
+          transition: opacity $transition-time-md $transition-fn;
+          &:hover {
+            opacity: 0.6;
           }
-          * {
-            transition: all $transition-time-sm $transition-fn;
-          }
-          .item-label {
-            display: flex;
-            .label-icon {
-              margin-right: $m-1 + 0.5;
+        }
+        .header-control {
+          display: flex;
+          align-items: center;
+          .control-select {
+            min-width: max-content;
+            position: relative;
+            margin: 0 $m-1;
+            &:hover .select-box .box-icon {
+              opacity: 1;
+            }
+            .select-box {
               display: flex;
               align-items: center;
-              justify-content: center;
+              cursor: pointer;
+              .box-value {
+                display: block;
+                min-width: max-content;
+                margin-right: $m-2;
+              }
+              .box-icon {
+                opacity: 0;
+                transition: opacity $transition-time-md $transition-fn;
+              }
+            }
+            .select-dropdown {
+              min-width: max-content;
+              width: $w-full;
+              height: $h-10 * 2;
+              overflow-y: auto;
+              box-shadow: 0 0 10px $bg-gray;
+              background: $bg-white;
+              position: absolute;
+              top: 110%;
+              left: 0;
+              z-index: 10;
+              opacity: 0;
+              transition: all $transition-time-sm $transition-fn;
+              .dropdown-item {
+                padding: $p-1 - 0.5;
+                font-size: $text-xs + 0.1;
+                cursor: pointer;
+                transition: background $transition-time-sm $transition-fn;
+                &:hover {
+                  background: $bg-slate;
+                }
+              }
+            }
+            .select-dropdown-active {
+              opacity: 1;
+              animation: fade $transition-time-sm $transition-fn;
             }
           }
         }
-        .list-item-selected {
-          color: $text-white;
-          * {
-            color: $text-white;
-          }
-        }
-        .list-empty {
-          height: $h-5;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+      }
+      .calendar-day {
+        display: flex;
+        padding: $p-1 - 0.5;
+        .day-item {
+          width: calc($w-full / 7);
+          text-align: center;
           color: $text-gray;
         }
-        .list-loading {
-          width: $w-full;
-          height: $h-10 * 2;
+      }
+      .calendar-date {
+        padding: $p-1 - 0.5;
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 10px;
+        .date-item {
+          width: calc($w-full / 7);
           display: flex;
           align-items: center;
           justify-content: center;
-          .loading-icon {
-            animation: spin $transition-time-md $transition-fn infinite;
-          }
-        }
-      }
-      .option-list-scroll {
-        height: $h-10 * 2;
-        overflow-y: auto;
-      }
-      .option-pagination {
-        padding: $p-1;
-        border-top: 0.5px solid $bg-gray;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        .pagination-content {
-          margin-right: $m-1;
-        }
-        .pagination-actions {
-          display: flex;
-          align-items: center;
-          .actions-btn {
-            width: $w-2 + 0.5;
-            height: $h-2 + 0.5;
-            border: 0.5px solid $bg-gray;
+          .item-btn {
+            width: $w-3;
+            height: $h-3;
+            border: unset;
+            border-radius: $rounded;
             background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity $transition-time-md $transition-fn;
-            &:hover {
-              opacity: 0.6;
-            }
-            &:nth-child(1) {
-              border-top-left-radius: $rounded;
-              border-bottom-left-radius: $rounded;
-              border-left: unset;
-            }
-            &:nth-child(2) {
-              border-top-right-radius: $rounded;
-              border-bottom-right-radius: $rounded;
-            }
+            transition: background $transition-time-md $transition-fn;
           }
-          .actions-btn-disabled {
-            opacity: 0.6;
+        }
+        .date-item-sub {
+          .item-btn {
+            color: $text-gray;
+          }
+        }
+        .date-item-disabled {
+          .item-btn {
+            color: $text-slate;
             cursor: not-allowed;
+            &:hover {
+              background: transparent !important;
+            }
           }
         }
       }
     }
-    .wrap-option-active {
+    .wrap-calendar-active {
       top: 120%;
       opacity: 1;
       animation: dropdown $transition-time-xs $transition-fn;
@@ -201,18 +221,18 @@
 }
 
 // Gap
-.select-gap {
+.datepicker-gap {
   margin-bottom: $m-1 + 0.5;
 }
 
 // Bottom
-.select-bottom {
-  .select-wrap {
-    .wrap-option {
+.datepicker-bottom {
+  .datepicker-wrap {
+    .wrap-calendar {
       top: unset !important;
       bottom: 100%;
     }
-    .wrap-option-active {
+    .wrap-calendar-active {
       bottom: calc(100% + 5px);
       opacity: 1;
       animation: dropup $transition-time-xs $transition-fn;
@@ -220,29 +240,9 @@
   }
 }
 
-// Disabled
-.select-disabled {
-  .select-label {
-    color: $text-gray;
-    * {
-      color: $text-gray;
-    }
-  }
-  .wrap-group {
-    background: $bg-slate !important;
-    &:hover {
-      border-color: $bg-gray !important;
-    }
-    .control-box {
-      color: $text-gray;
-      cursor: not-allowed;
-    }
-  }
-}
-
 // Error
-.select-error {
-  .select-label {
+.datepicker-error {
+  .datepicker-label {
     color: $text-red;
     * {
       color: $text-red;
@@ -253,9 +253,29 @@
   }
 }
 
+// Disabled
+.datepicker-disabled {
+  .datepicker-label {
+    color: $text-gray;
+    * {
+      color: $text-gray;
+    }
+  }
+  .wrap-group {
+    background: $bg-slate;
+    &:hover {
+      border-color: $bg-gray !important;
+    }
+    .control-box {
+      color: $text-gray;
+      cursor: not-allowed;
+    }
+  }
+}
+
 // Size
-.select-sm {
-  .select-label {
+.datepicker-sm {
+  .datepicker-label {
     font-size: $text-xs;
     * {
       font-size: $text-xs;
@@ -267,34 +287,24 @@
       * {
         font-size: $text-xs;
       }
-      .control-tags {
-        padding: $p-1 - 0.9 $p-1;
-      }
     }
   }
-  .wrap-option {
-    .list-item {
+  .wrap-calendar {
+    width: $w-10 * 2.5 !important;
+    * {
       font-size: $text-xs;
-      * {
-        font-size: $text-xs;
-      }
     }
   }
 }
 
-.select-md {
+.datepicker-md {
   .wrap-group {
     padding: $p-1 - 0.6 $p-1 - 0.2;
-    .group-control {
-      .control-tags {
-        padding: $p-1 - 0.8 $p-1;
-      }
-    }
   }
 }
 
-.select-lg {
-  .select-label {
+.datepicker-lg {
+  .datepicker-label {
     font-size: $text-md;
     * {
       font-size: $text-md;
@@ -306,23 +316,12 @@
       * {
         font-size: $text-md;
       }
-      .control-tags {
-        padding: $p-1 - 0.7 $p-1;
-      }
-    }
-  }
-  .wrap-option {
-    .list-item {
-      font-size: $text-md;
-      * {
-        font-size: $text-md;
-      }
     }
   }
 }
 
 // Color
-.select-blue {
+.datepicker-blue {
   .wrap-group {
     &:hover {
       border-color: $bg-blue;
@@ -334,19 +333,22 @@
       background: $bg-blue;
     }
   }
-  .wrap-option {
-    .list-item {
-      &:hover {
-        background: $bg-blue-rgba-xs;
+  .wrap-calendar {
+    .date-item {
+      &:hover .item-btn {
+        background: $bg-blue-rgba-sm !important;
       }
     }
-    .list-item-selected {
-      background: $bg-blue;
+    .date-item-selected {
+      .item-btn {
+        background: $bg-blue !important;
+        color: $text-white;
+      }
     }
   }
 }
 
-.select-green {
+.datepicker-green {
   .wrap-group {
     &:hover {
       border-color: $bg-green;
@@ -358,19 +360,22 @@
       background: $bg-green;
     }
   }
-  .wrap-option {
-    .list-item {
-      &:hover {
-        background: $bg-green-rgba-xs;
+  .wrap-calendar {
+    .date-item {
+      &:hover .item-btn {
+        background: $bg-green-rgba-sm !important;
       }
     }
-    .list-item-selected {
-      background: $bg-green;
+    .date-item-selected {
+      .item-btn {
+        background: $bg-green !important;
+        color: $text-white;
+      }
     }
   }
 }
 
-.select-orange {
+.datepicker-orange {
   .wrap-group {
     &:hover {
       border-color: $bg-orange;
@@ -382,19 +387,22 @@
       background: $bg-orange;
     }
   }
-  .wrap-option {
-    .list-item {
-      &:hover {
-        background: $bg-orange-rgba-xs;
+  .wrap-calendar {
+    .date-item {
+      &:hover .item-btn {
+        background: $bg-orange-rgba-sm !important;
       }
     }
-    .list-item-selected {
-      background: $bg-orange;
+    .date-item-selected {
+      .item-btn {
+        background: $bg-orange !important;
+        color: $text-white;
+      }
     }
   }
 }
 
-.select-yellow {
+.datepicker-yellow {
   .wrap-group {
     &:hover {
       border-color: $bg-yellow;
@@ -406,19 +414,22 @@
       background: $bg-yellow;
     }
   }
-  .wrap-option {
-    .list-item {
-      &:hover {
-        background: $bg-yellow-rgba-xs;
+  .wrap-calendar {
+    .date-item {
+      &:hover .item-btn {
+        background: $bg-yellow-rgba-sm !important;
       }
     }
-    .list-item-selected {
-      background: $bg-yellow;
+    .date-item-selected {
+      .item-btn {
+        background: $bg-yellow !important;
+        color: $text-white;
+      }
     }
   }
 }
 
-.select-purple {
+.datepicker-purple {
   .wrap-group {
     &:hover {
       border-color: $bg-purple;
@@ -430,19 +441,22 @@
       background: $bg-purple;
     }
   }
-  .wrap-option {
-    .list-item {
-      &:hover {
-        background: $bg-purple-rgba-xs;
+  .wrap-calendar {
+    .date-item {
+      &:hover .item-btn {
+        background: $bg-purple-rgba-sm !important;
       }
     }
-    .list-item-selected {
-      background: $bg-purple;
+    .date-item-selected {
+      .item-btn {
+        background: $bg-purple !important;
+        color: $text-white;
+      }
     }
   }
 }
 
-.select-pink {
+.datepicker-pink {
   .wrap-group {
     &:hover {
       border-color: $bg-pink;
@@ -454,14 +468,17 @@
       background: $bg-pink;
     }
   }
-  .wrap-option {
-    .list-item {
-      &:hover {
-        background: $bg-pink-rgba-xs;
+  .wrap-calendar {
+    .date-item {
+      &:hover .item-btn {
+        background: $bg-pink-rgba-sm !important;
       }
     }
-    .list-item-selected {
-      background: $bg-pink;
+    .date-item-selected {
+      .item-btn {
+        background: $bg-pink !important;
+        color: $text-white;
+      }
     }
   }
 }

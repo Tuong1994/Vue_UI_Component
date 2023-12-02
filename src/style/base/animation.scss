@@ -48,3 +48,14 @@
     opacity: 1;
   }
 }
+
+@keyframes dropup {
+  from {
+    bottom: 100%;
+    opacity: 0;
+  }
+  to {
+    bottom: calc(100% + 5px);
+    opacity: 1;
+  }
+}

@@ -93,7 +93,9 @@ const sizeClassName = computed<string>(() => `select-${props.sizes}`)
 
 const colorClassName = computed<string>(() => `select-${props.color}`)
 
-const selectGapClassName = computed<string>(() => (form.isVee ? 'select-gap' : ''))
+const gapClassName = computed<string>(() => (form.isVee ? 'select-gap' : ''))
+
+const bottomClassName = computed<string>(() => (bottom.value ? 'select-bottom' : ''))
 
 const errorClassName = computed<string>(() => (errorMessage?.value ? 'select-error' : ''))
 
@@ -161,8 +163,9 @@ const getDefaultOptions = (tags: any[]) => {
 
 // // Set default option
 watchEffect(() => {
-  if (!form.isVee) return (selectedOptions.value = getDefaultOptions([...defaultTags.value]))
-  selectedOptions.value = getDefaultOptions([...veeValue.value])
+  if (!form.isVee && defaultTags.value)
+    return (selectedOptions.value = getDefaultOptions([...defaultTags.value]))
+  if (veeValue.value) selectedOptions.value = getDefaultOptions([...veeValue.value])
 })
 </script>
 
@@ -172,9 +175,10 @@ watchEffect(() => {
     :style="rootStyle"
     :class="[
       'select',
-      selectGapClassName,
       sizeClassName,
       colorClassName,
+      gapClassName,
+      bottomClassName,
       errorClassName,
       rootClassName,
       disabledClassName

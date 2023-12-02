@@ -18,7 +18,7 @@ export interface InputPasswordProps {
   labelStyle?: StyleValue
   inputStyle?: StyleValue
   sizes?: ComponentSize
-  color?: ComponentSize
+  color?: ComponentColor
   modelValue?: string
   placeholder?: string
   name?: string

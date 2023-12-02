@@ -5,6 +5,7 @@ export const iconType = {
 
 export const iconName = {
   SPINNER: 'spinner',
+  CALENDAR: "calendar",
   X_MARK: 'xmark',
   USER: 'user',
   ANGLE_UP: 'angle-up',

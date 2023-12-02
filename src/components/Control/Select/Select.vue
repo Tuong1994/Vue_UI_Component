@@ -154,9 +154,11 @@ const handleChangePage = (type: 'prev' | 'next') => {
 // // Set default option
 watchEffect(() => {
   let defaultOption: Option | null = null
-  if (!form.isVee)
+  if (!form.isVee && props.defaultValue) {
     defaultOption = [...props.options].find((option) => option.value === props.defaultValue) as Option
-  else defaultOption = [...props.options].find((option) => option.value === veeValue.value) as Option
+  } else if (veeValue.value) {
+    defaultOption = [...props.options].find((option) => option.value === veeValue.value) as Option
+  }
   selectedOption.value = defaultOption
 })
 </script>

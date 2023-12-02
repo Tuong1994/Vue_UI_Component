@@ -49,7 +49,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div ref="controlRef" class="wrap-group" @click="handleDropdown">
+  <div ref="controlRef" :style="inputStyle" :class="['wrap-group', inputClassName]" @click="handleDropdown">
     <div v-if="hasAddonBefore" class="group-addon group-addon-before">
       <slot name="addonBefore"></slot>
     </div>
@@ -59,10 +59,10 @@ watchEffect(() => {
 
       <input
         type="text"
+        class="control-box"
         :value="renderValue"
         :placeholder="placeholder"
         :disabled="disabled"
-        :class="['control-box', inputClassName]"
         @input="handleSearch"
       />
 
