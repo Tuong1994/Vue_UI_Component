@@ -50,8 +50,16 @@
   }
 }
 
-.checkbox-gap {
+.checkbox-gap-sm {
+  margin-bottom: $m-1;
+}
+
+.checkbox-gap-md {
   margin-bottom: $m-1 + 0.5;
+}
+
+.checkbox-gap-lg {
+  margin-bottom: $m-2;
 }
 
 // Size

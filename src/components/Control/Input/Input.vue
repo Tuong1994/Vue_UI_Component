@@ -56,6 +56,10 @@ const inputRef = ref<HTMLInputElement | null>(null)
 
 const controlValue = computed<string>(() => (form.isVee ? veeValue?.value : props.modelValue))
 
+const controlColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+
+const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
+
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
 const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
@@ -64,19 +68,19 @@ const hasAddonAfter = computed<boolean>(() => slots.addonAfter !== undefined)
 
 const showClearIcon = computed<boolean>(() => (form.isVee ? Boolean(veeValue?.value) : props.modelValue))
 
-const colorClassName = computed<string>(() => `input-${props.color}`)
+const colorClassName = computed<string>(() => `input-${controlColor.value}`)
 
-const sizeClassName = computed<string>(() => `input-${props.sizes}`)
+const sizeClassName = computed<string>(() => `input-${controlSize.value}`)
 
-const inputGapClassName = computed<string>(() => (form.isVee ? 'input-gap' : ''))
+const gapClassName = computed<string>(() => (form.isVee ? `input-gap-${controlSize.value}` : ''))
 
 const errorClassName = computed<string>(() => (errorMessage?.value ? 'input-error' : ''))
 
 const disabledClassName = computed<string>(() => (props.disabled ? 'input-disabled' : ''))
 
 const iconSize = computed<number>(() => {
-  if (props.sizes === 'sm') return 12
-  if (props.sizes === 'lg') return 16
+  if (controlSize.value === 'sm') return 12
+  if (controlSize.value === 'lg') return 16
   return 14
 })
 
@@ -99,7 +103,7 @@ watchEffect(() => {
     :style="rootStyle"
     :class="[
       'input',
-      inputGapClassName,
+      gapClassName,
       colorClassName,
       sizeClassName,
       errorClassName,

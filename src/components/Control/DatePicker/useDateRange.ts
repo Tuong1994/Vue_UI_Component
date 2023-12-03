@@ -1,8 +1,5 @@
 import { computed, type Ref } from 'vue'
 import type { SelectDate } from '../type'
-// import * as yup from "yup"
-
-// yup.string().nonNullable()
 
 const useDateRange = (year: Ref<number>, month: Ref<number>) => {
   const lastDateOfMonth = computed<number>(() => new Date(year.value, month.value + 1, 0).getDate())

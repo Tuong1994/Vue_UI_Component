@@ -78,6 +78,10 @@ const bottom = useDetectBottom(selectRef)
 
 useClickOutside(selectRef, dropdown)
 
+const controlColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+
+const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
+
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
 const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
@@ -90,11 +94,11 @@ const showClearIcon = computed<boolean>(() =>
 
 const totalPages = computed<number>(() => Math.ceil(props.total / props.limit))
 
-const sizeClassName = computed<string>(() => `select-${props.sizes}`)
+const sizeClassName = computed<string>(() => `select-${controlSize.value}`)
 
-const colorClassName = computed<string>(() => `select-${props.color}`)
+const colorClassName = computed<string>(() => `select-${controlColor.value}`)
 
-const gapClassName = computed<string>(() => (form.isVee ? 'select-gap' : ''))
+const gapClassName = computed<string>(() => (form.isVee ? `select-gap-${controlSize.value}` : ''))
 
 const bottomClassName = computed<string>(() => (bottom.value ? 'select-bottom' : ''))
 
@@ -103,8 +107,8 @@ const errorClassName = computed<string>(() => (errorMessage?.value ? 'select-err
 const disabledClassName = computed<string>(() => (props.disabled ? 'select-disabled' : ''))
 
 const iconSize = computed<number>(() => {
-  if (props.sizes === 'sm') return 12
-  if (props.sizes === 'lg') return 16
+  if (controlSize.value === 'sm') return 12
+  if (controlSize.value === 'lg') return 16
   return 14
 })
 

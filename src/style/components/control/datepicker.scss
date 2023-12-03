@@ -221,8 +221,16 @@
 }
 
 // Gap
-.datepicker-gap {
+.datepicker-gap-sm {
+  margin-bottom: $m-1;
+}
+
+.datepicker-gap-md {
   margin-bottom: $m-1 + 0.5;
+}
+
+.datepicker-gap-lg {
+  margin-bottom: $m-2;
 }
 
 // Bottom

@@ -51,8 +51,16 @@
 }
 
 // Gap
-.input-gap {
+.input-gap-sm {
+  margin-bottom: $m-1;
+}
+
+.input-gap-md {
   margin-bottom: $m-1 + 0.5;
+}
+
+.input-gap-lg {
+  margin-bottom: $m-2;
 }
 
 // Disabled

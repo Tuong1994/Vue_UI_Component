@@ -64,6 +64,10 @@ const bottom = useDetectBottom(datepickerRef)
 
 useClickOutside(datepickerRef, dropdown)
 
+const controlColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+
+const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
+
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
 const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
@@ -74,11 +78,11 @@ const showResetIcon = computed<boolean>(() =>
   Boolean(selectedDate.value.getDate() !== new Date().getDate() && !props.disabled)
 )
 
-const sizeClassName = computed<string>(() => `datepicker-${props.sizes}`)
+const sizeClassName = computed<string>(() => `datepicker-${controlSize.value}`)
 
-const colorClassName = computed<string>(() => `datepicker-${props.color}`)
+const colorClassName = computed<string>(() => `datepicker-${controlColor.value}`)
 
-const gapClassName = computed<string>(() => (form.isVee ? 'datepicker-gap' : ''))
+const gapClassName = computed<string>(() => (form.isVee ? `datepicker-gap-${controlSize.value}` : ''))
 
 const bottomClassName = computed<string>(() => (bottom.value ? 'datepicker-bottom' : ''))
 
@@ -87,8 +91,8 @@ const disabledClassName = computed<string>(() => (props.disabled ? 'datepicker-d
 const errorClassName = computed<string>(() => (errorMessage?.value ? 'datepicker-error' : ''))
 
 const iconSize = computed<number>(() => {
-  if (props.sizes === 'sm') return 12
-  if (props.sizes === 'lg') return 16
+  if (controlSize.value === 'sm') return 12
+  if (controlSize.value === 'lg') return 16
   return 14
 })
 

@@ -201,8 +201,16 @@
 }
 
 // Gap
-.select-gap {
+.select-gap-sm {
+  margin-bottom: $m-1;
+}
+
+.select-gap-md {
   margin-bottom: $m-1 + 0.5;
+}
+
+.select-gap-lg {
+  margin-bottom: $m-2;
 }
 
 // Bottom

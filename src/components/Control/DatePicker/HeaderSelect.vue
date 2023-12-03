@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watchEffect, type StyleValue } from 'vue'
 import type { SelectOptions, Option } from '../type.ts'
-import { useRender } from '@/hooks'
+import { useRender, useClickOutside } from '@/hooks'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 
@@ -22,6 +22,8 @@ const selectedOption = ref<Option | null>(null)
 const selectRef = ref<HTMLDivElement | null>(null)
 
 const render = useRender(dropdown)
+
+useClickOutside(selectRef, dropdown)
 
 const dropdownClassName = computed<string>(() => (dropdown.value ? 'select-dropdown-active' : ''))
 

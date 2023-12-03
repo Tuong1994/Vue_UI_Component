@@ -2,6 +2,7 @@
 import { computed, withDefaults } from 'vue'
 import type { ComponentColor, ComponentSize } from '@/common/type'
 import Spinner from '@/components/UI/Loading/Spinner.vue'
+import useFormStore from '@/components/Control/Form/FormStore.ts'
 
 export interface ButtonProps {
   rootClassName?: string
@@ -18,19 +19,26 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   sizes: 'md',
   type: 'button'
 })
+
+const form = useFormStore()
+
+const buttonSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
+
+const buttonColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+
 const buttonDisabled = computed<boolean>(() => props.disabled || props.loading)
 
-const sizeClassName = computed<string>(() => `button-${props.sizes}`)
+const sizeClassName = computed<string>(() => `button-${buttonSize.value}`)
 
 const loadingClassName = computed<string>(() => (props.loading ? 'button-loading' : ''))
 
 const disabledClassName = computed<string>(() => (props.disabled ? 'button-disabled' : ''))
 
 const colorClassName = computed<string>(() => {
-  if (!props.ghost && !props.color) return ''
-  if (props.ghost && !props.color) return 'button-ghost'
-  if (!props.ghost && props.color) return `button-color button-${props.color}`
-  if (props.ghost && props.color) return `button-ghost button-ghost-${props.color}`
+  if (!props.ghost && !buttonColor.value) return ''
+  if (props.ghost && !buttonColor.value) return 'button-ghost'
+  if (!props.ghost && buttonColor.value) return `button-color button-${buttonColor.value}`
+  if (props.ghost && buttonColor.value) return `button-ghost button-ghost-${buttonColor.value}`
 })
 </script>
 

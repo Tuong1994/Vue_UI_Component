@@ -5,5 +5,6 @@ import Select from './Select/Select.vue'
 import SelectTag from './SelectTag/SelectTag.vue'
 import DatePicker from './DatePicker/DatePicker.vue'
 import CheckBox from './CheckBox/CheckBox.vue'
+import Radio from './Radio/Radio.vue'
 
-export { Form, Input, InputPassword, Select, SelectTag, DatePicker, CheckBox }
+export { Form, Input, InputPassword, Select, SelectTag, DatePicker, CheckBox, Radio }

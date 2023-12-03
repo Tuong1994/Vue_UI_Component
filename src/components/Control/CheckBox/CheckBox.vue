@@ -42,6 +42,7 @@ const {
   value: veeValue,
   checked: veeChecked,
   errorMessage,
+  setValue,
   handleChange: veeOnChange
 } = useField(name, !props.disabled ? props.rule : undefined, {
   type: 'checkbox',
@@ -56,32 +57,38 @@ const isCheck = ref<boolean>(false)
 
 const hasLabel = computed<boolean>(() => slots.default !== undefined)
 
-const sizeClassName = computed<string>(() => `checkbox-${props.sizes}`)
+const controlValue = computed<string>(() => (form.isVee ? veeValue?.value : props.value))
+
+const controlColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+
+const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
+
+const controlCheck = computed<boolean>(() => (form.isVee ? veeChecked?.value : isCheck.value))
+
+const sizeClassName = computed<string>(() => `checkbox-${controlSize.value}`)
 
 const colorClassName = computed<string>(() =>
-  isCheck.value ? `checkbox-checked-${props.color}` : `checkbox-${props.color}`
+  controlCheck.value ? `checkbox-checked-${controlColor.value}` : `checkbox-${controlColor.value}`
 )
 
-const inputGapClassName = computed<string>(() => (form.isVee ? 'checkbox-gap' : ''))
+const gapClassName = computed<string>(() => (form.isVee ? `checkbox-gap-${controlSize.value}` : ''))
 
 const errorClassName = computed<string>(() => (errorMessage?.value ? 'checkbox-group-error' : ''))
 
 const disabledClassName = computed<string>(() => (props.disabled ? 'checkbox-group-disabled' : ''))
 
 const iconSize = computed<number>(() => {
-  if (props.sizes === 'sm') return 12
-  if (props.sizes === 'md') return 14
-  if (props.sizes === 'lg') return 16
+  if (controlSize.value === 'sm') return 12
+  if (controlSize.value === 'lg') return 16
+  return 14
 })
 
-const controlValue = computed<string>(() => (form.isVee ? veeValue?.value : props.value))
-
 const handleChange = (e: Event) => {
+  if (form.isVee) return veeOnChange(props.value)
+
   const checked = (e.target as HTMLInputElement).checked
   const value = (e.target as HTMLInputElement).value
   isCheck.value = checked
-
-  if (form.isVee) return veeOnChange(props.value)
 
   emits('onCheck', checked)
   if (checked) emits('onInput', value)
@@ -90,26 +97,31 @@ const handleChange = (e: Event) => {
 
 const handleBlur = (e: Event) => emits('onBlur', e)
 
-watchEffect(() => (isCheck.value = props.checked))
+watchEffect(() => {
+  if (!form.isVee) return (isCheck.value = props.checked)
+  // if (veeValue && typeof veeValue === 'boolean') isCheck.value = veeValue.value
+  // else isCheck.value = [...Array.from(veeValue)].includes(props.value)
+})
 </script>
 
 <template>
   <div
     :style="rootStyle"
-    :class="['checkbox', inputGapClassName, sizeClassName, colorClassName, rootClassName]"
+    :class="['checkbox', gapClassName, sizeClassName, colorClassName, rootClassName]"
   >
     <label :class="['checkbox-group', errorClassName, disabledClassName]">
       <input
         type="checkbox"
         class="group-control"
-        :checked="checked"
+        :checked="isCheck"
+        :disabled="disabled"
         :value="controlValue"
         @input="handleChange"
         @blur="handleBlur"
       />
 
       <div class="group-checked">
-        <Icon v-if="isCheck" :iconName="iconName.CHECK" :size="iconSize" />
+        <Icon v-if="controlCheck" :iconName="iconName.CHECK" :size="iconSize" />
       </div>
 
       <div v-if="hasLabel" class="group-label">

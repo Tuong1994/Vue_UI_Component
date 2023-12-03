@@ -5,21 +5,25 @@ import { UI, Control } from './components'
 
 const { Section, Button } = UI
 
-const { Form, Input, InputPassword, Select, SelectTag, DatePicker, CheckBox } = Control
+const { Form, Input, InputPassword, Select, SelectTag, DatePicker, CheckBox, Radio } = Control
 
 interface FormData {
   account: string
   password: string
   age: number
   birthday: Date | null
+  role: string[]
+  gender: string
 }
 
 const initialValue: FormData = {
   account: '',
   password: '',
   age: -1,
+  birthday: null,
+  gender: '',
   tags: [],
-  birthday: null
+  role: ['user']
 }
 
 const options = [
@@ -40,7 +44,7 @@ const options = [
 
 <template>
   <Section>
-    <!-- <Form :initialValue="initialValue" @onFinish="(data) => console.log(data)">
+    <Form color="purple" :initialValue="initialValue" @onFinish="(data) => console.log(data)">
       <Input name="account">
         <template #label>Account</template>
       </Input>
@@ -57,11 +61,19 @@ const options = [
         <template #label>Age</template>
       </Select>
 
-      <Button type="submit">Vee</Button>
-    </Form> -->
+      <DatePicker name="birthday" :rule="yup.date().nonNullable()">
+        <template #label>Birthday</template>
+      </DatePicker>
 
-    <DatePicker>
-      <template #label>Birthday</template>
-    </DatePicker>
+      <CheckBox name="role" value="user"> User </CheckBox>
+
+      <CheckBox name="role" value="admin"> Admin </CheckBox>
+
+      <Radio name="gender" value="male" :rule="yup.string().required()">Male</Radio>
+
+      <Radio name="gender" value="female" :rule="yup.string().required()">Female</Radio>
+
+      <Button type="submit">Vee</Button>
+    </Form>
   </Section>
 </template>
