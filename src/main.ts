@@ -19,7 +19,9 @@ import {
   faSearchPlus,
   faRotate,
   faCheck,
+  faPlus,
   faMinus,
+  faCloudUpload,
   faBoxArchive,
   faList,
   faCircleCheck,
@@ -27,6 +29,7 @@ import {
   faCircleInfo,
   faCircleExclamation,
   faCalendar,
+  faUpload,
 } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import router from './router'
@@ -49,6 +52,7 @@ library.add(
   faSearchMinus,
   faSearchPlus,
   faCheck,
+  faPlus,
   faMinus,
   faBoxArchive,
   faList,
@@ -57,6 +61,8 @@ library.add(
   faCircleInfo,
   faCircleExclamation,
   faCalendar,
+  faCloudUpload,
+  faUpload,
 )
 
 const app = createApp(App)

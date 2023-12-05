@@ -13,7 +13,7 @@ export type ComponentColor =
   | 'black'
   | 'white'
 
-export type ComponentJustify = 'start' | 'center' | 'middle' | 'between' | 'around' | 'evenly'
+export type ComponentJustify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
 
 export type ComponentAligns = 'top' | 'middle' | 'bottom' | 'baseline'
 

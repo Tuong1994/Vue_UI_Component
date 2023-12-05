@@ -5,7 +5,12 @@ import { UI, Control } from './components'
 
 const { Section, Button } = UI
 
-const { Form, Input, InputPassword, Select, SelectTag, DatePicker, CheckBox, Radio } = Control
+const { Form, Input, InputPassword, Select, SelectTag, DatePicker, TextArea, CheckBox, Radio, Upload } =
+  Control
+
+const { Image, FileUpload } = Upload
+
+const { SingleImageUpload, MultipleImageUpload } = Image
 
 interface FormData {
   account: string
@@ -14,6 +19,7 @@ interface FormData {
   birthday: Date | null
   role: string[]
   gender: string
+  note: string
 }
 
 const initialValue: FormData = {
@@ -22,6 +28,7 @@ const initialValue: FormData = {
   age: -1,
   birthday: null,
   gender: '',
+  note: '',
   tags: [],
   role: ['user']
 }
@@ -40,11 +47,23 @@ const options = [
   { label: 'Item 11', value: 11 },
   { label: 'Item 12', value: 12 }
 ]
+
+const images = ref<File[]>([])
+
+const image = ref<File | null>(null)
+
+const files = ref<File[]>([])
 </script>
 
 <template>
   <Section>
-    <Form color="purple" :initialValue="initialValue" @onFinish="(data) => console.log(data)">
+    <Form color="pink" :initialValue="initialValue" @onFinish="(data) => console.log(files)">
+      <SingleImageUpload @onUpload="(file) => (image = file)" />
+
+      <MultipleImageUpload @onUpload="(files) => (images = files)" />
+
+      <FileUpload multiple @onUpload="(f) => (files = f)" />
+
       <Input name="account">
         <template #label>Account</template>
       </Input>
@@ -65,13 +84,17 @@ const options = [
         <template #label>Birthday</template>
       </DatePicker>
 
+      <TextArea name="note">
+        <template #label>Note</template>
+      </TextArea>
+
       <CheckBox name="role" value="user"> User </CheckBox>
 
       <CheckBox name="role" value="admin"> Admin </CheckBox>
 
-      <Radio name="gender" value="male" :rule="yup.string().required()">Male</Radio>
+      <Radio name="gender" value="male">Male</Radio>
 
-      <Radio name="gender" value="female" :rule="yup.string().required()">Female</Radio>
+      <Radio name="gender" value="female">Female</Radio>
 
       <Button type="submit">Vee</Button>
     </Form>

@@ -5,7 +5,7 @@ export const iconType = {
 
 export const iconName = {
   SPINNER: 'spinner',
-  CALENDAR: "calendar",
+  CALENDAR: 'calendar',
   X_MARK: 'xmark',
   USER: 'user',
   ANGLE_UP: 'angle-up',
@@ -21,11 +21,14 @@ export const iconName = {
   SEARCH_MINUS: 'search-minus',
   ROTATE: 'rotate',
   CHECK: 'check',
+  PLUS: 'plus',
   MINUS: 'minus',
   BOX_ARCHIVE: 'box-archive',
   LIST: 'list',
   CIRCLE_CHECK: 'circle-check',
   X_MARK_CIRCLE: 'xmark-circle',
   CIRCLE_INFO: 'circle-info',
-  CIRCLE_EXCLAMATION: 'circle-exclamation'
+  CIRCLE_EXCLAMATION: 'circle-exclamation',
+  UPLOAD: 'upload',
+  CLOUD_UPLOAD: 'cloud-upload'
 }
