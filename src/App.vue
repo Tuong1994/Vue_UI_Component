@@ -3,7 +3,9 @@ import * as yup from 'yup'
 import { ref, computed, onMounted } from 'vue'
 import { UI, Control } from './components'
 
-const { Section, Button } = UI
+const { Section, Button, UList } = UI
+
+const { List, ListItem } = UList
 
 const {
   Form,
@@ -63,7 +65,15 @@ const options = [
 
 <template>
   <Section>
-    <Form color="green" :initialValues="initialValues" @onFinish="(data) => console.log(data)">
+    <List>
+      <template #head>Head</template>
+      <ListItem>Item 1</ListItem>
+      <ListItem>Item 2</ListItem>
+      <ListItem>Item 3</ListItem>
+      <ListItem>Item 4</ListItem>
+    </List>
+
+    <!-- <Form color="green" :initialValues="initialValues" @onFinish="(data) => console.log(data)">
       <TreeSelect name="title" :options="options">
         <template #label>Title</template>
       </TreeSelect>
@@ -75,6 +85,6 @@ const options = [
       <CheckBox name="role" value="user"> User </CheckBox>
 
       <Button type="submit">Vee</Button>
-    </Form>
+    </Form> -->
   </Section>
 </template>
