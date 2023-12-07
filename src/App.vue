@@ -2,10 +2,9 @@
 import * as yup from 'yup'
 import { ref, computed, onMounted } from 'vue'
 import { UI, Control } from './components'
+import type { TabsItems } from '@/components/UI/Tabs/type.ts'
 
-const { Section, Button, UList } = UI
-
-const { List, ListItem } = UList
+const { Section, Button, Tabs } = UI
 
 const {
   Form,
@@ -61,17 +60,25 @@ const options = [
   { label: 'Item 11', value: 11 },
   { label: 'Item 12', value: 12 }
 ]
+
+const tabs: TabsItems = [
+  { id: '1', label: 'Tab 1', comName: 'tab-1' },
+  { id: '2', label: 'Tab 2', comName: 'tab-2' },
+  { id: '3', label: 'Tab 3', comName: 'tab-3' },
+  { id: '4', label: 'Tab 4', comName: 'tab-4' }
+]
 </script>
 
 <template>
   <Section>
-    <List>
-      <template #head>Head</template>
-      <ListItem>Item 1</ListItem>
-      <ListItem>Item 2</ListItem>
-      <ListItem>Item 3</ListItem>
-      <ListItem>Item 4</ListItem>
-    </List>
+    <Tabs color="green" :items="tabs">
+      <template #content="com">
+        <div v-if="com.tab === 'tab-1'">Content 1</div>
+        <div v-if="com.tab === 'tab-2'">Content 2</div>
+        <div v-if="com.tab === 'tab-3'">Content 3</div>
+        <div v-if="com.tab === 'tab-4'">Content 4</div>
+      </template>
+    </Tabs>
 
     <!-- <Form color="green" :initialValues="initialValues" @onFinish="(data) => console.log(data)">
       <TreeSelect name="title" :options="options">
