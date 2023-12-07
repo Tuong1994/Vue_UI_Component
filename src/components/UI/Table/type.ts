@@ -1,3 +1,5 @@
+import type { ComponentColor } from "@/common/type"
+
 type TableComponent = {
   node: any
   props?: any
@@ -19,3 +21,5 @@ export type TableExpand = {
   node: any
   props?: any
 }
+
+export type TableColor = Exclude<ComponentColor, "red" | "black" | "white" | "gray">;

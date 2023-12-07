@@ -5,36 +5,48 @@ import { UI, Control } from './components'
 
 const { Section, Button } = UI
 
-const { Form, Input, InputPassword, Select, SelectTag, DatePicker, TextArea, CheckBox, Radio, Upload } =
-  Control
+const {
+  Form,
+  Input,
+  InputPassword,
+  Select,
+  SelectTag,
+  TreeSelect,
+  DatePicker,
+  TextArea,
+  CheckBox,
+  Radio,
+  Upload
+} = Control
 
 const { Image, FileUpload } = Upload
 
 const { SingleImageUpload, MultipleImageUpload } = Image
 
 interface FormData {
-  account: string
-  password: string
-  age: number
-  birthday: Date | null
+  title: string
+  remembered: boolean
   role: string[]
-  gender: string
-  note: string
 }
 
-const initialValue: FormData = {
-  account: '',
-  password: '',
-  age: -1,
-  birthday: null,
-  gender: '',
-  note: '',
-  tags: [],
-  role: ['user']
-}
+const initialValues = ref<FormData>({
+  title: '',
+  remembered: true,
+  role: ['super-admin']
+})
 
 const options = [
-  { label: 'Item 1', value: 1 },
+  {
+    label: 'Item 1',
+    value: 1,
+    children: [
+      { label: 'Item Child 1', value: 101 },
+      { label: 'Item Child 2', value: 102 },
+      { label: 'Item Child 3', value: 103 },
+      { label: 'Item Child 4', value: 104 },
+      { label: 'Item Child 5', value: 105 }
+    ]
+  },
   { label: 'Item 2', value: 2 },
   { label: 'Item 3', value: 3 },
   { label: 'Item 4', value: 4 },
@@ -47,54 +59,20 @@ const options = [
   { label: 'Item 11', value: 11 },
   { label: 'Item 12', value: 12 }
 ]
-
-const images = ref<File[]>([])
-
-const image = ref<File | null>(null)
-
-const files = ref<File[]>([])
 </script>
 
 <template>
   <Section>
-    <Form color="pink" :initialValue="initialValue" @onFinish="(data) => console.log(files)">
-      <SingleImageUpload @onUpload="(file) => (image = file)" />
+    <Form color="green" :initialValues="initialValues" @onFinish="(data) => console.log(data)">
+      <TreeSelect name="title" :options="options">
+        <template #label>Title</template>
+      </TreeSelect>
 
-      <MultipleImageUpload @onUpload="(files) => (images = files)" />
+      <CheckBox name="remembered">Remembered</CheckBox>
 
-      <FileUpload multiple @onUpload="(f) => (files = f)" />
-
-      <Input name="account">
-        <template #label>Account</template>
-      </Input>
-
-      <InputPassword name="password">
-        <template #label>Password</template>
-      </InputPassword>
-
-      <SelectTag name="tags" :options="options">
-        <template #label>Tags</template>
-      </SelectTag>
-
-      <Select name="age" :options="options">
-        <template #label>Age</template>
-      </Select>
-
-      <DatePicker name="birthday" :rule="yup.date().nonNullable()">
-        <template #label>Birthday</template>
-      </DatePicker>
-
-      <TextArea name="note">
-        <template #label>Note</template>
-      </TextArea>
-
-      <CheckBox name="role" value="user"> User </CheckBox>
-
+      <CheckBox name="role" value="super-admin"> Super Admin </CheckBox>
       <CheckBox name="role" value="admin"> Admin </CheckBox>
-
-      <Radio name="gender" value="male">Male</Radio>
-
-      <Radio name="gender" value="female">Female</Radio>
+      <CheckBox name="role" value="user"> User </CheckBox>
 
       <Button type="submit">Vee</Button>
     </Form>

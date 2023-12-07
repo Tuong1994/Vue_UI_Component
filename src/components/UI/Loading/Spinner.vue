@@ -4,17 +4,19 @@ import type { ComponentColor } from '@/common/type'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 
+type SpinnerType = 'default' | 'bubble'
+
 export interface SpinnerProps {
   rootClassName?: string
   color?: ComponentColor
   size?: number
-  type?: 'default' | 'bubble'
+  type?: SpinnerType
 }
 
 const props = withDefaults(defineProps<SpinnerProps>(), {
   rootClassName: '',
   size: 15,
-  color: 'black',
+  color: 'gray',
   type: 'default'
 })
 const colorClassName = computed<string>(() => {

@@ -4,12 +4,12 @@ import { useField } from 'vee-validate'
 import { useRender, useDetectBottom, useClickOutside } from '@/hooks'
 import type { ComponentSize } from '@/common/type.ts'
 import type { SelectOptions, FormRule, ControlColor } from '@/components/Control/type.ts'
-import SelectControl from './SelectControl.vue'
-import SelectOption from './SelectOption.vue'
+import TreeSelectControl from './TreeSelectControl.vue'
+import TreeSelectOption from './TreeSelectOption.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import useFormStore from '@/components/Control/Form/FormStore.ts'
 
-export interface SelectProps {
+export interface TreeSelectProps {
   rootClassName?: string
   labelClassName?: string
   inputClassName?: string
@@ -30,7 +30,7 @@ export interface SelectProps {
   rule?: FormRule
 }
 
-const props = withDefaults(defineProps<SelectProps>(), {
+const props = withDefaults(defineProps<TreeSelectProps>(), {
   rootClassName: '',
   labelClassName: '',
   inputClassName: '',
@@ -94,17 +94,17 @@ const showClearIcon = computed<boolean>(() =>
 
 const totalPages = computed<number>(() => Math.ceil(props.total / props.limit))
 
-const sizeClassName = computed<string>(() => `select-${controlSize.value}`)
+const sizeClassName = computed<string>(() => `tree-select-${controlSize.value}`)
 
-const colorClassName = computed<string>(() => `select-${controlColor.value}`)
+const colorClassName = computed<string>(() => `tree-select-${controlColor.value}`)
 
-const gapClassName = computed<string>(() => (form.isVee ? `select-gap-${controlSize.value}` : ''))
+const gapClassName = computed<string>(() => (form.isVee ? `tree-select-gap-${controlSize.value}` : ''))
 
-const bottomClassName = computed<string>(() => (bottom.value ? 'select-bottom' : ''))
+const bottomClassName = computed<string>(() => (bottom.value ? 'tree-select-bottom' : ''))
 
-const errorClassName = computed<string>(() => (errorMessage?.value ? 'select-error' : ''))
+const errorClassName = computed<string>(() => (errorMessage?.value ? 'tree-select-error' : ''))
 
-const disabledClassName = computed<string>(() => (props.disabled ? 'select-disabled' : ''))
+const disabledClassName = computed<string>(() => (props.disabled ? 'tree-select-disabled' : ''))
 
 const iconSize = computed<number>(() => {
   if (controlSize.value === 'sm') return 12
@@ -172,7 +172,7 @@ watchEffect(() => {
     ref="selectRef"
     :style="rootStyle"
     :class="[
-      'select',
+      'tree-select',
       gapClassName,
       sizeClassName,
       colorClassName,
@@ -182,12 +182,12 @@ watchEffect(() => {
       disabledClassName
     ]"
   >
-    <label v-if="hasLabel" :style="labelStyle" :class="['select-label', labelClassName]">
+    <label v-if="hasLabel" :style="labelStyle" :class="['tree-select-label', labelClassName]">
       <slot name="label"></slot>
     </label>
 
-    <div class="select-wrap">
-      <SelectControl
+    <div class="tree-select-wrap">
+      <TreeSelectControl
         :inputClassName="inputClassName"
         :inputStyle="inputStyle"
         :placeholder="placeholder"
@@ -210,9 +210,9 @@ watchEffect(() => {
         <template #addonAfter>
           <slot name="addonAfter"></slot>
         </template>
-      </SelectControl>
+      </TreeSelectControl>
 
-      <SelectOption
+      <TreeSelectOption
         v-if="render"
         :async="async"
         :dropdown="dropdown"

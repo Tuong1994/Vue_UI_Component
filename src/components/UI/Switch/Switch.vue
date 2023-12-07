@@ -5,7 +5,7 @@ import type { ComponentColor, ComponentSize } from '@/common/type.ts'
 export interface SwitchProps {
   rootClassName?: string
   rootStyle?: StyleValue
-  color?: ComponentColor
+  color?: Exclude<ComponentColor, "black" | "white" | "gray">
   sizes?: ComponentSize
 }
 

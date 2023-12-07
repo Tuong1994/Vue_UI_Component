@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, watchEffect, toRef, type StyleValue } from 'vue'
-import type { ComponentColor, ComponentShape } from '@/common/type.ts'
-import type { UploadError } from '@/components/Control/type.ts'
+import type { ComponentShape } from '@/common/type.ts'
+import type { UploadError, ControlColor } from '@/components/Control/type.ts'
 import { ACCEPT_IMAGE_FILE_TYPE, DEFAULT_FILE_SIZE } from '../../constant.ts'
 import Image from '@/components/UI/Image/Image.vue'
 import UploadControl from './UploadControl.vue'
@@ -15,7 +15,7 @@ export interface SingleImageUploadProps {
   rootStyle?: StyleValue
   controlStyle?: StyleValue
   shape?: Exclude<ComponentShape, 'round'>
-  color?: Exclude<ComponentColor, 'red' | 'black' | 'white'>
+  color?: ControlColor
   limit?: number
   defaultImageUrl?: string
   fileAccepted?: string
@@ -46,7 +46,7 @@ const dragged = ref<boolean>(false)
 
 const uploading = ref<boolean>(props.loading)
 
-const controlColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
 
 const shapeClassName = computed<string>(() => `single-image-upload-${props.shape}`)
 

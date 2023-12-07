@@ -52,6 +52,12 @@
   }
 }
 
+.spinner-gray {
+  path {
+    color: $text-gray;
+  }
+}
+
 .spinner-white {
   path {
     color: $text-white;

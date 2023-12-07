@@ -4,14 +4,16 @@ import type { ComponentColor, ComponentSize } from '@/common/type'
 import Spinner from '@/components/UI/Loading/Spinner.vue'
 import useFormStore from '@/components/Control/Form/FormStore.ts'
 
+type ButtonType = 'submit' | 'button' | 'reset'
+
 export interface ButtonProps {
   rootClassName?: string
   sizes?: ComponentSize
-  color?: ComponentColor
+  color?: Exclude<ComponentColor, 'white' | 'gray'>
   ghost?: boolean
   loading?: boolean
   disabled?: boolean
-  type?: 'submit' | 'button' | 'reset'
+  type?: ButtonType
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {

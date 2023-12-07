@@ -11,8 +11,8 @@ export interface AvatarProps {
   dot?: boolean
   badge?: string
   letter?: string
-  shape?: ComponentShape
-  color?: ComponentColor
+  shape?: Exclude<ComponentShape, 'round'>
+  color?: Exclude<ComponentColor, 'white' | 'gray'>
 }
 
 const props = withDefaults(defineProps<AvatarProps>(), {

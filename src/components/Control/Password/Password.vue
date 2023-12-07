@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, useSlots, toRef, watchEffect, type StyleValue } from 'vue'
 import { useField } from 'vee-validate'
-import type { ComponentSize, ComponentColor } from '@/common/type.ts'
-import type { FormRule } from '@/components/Control/type.ts'
+import type { ComponentSize } from '@/common/type.ts'
+import type { FormRule, ControlColor } from '@/components/Control/type.ts'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
@@ -18,7 +18,7 @@ export interface InputPasswordProps {
   labelStyle?: StyleValue
   inputStyle?: StyleValue
   sizes?: ComponentSize
-  color?: ComponentColor
+  color?: ControlColor
   modelValue?: string
   placeholder?: string
   name?: string
@@ -60,7 +60,7 @@ const inputType = ref<InputType>('password')
 
 const controlValue = computed<string>(() => (form.isVee ? inputValue?.value : props.modelValue))
 
-const controlColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
 
 const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
 

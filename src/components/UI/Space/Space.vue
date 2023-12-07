@@ -2,12 +2,14 @@
 import { computed, withDefaults, type StyleValue } from 'vue'
 import type { ComponentJustify, ComponentAligns, ComponentSize } from '@/common/type.ts'
 
+type SpaceSize = ComponentSize | number
+
 export interface SpaceProps {
   rootClassName?: string
   rootStyle?: StyleValue
-  justify?: ComponentJustify
-  aligns?: ComponentAligns
-  size?: ComponentSize | number
+  justify?: Exclude<ComponentJustify, 'between' | 'around' | 'evenly'>
+  aligns?: Exclude<ComponentAligns, 'baseline'>
+  size?: SpaceSize
 }
 
 const props = withDefaults(defineProps<SpaceProps>(), {

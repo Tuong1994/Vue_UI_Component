@@ -5,8 +5,8 @@ import type { ComponentColor, ComponentShape } from '@/common/type.ts'
 export interface BadgeProps {
   rootClassName?: string
   rootStyle?: StyleValue
-  color?: ComponentColor
-  shape?: ComponentShape
+  color?: Exclude<ComponentColor, 'white' | 'gray'>
+  shape?: Exclude<ComponentShape, 'circle'>
   ghost?: boolean
 }
 

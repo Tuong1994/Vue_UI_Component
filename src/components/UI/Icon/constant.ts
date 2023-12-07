@@ -30,5 +30,6 @@ export const iconName = {
   CIRCLE_INFO: 'circle-info',
   CIRCLE_EXCLAMATION: 'circle-exclamation',
   UPLOAD: 'upload',
-  CLOUD_UPLOAD: 'cloud-upload'
+  CLOUD_UPLOAD: 'cloud-upload',
+  CARET_RIGHT: 'caret-right'
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, withDefaults, toRefs, watchEffect, type StyleValue } from 'vue'
 import type { AlertType } from './type.ts'
+import type { ComponentPlacement } from '@/common/type.ts'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import useRender from '@/hooks/useRender.ts'
@@ -10,7 +11,7 @@ export interface AlertProps {
   rootStyle?: StyleValue
   type?: AlertType
   message?: React.ReactNode | React.ReactNode[]
-  placement?: 'top' | 'bottom'
+  placement?: Exclude<ComponentPlacement, 'left' | 'right'>
   open?: boolean
 }
 

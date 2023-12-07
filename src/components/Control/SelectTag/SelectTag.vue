@@ -2,8 +2,8 @@
 import { ref, computed, withDefaults, useSlots, toRefs, watchEffect, type StyleValue } from 'vue'
 import { useField } from 'vee-validate'
 import { useRender, useDetectBottom, useClickOutside } from '@/hooks'
-import type { ComponentSize, ComponentColor } from '@/common/type.ts'
-import type { SelectOptions, FormRule } from '@/components/Control/type.ts'
+import type { ComponentSize } from '@/common/type.ts'
+import type { SelectOptions, FormRule, ControlColor } from '@/components/Control/type.ts'
 import SelectTagControl from './SelectTagControl.vue'
 import SelectTagOption from './SelectTagOption.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
@@ -21,7 +21,7 @@ export interface SelectTagProps {
   name?: string
   placeholder?: string
   sizes?: ComponentSize
-  color?: ComponentColor
+  color?: ControlColor
   async?: boolean
   loading?: boolean
   disabled?: boolean
@@ -79,7 +79,7 @@ const bottom = useDetectBottom(selectRef)
 
 useClickOutside(selectRef, dropdown)
 
-const controlColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
 
 const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
 

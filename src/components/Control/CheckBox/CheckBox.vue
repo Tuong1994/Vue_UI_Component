@@ -16,8 +16,8 @@ export interface CheckBoxProps {
   labelStyle?: StyleValue
   controlStyle?: StyleValue
   sizes?: ComponentSize
-  color?: ComponentColor
-  value?: string | number
+  color?: Exclude<ComponentColor, 'red' | 'gray'>
+  value?: string | number | boolean
   name?: string
   checked?: boolean
   disabled?: boolean
@@ -40,13 +40,12 @@ const { name } = toRefs(props)
 
 const {
   value: veeValue,
-  checked: veeChecked,
   errorMessage,
   setValue,
   handleChange: veeOnChange
 } = useField(name, !props.disabled ? props.rule : undefined, {
   type: 'checkbox',
-  checkedValue: props.value
+  checkedValue: props.value ? props.value : true
 })
 
 const slots = useSlots()
@@ -63,12 +62,10 @@ const controlColor = computed<ComponentColor>(() => (form.isVee ? form.formColor
 
 const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
 
-const controlCheck = computed<boolean>(() => (form.isVee ? veeChecked?.value : isCheck.value))
-
 const sizeClassName = computed<string>(() => `checkbox-${controlSize.value}`)
 
 const colorClassName = computed<string>(() =>
-  controlCheck.value ? `checkbox-checked-${controlColor.value}` : `checkbox-${controlColor.value}`
+  isCheck.value ? `checkbox-checked-${controlColor.value}` : `checkbox-${controlColor.value}`
 )
 
 const gapClassName = computed<string>(() => (form.isVee ? `checkbox-gap-${controlSize.value}` : ''))
@@ -84,11 +81,14 @@ const iconSize = computed<number>(() => {
 })
 
 const handleChange = (e: Event) => {
-  if (form.isVee) return veeOnChange(props.value)
-
   const checked = (e.target as HTMLInputElement).checked
   const value = (e.target as HTMLInputElement).value
   isCheck.value = checked
+
+  if (form.isVee) {
+    if (!props.value) return setValue(checked)
+    else return veeOnChange(veeValue.value)
+  }
 
   emits('onCheck', checked)
   if (checked) emits('onInput', value)
@@ -99,16 +99,22 @@ const handleBlur = (e: Event) => emits('onBlur', e)
 
 watchEffect(() => {
   if (!form.isVee) return (isCheck.value = props.checked)
-  // if (veeValue && typeof veeValue === 'boolean') isCheck.value = veeValue.value
-  // else isCheck.value = [...Array.from(veeValue)].includes(props.value)
+
+  const defaultValue = form.formData[name.value]
+  if (!defaultValue) return
+
+  const isBoolean = typeof defaultValue === 'boolean'
+  const isPrimitive = typeof defaultValue !== 'boolean' && typeof defaultValue !== 'object'
+  const isArray = Array.isArray(defaultValue)
+
+  if (isBoolean) return (isCheck.value = defaultValue)
+  if (isPrimitive) return (isCheck.value = defaultValue === props.value)
+  if (isArray) return (isCheck.value = [...Array.from(defaultValue)].includes(props.value))
 })
 </script>
 
 <template>
-  <div
-    :style="rootStyle"
-    :class="['checkbox', gapClassName, sizeClassName, colorClassName, rootClassName]"
-  >
+  <div :style="rootStyle" :class="['checkbox', gapClassName, sizeClassName, colorClassName, rootClassName]">
     <label :class="['checkbox-group', errorClassName, disabledClassName]">
       <input
         type="checkbox"
@@ -121,7 +127,7 @@ watchEffect(() => {
       />
 
       <div class="group-checked">
-        <Icon v-if="controlCheck" :iconName="iconName.CHECK" :size="iconSize" />
+        <Icon v-if="isCheck" :iconName="iconName.CHECK" :size="iconSize" />
       </div>
 
       <div v-if="hasLabel" class="group-label">

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, useSlots, watchEffect, type StyleValue } from 'vue'
 import { ACCEPT_FILE_TYPE, DEFAULT_FILE_SIZE } from '../constant.ts'
-import type { ComponentColor } from '@/common/type.ts'
-import type { UploadItems } from '@/components/Control/type.ts'
+import type { UploadItems, ControlColor } from '@/components/Control/type.ts'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import UploadControl from './UploadControl.vue'
 import UploadFiles from './UploadFiles.vue'
@@ -14,7 +13,7 @@ export interface FileUploadProps {
   controlClassName?: string
   rootStyle?: StyleValue
   controlStyle?: StyleValue
-  color?: Exclude<ComponentColor, 'red' | 'white' | 'black'>
+  color?: ControlColor
   limit?: number
   fileAccepted?: string
   disabled?: boolean
@@ -43,7 +42,7 @@ const dragged = ref<boolean>(false)
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
-const controlColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
 
 const colorClassName = computed<string>(() => `file-upload-${controlColor.value}`)
 

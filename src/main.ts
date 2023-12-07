@@ -30,6 +30,7 @@ import {
   faCircleExclamation,
   faCalendar,
   faUpload,
+  faCaretRight
 } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import router from './router'
@@ -63,6 +64,7 @@ library.add(
   faCalendar,
   faCloudUpload,
   faUpload,
+  faCaretRight,
 )
 
 const app = createApp(App)
@@ -74,3 +76,4 @@ app.use(router)
 app.component('fa', FontAwesomeIcon)
 
 app.mount('#app')
+

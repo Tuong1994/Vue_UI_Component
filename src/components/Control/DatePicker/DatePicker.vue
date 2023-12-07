@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, toRefs, useSlots, watchEffect, type StyleValue } from 'vue'
 import { useField } from 'vee-validate'
-import type { ComponentSize, ComponentColor } from '@/common/type/ts'
+import type { ComponentSize } from '@/common/type/ts'
+import type { ControlColor } from '@/components/Control/type.ts'
 import { useRender, useClickOutside, useDetectBottom } from '@/hooks'
 import DatePickerControl from './DatePickerControl.vue'
 import DatePickerCalender from './DatePickerCalendar.vue'
@@ -22,7 +23,7 @@ export interface DatePickerProps {
   max?: 'today' | string
   min?: 'today' | string
   sizes?: ComponentSize
-  color?: ComponentColor
+  color?: ControlColor
 }
 
 const props = withDefaults(defineProps<DatePickerProps>(), {
@@ -64,7 +65,7 @@ const bottom = useDetectBottom(datepickerRef)
 
 useClickOutside(datepickerRef, dropdown)
 
-const controlColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
 
 const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
 

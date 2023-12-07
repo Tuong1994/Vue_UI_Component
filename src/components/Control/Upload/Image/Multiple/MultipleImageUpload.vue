@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, watchEffect, useSlots, type StyleValue } from 'vue'
-import type { ComponentShape, ComponentColor } from '@/common/type.ts'
-import type { UploadError, UploadItem, UploadItems } from '@/components/Control/type'
+import type { ComponentShape } from '@/common/type.ts'
+import type { UploadError, UploadItem, UploadItems, ControlColor } from '@/components/Control/type'
 import { ACCEPT_IMAGE_FILE_TYPE, DEFAULT_FILE_SIZE } from '../../constant'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import UploadControl from './UploadControl.vue'
@@ -20,7 +20,7 @@ export interface MultipleImageUploadProps {
   fileAccepted?: string
   defaultImages?: string[]
   shape?: Exclude<ComponentShape, 'circle'>
-  color?: Exclude<ComponentColor, 'red' | 'white' | 'black'>
+  color?: ControlColor
 }
 
 const props = withDefaults(defineProps<MultipleImageUploadProps>(), {
@@ -52,7 +52,7 @@ const dragged = ref<boolean>(false)
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
-const controlColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
 
 const shapeClassName = computed<string>(() => `multiple-image-upload-${props.shape}`)
 

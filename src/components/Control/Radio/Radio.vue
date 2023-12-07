@@ -14,7 +14,7 @@ export interface RadioProps {
   labelStyle?: StyleValue
   controlStyle?: StyleValue
   sizes?: ComponentSize
-  color?: ComponentColor
+  color?: Exclude<ComponentColor, 'red' | 'gray'>
   disabled?: boolean
   checked?: boolean
   name?: string
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<RadioProps>(), {
   color: 'blue',
   sizes: 'md',
   name: '',
-  checked: false,
+  checked: false
 })
 
 const form = useFormStore()

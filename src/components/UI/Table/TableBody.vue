@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="M">
 import { ref, withDefaults, watchEffect } from 'vue'
-import type { ComponentColor } from '@/common/type.ts'
-import type { TableColumns, TableRowKey, TableExpand } from './type.ts'
+import type { TableColumns, TableRowKey, TableExpand, TableColor } from './type.ts'
 import Table from './Table.vue'
 import TableCell from './TableCell.vue'
 import CheckBox from '@/components/Control/CheckBox/CheckBox.vue'
@@ -9,7 +8,7 @@ import CheckBox from '@/components/Control/CheckBox/CheckBox.vue'
 interface TableHeadProps {
   dataSource: M[]
   columns: TableColumns<M>
-  color: ComponentColor
+  color: TableColor
   rowKey: TableRowKey
   rowSelectedKeys: TableRowKey[]
   hasSelectRow: boolean

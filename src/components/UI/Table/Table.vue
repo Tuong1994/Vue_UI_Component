@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="M">
 import { ref, computed, withDefaults, watchEffect, type StyleValue } from 'vue'
-import type { ComponentColor } from '@/common/type.ts'
-import type { TableColumns, TableRowKey } from './type.ts'
+import type { TableColumns, TableRowKey, TableColor } from './type.ts'
 import TableHead from './TableHead.vue'
 import TableBody from './TableBody.vue'
 import TableEmpty from './TableEmpty.vue'
@@ -12,7 +11,7 @@ export interface TableProps {
   rootStyle?: StyleValue
   tableClassName?: string
   tableStyle?: StyleValue
-  color?: ComponentColor
+  color?: TableColor
   dataSource: M[]
   columns: TableColumns<M>
   rowKey?: TableRowKey

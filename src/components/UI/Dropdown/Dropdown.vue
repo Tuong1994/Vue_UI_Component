@@ -12,7 +12,7 @@ export interface DropdownProps {
   labelClassName?: string
   rootStyle?: StyleValue
   labelStyle?: StyleValue
-  placement?: ComponentPlacement
+  placement?: Exclude<ComponentPlacement, 'top' | 'bottom'>
   items?: DropdownItems
   trigger?: TriggerType
 }

@@ -25,7 +25,7 @@ const handleSelect = () => emits('onSelect', props.option)
 
 <template>
   <div :class="['list-item', selectedClassName]" @click="handleSelect">
-    <div className="item-label">
+    <div class="item-label">
       <div v-if="option.icon" className="label-icon">
         <Icon :iconName="option.icon" :size="iconSize" />
       </div>

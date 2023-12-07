@@ -12,6 +12,7 @@ export type ComponentColor =
   | 'pink'
   | 'black'
   | 'white'
+  | 'gray'
 
 export type ComponentJustify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
 

@@ -14,11 +14,11 @@ export interface PaginationProps {
   ghost?: boolean
   simple?: boolean
   hasContent?: boolean
-  color?: ComponentColor
-  shape?: ComponentShape
+  color?: Exclude<ComponentColor, 'white' | 'gray'>
+  shape?: Exclude<ComponentShape, "circle">
 }
 
-type BtnType = 'first' | 'prev' | 'page' | 'next' | 'last'
+type ActionType = 'first' | 'prev' | 'page' | 'next' | 'last'
 
 const props = withDefaults(defineProps<PaginationProps>(), {
   rootClassName: '',
@@ -48,7 +48,9 @@ const rightBtnsDisabled = computed<boolean>(() => currentPage.value === totalPag
 
 const leftBtnsDisabledClassName = computed<string>(() => (leftBtnsDisabled.value ? 'range-btn-disabled' : ''))
 
-const rightBtnsDisabledClassName = computed<string>(() => (rightBtnsDisabled.value ? 'range-btn-disabled' : ''))
+const rightBtnsDisabledClassName = computed<string>(() =>
+  rightBtnsDisabled.value ? 'range-btn-disabled' : ''
+)
 
 const shapeClassName = computed<string>(() => `pagination-${props.shape}`)
 
@@ -69,7 +71,7 @@ const content = computed<string>(() => {
   return `Showing ${from} - ${to} of ${props.total} items`
 })
 
-const handleChangePage = (type: BtnType, page?: number) => {
+const handleChangePage = (type: ActionType, page?: number) => {
   switch (type) {
     case 'first': {
       currentPage.value = 1
