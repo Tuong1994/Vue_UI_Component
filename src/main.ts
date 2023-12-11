@@ -30,7 +30,8 @@ import {
   faCircleExclamation,
   faCalendar,
   faUpload,
-  faCaretRight
+  faCaretRight,
+  faArrowsLeftRightToLine,
 } from '@fortawesome/free-solid-svg-icons'
 import App from './App.vue'
 import router from './router'
@@ -65,6 +66,7 @@ library.add(
   faCloudUpload,
   faUpload,
   faCaretRight,
+  faArrowsLeftRightToLine,
 )
 
 const app = createApp(App)
