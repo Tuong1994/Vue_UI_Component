@@ -2,18 +2,20 @@
 import { withDefaults, watchEffect, toRef } from 'vue'
 import { Form, useForm } from 'vee-validate'
 import type { ComponentSize } from '@/common/type.ts'
-import type { ControlColor } from '@/components/Control/type.ts'
+import type { ControlColor, ControlShape } from '@/components/Control/type.ts'
 import useFormStore from './FormStore.ts'
 
 export interface FormProps {
   initialValues: M
   color?: ControlColor
   sizes?: ComponentSize
+  shape?: ControlShape
 }
 
 const props = withDefaults(defineProps<FormProps>(), {
   color: 'blue',
-  sizes: 'md'
+  sizes: 'md',
+  shape: 'square'
 })
 
 const emits = defineEmits(['onFinish'])
@@ -31,6 +33,7 @@ watchEffect(() => {
   form.bindData(props.initialValues)
   form.changeColor(props.color)
   form.changeSize(props.sizes)
+  form.changeShape(props.shape)
 })
 </script>
 

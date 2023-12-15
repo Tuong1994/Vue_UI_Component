@@ -2,7 +2,7 @@
 import { ref, computed, withDefaults, toRefs, useSlots, watchEffect, type StyleValue } from 'vue'
 import { useField } from 'vee-validate'
 import type { ComponentSize } from '@/common/type/ts'
-import type { ControlColor } from '@/components/Control/type.ts'
+import type { ControlColor, ControlShape } from '@/components/Control/type.ts'
 import { useRender, useClickOutside, useDetectBottom } from '@/hooks'
 import DatePickerControl from './DatePickerControl.vue'
 import DatePickerCalender from './DatePickerCalendar.vue'
@@ -24,6 +24,7 @@ export interface DatePickerProps {
   min?: 'today' | string
   sizes?: ComponentSize
   color?: ControlColor
+  shape?: ControlShape
 }
 
 const props = withDefaults(defineProps<DatePickerProps>(), {
@@ -33,6 +34,7 @@ const props = withDefaults(defineProps<DatePickerProps>(), {
   name: '',
   sizes: 'md',
   color: 'blue',
+  shape: 'square',
   format: 'DD/MM/YYYY',
   defaultDate: new Date()
 })
@@ -69,6 +71,8 @@ const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor :
 
 const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
 
+const controlShape = computed<ControlShape>(() => (form.isVee ? form.formShape : props.shape))
+
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
 const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
@@ -82,6 +86,8 @@ const showResetIcon = computed<boolean>(() =>
 const sizeClassName = computed<string>(() => `datepicker-${controlSize.value}`)
 
 const colorClassName = computed<string>(() => `datepicker-${controlColor.value}`)
+
+const shapeClassName = computed<string>(() => `datepicker-${controlShape.value}`)
 
 const gapClassName = computed<string>(() => (form.isVee ? `datepicker-gap-${controlSize.value}` : ''))
 
@@ -124,6 +130,7 @@ watchEffect(() => {
       'datepicker',
       colorClassName,
       sizeClassName,
+      shapeClassName,
       gapClassName,
       bottomClassName,
       errorClassName,

@@ -1,7 +1,9 @@
-import type { ComponentColor } from '@/common/type'
+import type { ComponentColor, ComponentShape } from '@/common/type'
 import * as yup from 'yup'
 
 export type ControlColor = Exclude<ComponentColor, 'red' | 'black' | 'white' | 'gray'>
+
+export type ControlShape = Exclude<ComponentShape, 'circle'>
 
 export type FormRule = typeof yup
 

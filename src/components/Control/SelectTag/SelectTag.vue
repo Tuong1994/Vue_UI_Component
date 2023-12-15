@@ -3,7 +3,7 @@ import { ref, computed, withDefaults, useSlots, toRefs, watchEffect, type StyleV
 import { useField } from 'vee-validate'
 import { useRender, useDetectBottom, useClickOutside } from '@/hooks'
 import type { ComponentSize } from '@/common/type.ts'
-import type { SelectOptions, FormRule, ControlColor } from '@/components/Control/type.ts'
+import type { SelectOptions, FormRule, ControlColor, ControlShape } from '@/components/Control/type.ts'
 import SelectTagControl from './SelectTagControl.vue'
 import SelectTagOption from './SelectTagOption.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
@@ -22,6 +22,7 @@ export interface SelectTagProps {
   placeholder?: string
   sizes?: ComponentSize
   color?: ControlColor
+  shape?: ControlShape
   async?: boolean
   loading?: boolean
   disabled?: boolean
@@ -36,6 +37,7 @@ const props = withDefaults(defineProps<SelectTagProps>(), {
   inputClassName: '',
   sizes: 'md',
   color: 'blue',
+  shape: 'square',
   placeholder: 'Select...',
   name: '',
   async: false,
@@ -83,6 +85,8 @@ const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor :
 
 const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
 
+const controlShape = computed<ControlShape>(() => (form.isVee ? form.formShape : props.shape))
+
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
 const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
@@ -96,6 +100,8 @@ const totalPages = computed<number>(() => Math.ceil(props.total / props.limit))
 const sizeClassName = computed<string>(() => `select-${controlSize.value}`)
 
 const colorClassName = computed<string>(() => `select-${controlColor.value}`)
+
+const shapeClassName = computed<string>(() => `select-${controlShape.value}`)
 
 const gapClassName = computed<string>(() => (form.isVee ? `select-gap-${controlSize.value}` : ''))
 
@@ -182,6 +188,7 @@ watchEffect(() => {
       gapClassName,
       sizeClassName,
       colorClassName,
+      shapeClassName,
       bottomClassName,
       errorClassName,
       rootClassName,

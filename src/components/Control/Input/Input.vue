@@ -2,7 +2,7 @@
 import { ref, computed, withDefaults, useSlots, toRef, watchEffect, type StyleValue } from 'vue'
 import { useField } from 'vee-validate'
 import type { ComponentSize } from '@/common/type.ts'
-import type { FormRule, ControlColor } from '@/components/Control/type.ts'
+import type { FormRule, ControlColor, ControlShape } from '@/components/Control/type.ts'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
@@ -17,6 +17,7 @@ export interface InputProps {
   inputStyle?: StyleValue
   sizes?: ComponentSize
   color?: ControlColor
+  shape?: ControlShape
   modelValue?: string
   placeholder?: string
   name?: string
@@ -30,6 +31,7 @@ const props = withDefaults(defineProps<InputProps>(), {
   inputClassName: '',
   sizes: 'md',
   color: 'blue',
+  shape: 'square',
   placeholder: 'Type...',
   name: ''
 })
@@ -60,6 +62,8 @@ const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor :
 
 const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
 
+const controlShape = computed<ControlShape>(() => (form.isVee ? form.formShape : props.shape))
+
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
 const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
@@ -71,6 +75,8 @@ const showClearIcon = computed<boolean>(() => (form.isVee ? Boolean(veeValue?.va
 const colorClassName = computed<string>(() => `input-${controlColor.value}`)
 
 const sizeClassName = computed<string>(() => `input-${controlSize.value}`)
+
+const shapeClassName = computed<string>(() => `input-${controlShape.value}`)
 
 const gapClassName = computed<string>(() => (form.isVee ? `input-gap-${controlSize.value}` : ''))
 
@@ -106,6 +112,7 @@ watchEffect(() => {
       gapClassName,
       colorClassName,
       sizeClassName,
+      shapeClassName,
       errorClassName,
       rootClassName,
       disabledClassName
