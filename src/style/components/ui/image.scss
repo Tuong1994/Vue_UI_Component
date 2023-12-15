@@ -58,6 +58,32 @@
   }
 }
 
+// Object fit
+.image-fill {
+  .view-area {
+    object-fit: fill;
+  }
+}
+
+.image-cover {
+  .view-area {
+    object-fit: cover;
+  }
+}
+
+.image-contain {
+  .view-area {
+    object-fit: contain;
+  }
+}
+
+.image-none {
+  .view-area {
+    object-fit: none;
+  }
+}
+
+// Viewer
 .image-viewer {
   width: $w-full;
   height: $h-screen;
