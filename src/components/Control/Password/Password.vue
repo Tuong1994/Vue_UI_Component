@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, useSlots, toRef, watchEffect, type StyleValue } from 'vue'
+import { ref, computed, withDefaults, useSlots, toRef, watchEffect, inject, type StyleValue } from 'vue'
 import { useField } from 'vee-validate'
 import type { ComponentSize } from '@/common/type.ts'
 import type { FormRule, ControlColor, ControlShape } from '@/components/Control/type.ts'
@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<InputPasswordProps>(), {
   name: ''
 })
 
-const form = useFormStore()
+const form = inject('form')
 
 const name = toRef(props, 'name')
 
@@ -49,7 +49,7 @@ const {
   handleBlur: onBlur,
   setValue
 } = useField(name, !props.disabled ? props.rule : undefined, {
-  initialValue: form.formData[name.value]
+  initialValue: form?.formData[name.value]
 })
 
 const slots = useSlots()
@@ -60,13 +60,13 @@ const inputRef = ref<HTMLInputElement | null>(null)
 
 const inputType = ref<InputType>('password')
 
-const controlValue = computed<string>(() => (form.isVee ? inputValue?.value : props.modelValue))
+const controlValue = computed<string>(() => (form?.isVee ? inputValue?.value : props.modelValue))
 
-const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form?.isVee ? form?.formColor : props.color))
 
-const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
+const controlSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize : props.sizes))
 
-const controlShape = computed<ControlShape>(() => (form.isVee ? form.formShape : props.shape))
+const controlShape = computed<ControlShape>(() => (form?.isVee ? form?.formShape : props.shape))
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
@@ -74,7 +74,7 @@ const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
 
 const hasAddonAfter = computed<boolean>(() => slots.addonAfter !== undefined)
 
-const showClearIcon = computed<boolean>(() => (form.isVee ? Boolean(inputValue?.value) : props.modelValue))
+const showClearIcon = computed<boolean>(() => (form?.isVee ? Boolean(inputValue?.value) : props.modelValue))
 
 const colorClassName = computed<string>(() => `input-${controlColor.value}`)
 
@@ -82,7 +82,7 @@ const sizeClassName = computed<string>(() => `input-${controlSize.value}`)
 
 const shapeClassName = computed<string>(() => `input-${controlShape.value}`)
 
-const gapClassName = computed<string>(() => (form.isVee ? `input-gap-${controlSize.value}` : ''))
+const gapClassName = computed<string>(() => (form?.isVee ? `input-gap-${controlSize.value}` : ''))
 
 const errorClassName = computed<string>(() => (errorMessage?.value ? 'input-error' : ''))
 
@@ -99,11 +99,11 @@ const handleChange = (e: Event) => {
   emits('update:modelValue', value)
 }
 
-const handleClearInput = () => (form.isVee ? setValue('') : emits('update:modelValue', ''))
+const handleClearInput = () => (form?.isVee ? setValue('') : emits('update:modelValue', ''))
 
 const handleSwitchInputType = (type: InputType) => (inputType.value = type)
 
-const onChangeFn = form.isVee ? onChange : handleChange
+const onChangeFn = form?.isVee ? onChange : handleChange
 
 watchEffect(() => {
   if (errorMessage?.value) inputRef.value.click()

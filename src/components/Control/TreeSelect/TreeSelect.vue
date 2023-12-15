@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, useSlots, toRef, watchEffect, onMounted, type StyleValue } from 'vue'
+import { ref, computed, withDefaults, useSlots, toRef, watchEffect, inject, type StyleValue } from 'vue'
 import { useField } from 'vee-validate'
 import { useRender, useDetectBottom, useClickOutside } from '@/hooks'
 import type { ComponentSize } from '@/common/type.ts'
@@ -50,7 +50,7 @@ const props = withDefaults(defineProps<TreeSelectProps>(), {
 
 const emits = defineEmits(['onChangeSearch', 'onChangeSelect', 'onChangePage'])
 
-const form = useFormStore()
+const form = inject('form')
 
 const name = toRef(props, 'name')
 
@@ -59,7 +59,7 @@ const {
   errorMessage,
   setValue
 } = useField(name, !props.disabled ? props.rule : undefined, {
-  initialValue: form.formData[name.value]
+  initialValue: form?.formData[name.value]
 })
 
 const slots = useSlots()
@@ -80,11 +80,11 @@ const bottom = useDetectBottom(selectRef)
 
 useClickOutside(selectRef, dropdown)
 
-const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form?.isVee ? form?.formColor : props.color))
 
-const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
+const controlSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize : props.sizes))
 
-const controlShape = computed<ControlShape>(() => (form.isVee ? form.formShape : props.shape))
+const controlShape = computed<ControlShape>(() => (form?.isVee ? form?.formShape : props.shape))
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
@@ -104,7 +104,7 @@ const colorClassName = computed<string>(() => `tree-select-${controlColor.value}
 
 const shapeClassName = computed<string>(() => `tree-select-${controlShape.value}`)
 
-const gapClassName = computed<string>(() => (form.isVee ? `tree-select-gap-${controlSize.value}` : ''))
+const gapClassName = computed<string>(() => (form?.isVee ? `tree-select-gap-${controlSize.value}` : ''))
 
 const bottomClassName = computed<string>(() => (bottom.value ? 'tree-select-bottom' : ''))
 
@@ -144,13 +144,13 @@ const handleSelect = (option: Option) => {
   selectedOption.value = option
   search.value = ''
   emits('onChangeSelect', option.value)
-  if (form.isVee) setValue(option.value)
+  if (form?.isVee) setValue(option.value)
 }
 
 const handleClearInput = () => {
   if (search.value) search.value = ''
   if (selectedOption.value) selectedOption.value = null
-  if (form.isVee) setValue(null)
+  if (form?.isVee) setValue(null)
 }
 
 const handleChangePage = (type: 'prev' | 'next') => {
@@ -164,7 +164,7 @@ const handleChangePage = (type: 'prev' | 'next') => {
 // // Set default option
 watchEffect(() => {
   let defaultOption: Option | null = null
-  if (!form.isVee && props.defaultValue) {
+  if (!form?.isVee && props.defaultValue) {
     defaultOption = [...props.options].find((option) => option.value === props.defaultValue) as Option
   } else if (veeValue.value) {
     defaultOption = [...props.options].find((option) => option.value === veeValue.value) as Option

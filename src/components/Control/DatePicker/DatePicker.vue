@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, toRefs, useSlots, watchEffect, type StyleValue } from 'vue'
+import { ref, computed, withDefaults, toRefs, useSlots, watchEffect, inject, type StyleValue } from 'vue'
 import { useField } from 'vee-validate'
 import type { ComponentSize } from '@/common/type/ts'
 import type { ControlColor, ControlShape } from '@/components/Control/type.ts'
@@ -43,7 +43,7 @@ const emits = defineEmits(['onChangeSelect'])
 
 const slots = useSlots()
 
-const form = useFormStore()
+const form = inject('form')
 
 const { defaultDate, name } = toRefs(props)
 
@@ -52,7 +52,7 @@ const {
   errorMessage,
   setValue
 } = useField(name, !props.disabled ? props.rule : undefined, {
-  initialValue: form.formData[name.value]
+  initialValue: form?.formData[name.value]
 })
 
 const selectedDate = ref<Date>(defaultDate.value)
@@ -67,11 +67,11 @@ const bottom = useDetectBottom(datepickerRef)
 
 useClickOutside(datepickerRef, dropdown)
 
-const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form?.isVee ? form?.formColor : props.color))
 
-const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
+const controlSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize : props.sizes))
 
-const controlShape = computed<ControlShape>(() => (form.isVee ? form.formShape : props.shape))
+const controlShape = computed<ControlShape>(() => (form?.isVee ? form?.formShape : props.shape))
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
@@ -89,7 +89,7 @@ const colorClassName = computed<string>(() => `datepicker-${controlColor.value}`
 
 const shapeClassName = computed<string>(() => `datepicker-${controlShape.value}`)
 
-const gapClassName = computed<string>(() => (form.isVee ? `datepicker-gap-${controlSize.value}` : ''))
+const gapClassName = computed<string>(() => (form?.isVee ? `datepicker-gap-${controlSize.value}` : ''))
 
 const bottomClassName = computed<string>(() => (bottom.value ? 'datepicker-bottom' : ''))
 
@@ -108,17 +108,17 @@ const handleDropdown = () => (dropdown.value = !dropdown.value)
 const handleSelect = (date: SelectDate) => {
   selectedDate.value = date.fullDate
   emits('onChangeSelect', date.fullDate)
-  if (form.isVee) setValue(date.fullDate)
+  if (form?.isVee) setValue(date.fullDate)
 }
 
 const handleResetInput = () => {
   selectedDate.value = new Date()
-  if (form.isVee) setValue(new Date())
+  if (form?.isVee) setValue(new Date())
 }
 
 // Set default value
 watchEffect(() => {
-  if (form.isVee && veeValue.value) selectedDate.value = new Date(veeValue.value)
+  if (form?.isVee && veeValue.value) selectedDate.value = new Date(veeValue.value)
 })
 </script>
 

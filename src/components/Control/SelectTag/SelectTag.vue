@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, useSlots, toRefs, watchEffect, type StyleValue } from 'vue'
+import { ref, computed, withDefaults, useSlots, toRefs, watchEffect, inject, type StyleValue } from 'vue'
 import { useField } from 'vee-validate'
 import { useRender, useDetectBottom, useClickOutside } from '@/hooks'
 import type { ComponentSize } from '@/common/type.ts'
@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<SelectTagProps>(), {
 
 const emits = defineEmits(['onChangeSearch', 'onChangeSelect', 'onChangePage'])
 
-const form = useFormStore()
+const form = inject('form')
 
 const { name, defaultTags } = toRefs(props)
 
@@ -60,7 +60,7 @@ const {
   errorMessage,
   setValue
 } = useField(name, !props.disabled ? props.rule : undefined, {
-  initialValue: form.formData[name.value]
+  initialValue: form?.formData[name.value]
 })
 
 const slots = useSlots()
@@ -81,11 +81,11 @@ const bottom = useDetectBottom(selectRef)
 
 useClickOutside(selectRef, dropdown)
 
-const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form?.isVee ? form?.formColor : props.color))
 
-const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
+const controlSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize : props.sizes))
 
-const controlShape = computed<ControlShape>(() => (form.isVee ? form.formShape : props.shape))
+const controlShape = computed<ControlShape>(() => (form?.isVee ? form?.formShape : props.shape))
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
@@ -103,7 +103,7 @@ const colorClassName = computed<string>(() => `select-${controlColor.value}`)
 
 const shapeClassName = computed<string>(() => `select-${controlShape.value}`)
 
-const gapClassName = computed<string>(() => (form.isVee ? `select-gap-${controlSize.value}` : ''))
+const gapClassName = computed<string>(() => (form?.isVee ? `select-gap-${controlSize.value}` : ''))
 
 const bottomClassName = computed<string>(() => (bottom.value ? 'select-bottom' : ''))
 
@@ -150,7 +150,7 @@ const handleSelect = (option: Option) => {
   const tags = [...selectedItems].map((option) => option?.value)
 
   emits('onChangeSelect', tags)
-  if (form.isVee) setValue(tags)
+  if (form?.isVee) setValue(tags)
 }
 
 const handleClearInput = () => {
@@ -173,7 +173,7 @@ const getDefaultOptions = (tags: any[]) => {
 
 // // Set default option
 watchEffect(() => {
-  if (!form.isVee && defaultTags.value)
+  if (!form?.isVee && defaultTags.value)
     return (selectedOptions.value = getDefaultOptions([...defaultTags.value]))
   if (veeValue.value) selectedOptions.value = getDefaultOptions([...veeValue.value])
 })

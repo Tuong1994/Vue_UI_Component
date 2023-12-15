@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="M extends object">
-import { withDefaults, watchEffect, toRef } from 'vue'
+import { withDefaults, watchEffect, toRef, provide } from 'vue'
 import { Form, useForm } from 'vee-validate'
 import type { ComponentSize } from '@/common/type.ts'
 import type { ControlColor, ControlShape } from '@/components/Control/type.ts'
@@ -21,6 +21,8 @@ const props = withDefaults(defineProps<FormProps>(), {
 const emits = defineEmits(['onFinish'])
 
 const form = useFormStore()
+
+provide('form', form)
 
 const initialValues = toRef(props, 'initialValues')
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, useSlots, toRef, watchEffect, type StyleValue } from 'vue'
+import { ref, computed, withDefaults, useSlots, toRef, watchEffect, inject, type StyleValue } from 'vue'
 import { useField } from 'vee-validate'
 import type { ComponentSize } from '@/common/type.ts'
 import type { FormRule, ControlColor, ControlShape } from '@/components/Control/type.ts'
@@ -39,7 +39,7 @@ const props = withDefaults(defineProps<TextAreaProps>(), {
   rows: 5
 })
 
-const form = useFormStore()
+const form = inject('form')
 
 const name = toRef(props, 'name')
 
@@ -50,7 +50,7 @@ const {
   handleBlur: veeOnBlur,
   setValue
 } = useField(name, !props.disabled ? props.rule : undefined, {
-  initialValue: form.formData[name.value]
+  initialValue: form?.formData[name.value]
 })
 
 const slots = useSlots()
@@ -59,17 +59,17 @@ const emits = defineEmits(['update:modelValue'])
 
 const inputRef = ref<HTMLInputElement | null>(null)
 
-const controlValue = computed<string>(() => (form.isVee ? veeValue?.value : props.modelValue))
+const controlValue = computed<string>(() => (form?.isVee ? veeValue?.value : props.modelValue))
 
-const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form?.isVee ? form?.formColor : props.color))
 
-const controlShape = computed<ControlShape>(() => (form.isVee ? form.formShape : props.shape))
+const controlShape = computed<ControlShape>(() => (form?.isVee ? form?.formShape : props.shape))
 
-const controlSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
+const controlSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize : props.sizes))
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
-const showClearIcon = computed<boolean>(() => (form.isVee ? Boolean(veeValue?.value) : props.modelValue))
+const showClearIcon = computed<boolean>(() => (form?.isVee ? Boolean(veeValue?.value) : props.modelValue))
 
 const colorClassName = computed<string>(() => `textarea-${controlColor.value}`)
 
@@ -77,7 +77,7 @@ const sizeClassName = computed<string>(() => `textarea-${controlSize.value}`)
 
 const shapeClassName = computed<string>(() => `textarea-${controlShape.value}`)
 
-const gapClassName = computed<string>(() => (form.isVee ? `textarea-gap-${controlSize.value}` : ''))
+const gapClassName = computed<string>(() => (form?.isVee ? `textarea-gap-${controlSize.value}` : ''))
 
 const errorClassName = computed<string>(() => (errorMessage?.value ? 'textarea-error' : ''))
 
@@ -94,9 +94,9 @@ const handleChange = (e: Event) => {
   emits('update:modelValue', value)
 }
 
-const handleClearInput = () => (form.isVee ? setValue('') : emits('update:modelValue', ''))
+const handleClearInput = () => (form?.isVee ? setValue('') : emits('update:modelValue', ''))
 
-const onChangeFn = form.isVee ? veeOnChange : handleChange
+const onChangeFn = form?.isVee ? veeOnChange : handleChange
 
 watchEffect(() => {
   if (errorMessage?.value) inputRef.value.click()

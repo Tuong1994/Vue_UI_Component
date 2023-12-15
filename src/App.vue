@@ -101,4 +101,38 @@ const initialValues: FormData = {
       </Content>
     </Body>
   </Container> -->
+  <Section>
+    <Input shape="round" />
+    <InputPassword shape="round" />
+    <Select shape="round" />
+    <SelectTag shape="round" />
+    <DatePicker shape="round" />
+    <TextArea shape="round" />
+
+    <Form :initialValues="initialValues" color="green">
+      <Input name="account">
+        <template #label>Account</template>
+      </Input>
+
+      <InputPassword name="password">
+        <template #label>Password</template>
+      </InputPassword>
+
+      <Select name="gender">
+        <template #label>Gender</template>
+      </Select>
+
+      <SelectTag name="tags">
+        <template #label>Tags</template>
+      </SelectTag>
+
+      <DatePicker name="birthday">
+        <template #label>Birthday</template>
+      </DatePicker>
+
+      <TextArea name="note">
+        <template #label>Note</template>
+      </TextArea>
+    </Form>
+  </Section>
 </template>
