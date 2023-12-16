@@ -13,16 +13,20 @@ export interface AccordionProps {
   label?: string
   labelIcon?: string
   extraIcon?: string
+  contentId?: string
   bordered?: boolean
+  showLabelIcon?: boolean
 }
 
 const props = withDefaults(defineProps<AccordionProps>(), {
+  contentId: 'accordionContent'
   rootClassName: '',
   labelClassName: '',
   contentClassName: '',
   label: 'Accordion',
   labelIcon: iconName.ANGLE_DOWN,
-  bordered: true
+  bordered: true,
+  showLabelIcon: true
 })
 
 const emits = defineEmits(['onCollapse'])
@@ -31,6 +35,8 @@ const slots = useSlots()
 
 const collapsed = ref<boolean>(false)
 
+const hasExtraLabel = computed<boolean>(() => slots.extraLabel !== undefined)
+
 const hasContent = computed<boolean>(() => slots.default !== undefined)
 
 const borderedClassName = computed<string>(() => (props.bordered ? 'accordion-bordered' : ''))
@@ -38,7 +44,7 @@ const borderedClassName = computed<string>(() => (props.bordered ? 'accordion-bo
 const collapsedClassName = computed<string>(() => (collapsed.value ? 'accordion-collapsed' : ''))
 
 const handleCollapse = () => {
-  const el = document.getElementById('accordionContent')
+  const el = document.getElementById(props.contentId)
   if (!el) return
   if (el.style.maxHeight) el.style.maxHeight = ''
   else el.style.maxHeight = `${el.scrollHeight}px`
@@ -52,13 +58,16 @@ watch(collapsed, (newValue) => emits('onCollapse', newValue))
   <div :style="rootStyle" :class="['accordion', borderedClassName, collapsedClassName, rootClassName]">
     <div :style="labelStyle" :class="['accordion-label', labelClassName]" @click="handleCollapse">
       <div class="label-title">
-        <Icon :iconName="labelIcon" rootClassName="title-icon" />
+        <Icon v-if="!hasExtraLabel && showLabelIcon" :iconName="labelIcon" rootClassName="title-icon" />
+        <div v-if="hasExtraLabel">
+          <slot name="extraLabel"></slot>
+        </div>
         <span>{{ label }}</span>
       </div>
       <Icon v-if="extraIcon" :iconName="extraIcon" />
     </div>
 
-    <div id="accordionContent" :style="contentStyle" :class="['accordion-content', contentClassName]">
+    <div :id="contentId" :style="contentStyle" :class="['accordion-content', contentClassName]">
       <div v-if="hasContent" class="content-inner">
         <slot></slot>
       </div>
