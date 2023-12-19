@@ -1,7 +1,6 @@
 .button {
   min-width: max-content;
   border: 0.5px solid $bg-gray;
-  border-radius: $rounded;
   background: $bg-slate;
   display: flex;
   justify-content: center;
@@ -17,7 +16,6 @@
     content: '';
     width: calc($w-full);
     height: calc($h-full);
-    border-radius: $rounded;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -55,6 +53,23 @@
 
 .button-ghost {
   background: $bg-white;
+}
+
+// Shape
+.button-square {
+  border-radius: $rounded;
+  &::after,
+  &::before {
+    border-radius: $rounded;
+  }
+}
+
+.button-round {
+  border-radius: $rounded-xxl;
+  &::after,
+  &::before {
+    border-radius: $rounded-xxl;
+  }
 }
 
 // Size

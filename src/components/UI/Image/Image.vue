@@ -9,11 +9,14 @@ type ImageSize = (ComponentSize & number) | any
 
 type ImageObjectFit = 'fill' | 'cover' | 'contain' | 'none'
 
+export type ImageLazyType = 'immediate' | 'lazy'
+
 export interface ImageProps {
   rootClassName?: string
   rootStyle?: StyleValue
   sizes?: ImageSize
   objectFit?: ImageObjectFit
+  lazyType?: ImageLazyType
   src?: string
   hasView?: boolean
   hasRemove?: boolean
@@ -23,6 +26,7 @@ const props = withDefaults(defineProps<ImageProps>(), {
   rootClassName: '',
   sizes: 'sm',
   objectFit: 'fill',
+  lazyType: 'lazy',
   src: 'https://cdn.hswstatic.com/gif/space-smell-2.jpg',
   hasView: false,
   hasRemove: false
@@ -61,6 +65,7 @@ const handleClick = () => emits('onClick')
     <ImageView
       :loading="loading"
       :imageSize="imageSize"
+      :lazyType="lazyType"
       :hasView="hasView"
       :hasRemove="hasRemove"
       :src="src"

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, withDefaults } from 'vue'
+import { computed, withDefaults, inject } from 'vue'
+import type { ControlShape } from '@/components/Control/type.ts'
 import type { ComponentColor, ComponentSize } from '@/common/type'
 import Spinner from '@/components/UI/Loading/Spinner.vue'
 import useFormStore from '@/components/Control/Form/FormStore.ts'
@@ -8,6 +9,7 @@ type ButtonType = 'submit' | 'button' | 'reset'
 
 export interface ButtonProps {
   rootClassName?: string
+  shape?: ControlShape
   sizes?: ComponentSize
   color?: Exclude<ComponentColor, 'white' | 'gray'>
   ghost?: boolean
@@ -18,19 +20,24 @@ export interface ButtonProps {
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   rootClassName: '',
+  shape: 'square',
   sizes: 'md',
   type: 'button'
 })
 
-const form = useFormStore()
+const form = inject('form', null)
 
-const buttonSize = computed<ComponentSize>(() => (form.isVee ? form.formSize : props.sizes))
+const buttonShape = computed<ComponentShape>(() => (form?.isVee ? form?.formShape : props.shape))
 
-const buttonColor = computed<ComponentColor>(() => (form.isVee ? form.formColor : props.color))
+const buttonSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize : props.sizes))
+
+const buttonColor = computed<ComponentColor>(() => (form?.isVee ? form?.formColor : props.color))
 
 const buttonDisabled = computed<boolean>(() => props.disabled || props.loading)
 
 const sizeClassName = computed<string>(() => `button-${buttonSize.value}`)
+
+const shapeClassName = computed<string>(() => `button-${buttonShape.value}`)
 
 const loadingClassName = computed<string>(() => (props.loading ? 'button-loading' : ''))
 
@@ -48,7 +55,15 @@ const colorClassName = computed<string>(() => {
   <button
     :type="type"
     :disabled="buttonDisabled"
-    :class="['button', sizeClassName, colorClassName, loadingClassName, disabledClassName, rootClassName]"
+    :class="[
+      'button',
+      shapeClassName,
+      sizeClassName,
+      colorClassName,
+      loadingClassName,
+      disabledClassName,
+      rootClassName
+    ]"
   >
     <span v-if="loading" class="button-loading-icon"><Spinner /></span>
     <span><slot></slot></span>

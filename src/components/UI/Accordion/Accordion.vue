@@ -19,7 +19,7 @@ export interface AccordionProps {
 }
 
 const props = withDefaults(defineProps<AccordionProps>(), {
-  contentId: 'accordionContent'
+  contentId: 'accordionContent',
   rootClassName: '',
   labelClassName: '',
   contentClassName: '',

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, useSlots, watchEffect, type StyleValue } from 'vue'
+import { ref, computed, withDefaults, useSlots, watchEffect, inject, type StyleValue } from 'vue'
 import { ACCEPT_FILE_TYPE, DEFAULT_FILE_SIZE } from '../constant.ts'
-import type { UploadItems, ControlColor } from '@/components/Control/type.ts'
+import type { UploadItems, ControlColor, ControlShape } from '@/components/Control/type.ts'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import UploadControl from './UploadControl.vue'
 import UploadFiles from './UploadFiles.vue'
@@ -14,6 +14,7 @@ export interface FileUploadProps {
   rootStyle?: StyleValue
   controlStyle?: StyleValue
   color?: ControlColor
+  shape?: ControlShape
   limit?: number
   fileAccepted?: string
   disabled?: boolean
@@ -24,13 +25,14 @@ const props = withDefaults(defineProps<FileUploadProps>(), {
   rootClassName: '',
   controlClassName: '',
   color: 'blue',
+  shape: 'square',
   limit: DEFAULT_FILE_SIZE,
   fileAccepted: ''
 })
 
 const emits = defineEmits(['onUpload'])
 
-const form = useFormStore()
+const form = inject('form', null)
 
 const slots = useSlots()
 
@@ -42,9 +44,15 @@ const dragged = ref<boolean>(false)
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
-const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form?.isVee ? form?.formColor : props.color))
+
+const controlShape = computed<ControlShape>(() => (form?.isVee ? form?.formShape : props.shape))
 
 const colorClassName = computed<string>(() => `file-upload-${controlColor.value}`)
+
+const shapeClassName = computed<string>(() => `file-upload-${controlShape.value}`)
+
+const gapClassName = computed<string>(() => (form?.isVee ? 'file-upload-gap' : ''))
 
 const errorMessage = computed<string | undefined>(() => {
   if (!error.value) return ''
@@ -116,7 +124,10 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div :style="rootStyle" :class="['file-upload', colorClassName, rootClassName]">
+  <div
+    :style="rootStyle"
+    :class="['file-upload', colorClassName, shapeClassName, gapClassName, rootClassName]"
+  >
     <UploadControl
       id="fileUpload"
       :controlClassName="controlClassName"

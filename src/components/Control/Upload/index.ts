@@ -1,4 +1,4 @@
-import * as Image from './Image'
+import * as ImageUpload from './Image'
 import FileUpload from './File/FileUpload.vue'
 
-export { Image, FileUpload }
+export { ImageUpload, FileUpload }

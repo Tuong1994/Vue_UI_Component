@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, watchEffect, useSlots, type StyleValue } from 'vue'
-import type { ComponentShape } from '@/common/type.ts'
-import type { UploadError, UploadItem, UploadItems, ControlColor } from '@/components/Control/type'
+import { ref, computed, withDefaults, watchEffect, useSlots, inject, type StyleValue } from 'vue'
+import type { UploadError, UploadItem, UploadItems, ControlColor, ControlShape } from '@/components/Control/type'
 import { ACCEPT_IMAGE_FILE_TYPE, DEFAULT_FILE_SIZE } from '../../constant'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import UploadControl from './UploadControl.vue'
@@ -19,7 +18,7 @@ export interface MultipleImageUploadProps {
   maxUpload?: number
   fileAccepted?: string
   defaultImages?: string[]
-  shape?: Exclude<ComponentShape, 'circle'>
+  shape?: ControlShape
   color?: ControlColor
 }
 
@@ -38,7 +37,7 @@ const emits = defineEmits(['onUpload', 'onRemoveDefaultImage'])
 
 const slots = useSlots()
 
-const form = useFormStore()
+const form = inject('form', null)
 
 const images = ref<UploadItems>([])
 
@@ -52,13 +51,15 @@ const dragged = ref<boolean>(false)
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
-const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form?.isVee ? form?.formColor : props.color))
 
-const shapeClassName = computed<string>(() => `multiple-image-upload-${props.shape}`)
+const controlShape = computed<ControlShape>(() => (form?.isVee ? form?.formShape : props.shape))
+
+const shapeClassName = computed<string>(() => `multiple-image-upload-${controlShape.value}`)
 
 const colorClassName = computed<string>(() => `multiple-image-upload-${controlColor.value}`)
 
-const gapClassName = computed<string>(() => (form.isVee ? 'multiple-image-upload-gap' : ''))
+const gapClassName = computed<string>(() => (form?.isVee ? 'multiple-image-upload-gap' : ''))
 
 const dragClassName = computed<string>(() => (dragged.value ? 'upload-group-dragged' : ''))
 

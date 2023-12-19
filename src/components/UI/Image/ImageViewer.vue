@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, toRefs, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
+import { useRender, useOverflow } from '@/hooks'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import Draggable from '@/components/UI/Draggable/Draggable.vue'
-import { useRender, useOverflow } from '@/hooks'
 
 interface ImageViewerProps {
   open: boolean

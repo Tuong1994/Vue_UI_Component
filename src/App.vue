@@ -4,17 +4,35 @@ import { ref, computed, onMounted } from 'vue'
 import { UI, Control } from './components'
 import type { MenuItems } from '@/components/UI/Layout/Menu/type.ts'
 
-const { Section, Layout } = UI
+const { Section, Layout, Button } = UI
 
-const { Form, Input, InputPassword, TextArea, Select, SelectTag, TreeSelect, DatePicker } = Control
+const {
+  Form,
+  Input,
+  InputPassword,
+  TextArea,
+  Select,
+  SelectTag,
+  TreeSelect,
+  DatePicker,
+  CheckBox,
+  Radio,
+  Upload
+} = Control
+
+const { ImageUpload, FileUpload } = Upload
+
+const { SingleImageUpload, MultipleImageUpload } = ImageUpload
 
 interface FormData {
   account: string
   password: string
   gender: number
   tags: string[]
+  ids: string[]
   birthday: Date | string
   note: string
+  role: string
 }
 
 const initialValues: FormData = {
@@ -22,8 +40,10 @@ const initialValues: FormData = {
   password: '',
   gender: -1,
   tags: [],
+  ids: [],
   birthday: new Date(),
-  note: ''
+  note: '',
+  role: ''
 }
 
 // const { Container, Head, Body, Side, Content, Menu } = Layout
@@ -102,14 +122,13 @@ const initialValues: FormData = {
     </Body>
   </Container> -->
   <Section>
-    <Input shape="round" />
-    <InputPassword shape="round" />
-    <Select shape="round" />
-    <SelectTag shape="round" />
-    <DatePicker shape="round" />
-    <TextArea shape="round" />
+    <Form :initialValues="initialValues" color="red" shape="round">
+      <SingleImageUpload />
 
-    <Form :initialValues="initialValues" color="green">
+      <MultipleImageUpload />
+
+      <FileUpload />
+
       <Input name="account">
         <template #label>Account</template>
       </Input>
@@ -133,6 +152,15 @@ const initialValues: FormData = {
       <TextArea name="note">
         <template #label>Note</template>
       </TextArea>
+
+      <CheckBox name="ids" value="1"> ID 1 </CheckBox>
+      <CheckBox name="ids" value="2"> ID 2 </CheckBox>
+      <CheckBox name="ids" value="3"> ID 3 </CheckBox>
+
+      <Radio name="role" value="admin">Admin</Radio>
+      <Radio name="role" value="user">User</Radio>
+
+      <Button>Save</Button>
     </Form>
   </Section>
 </template>

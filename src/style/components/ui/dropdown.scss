@@ -7,6 +7,7 @@
   .dropdown-list {
     min-width: max-content;
     width: $w-10 * 1.5;
+    background: $bg-white;
     border-radius: $rounded;
     box-shadow: 0 0 5px $bg-black-rgba-xs;
     overflow: hidden;

@@ -16,6 +16,10 @@ export interface ModalProps {
   headStyle?: StyleValue
   bodyStyle?: StyleValue
   footStyle?: StyleValue
+  hasHead?: boolean
+  hasFoot?: boolean
+  hasCloseIcon?: boolean
+  backdropClose?: boolean
   open?: boolean
   sizes?: ComponentSize
   okButtonTitle?: string
@@ -29,10 +33,14 @@ const props = withDefaults(defineProps<ModalProps>(), {
   headClassName: '',
   bodyClassName: '',
   footClassName: '',
+  hasHead: true,
+  hasFoot: true,
+  hasCloseIcon: true,
+  backdropClose: true,
   sizes: 'md',
   okButtonTitle: 'Ok',
   cancelButtonTitle: 'Cancel',
-  okButtonProps: () => ({ color: 'blue' }),
+  okButtonProps: () => ({}),
   cancelButtonProps: () => ({})
 })
 
@@ -46,15 +54,17 @@ const slots = useSlots()
 
 useOverflow(open)
 
-const hasHead = computed<boolean>(() => slots.head)
+const hasHeadTitle = computed<boolean>(() => slots.head !== undefined)
 
 const sizesClassName = computed<string>(() => `modal-${props.sizes}`)
 
-const hasHeadClassName = computed<boolean>(() => (hasHead.value ? 'modal-head-flex' : ''))
+const hasHeadClassName = computed<boolean>(() => (hasHeadTitle.value ? 'modal-head-flex' : ''))
 
 const backdropActiveClassName = computed<boolean>(() => (props.open ? 'modal-backdrop-active' : ''))
 
 const modalActiveClassName = computed<boolean>(() => (props.open ? 'modal-active' : ''))
+
+const okActionProps = computed<ButtonProps>(() => ({ ...props.okButtonProps, color: 'blue' }))
 
 const handleOk = () => emits('onOk')
 
@@ -63,13 +73,17 @@ const handleClose = () => emits('onClose')
 
 <template>
   <Teleport to="#portal">
-    <div v-if="render" :class="['modal-backdrop', backdropActiveClassName]" @click="handleClose" />
+    <div
+      v-if="render"
+      :class="['modal-backdrop', backdropActiveClassName]"
+      @click="() => backdropClose && handleClose()"
+    />
 
     <div v-if="render" :class="['modal', sizesClassName, modalActiveClassName, rootClassName]">
-      <div :class="['modal-head', hasHeadClassName, headClassName]">
-        <slot v-if="hasHead" name="head"></slot>
+      <div v-if="hasHead" :class="['modal-head', hasHeadClassName, headClassName]">
+        <slot v-if="hasHeadTitle" name="head"></slot>
 
-        <button type="button" class="head-close-action" @click="handleClose">
+        <button v-if="hasCloseIcon" type="button" class="head-close-action" @click="handleClose">
           <Icon :iconName="iconName.X_MARK" />
         </button>
       </div>
@@ -78,21 +92,11 @@ const handleClose = () => emits('onClose')
         <slot name="body"></slot>
       </div>
 
-      <div :class="['modal-foot', footClassName]">
-        <Button
-          :color="cancelButtonProps.color"
-          :sizes="cancelButtonProps.sizes"
-          :ghost="cancelButtonProps.ghost"
-          @click="handleClose"
-        >
+      <div v-if="hasFoot" :class="['modal-foot', footClassName]">
+        <Button v-bind="cancelButtonProps" @click="handleClose">
           {{ cancelButtonTitle }}
         </Button>
-        <Button
-          :color="okButtonProps.color"
-          :sizes="okButtonProps.sizes"
-          :ghost="okButtonProps.ghost"
-          @click="handleOk"
-        >
+        <Button v-bind="okActionProps" @click="handleOk">
           {{ okButtonTitle }}
         </Button>
       </div>

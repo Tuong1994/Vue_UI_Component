@@ -1,25 +1,27 @@
+import type { DirectiveBinding } from 'vue'
+
 const vLazyload = {
-  mounted(el: HTMLImageElement) {
+  mounted(el: HTMLImageElement, binding: DirectiveBinding) {
     const renderImage = () => {
       el.src = el.dataset.src ?? ''
     }
 
     const createIntersectionObserver = () => {
-      const observer = new IntersectionObserver(
-        (entries, observer) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              renderImage()
-              observer.unobserve(el)
-            }
-          })
-        },
-      )
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            renderImage()
+            observer.unobserve(el)
+          }
+        })
+      })
       observer.observe(el)
     }
 
-    if (window['IntersectionObserver']) createIntersectionObserver()
-    else renderImage()
+    if (binding.value === 'lazy') {
+      if (window['IntersectionObserver']) createIntersectionObserver()
+      else renderImage()
+    } else renderImage()
   }
 }
 

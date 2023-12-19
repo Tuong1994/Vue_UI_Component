@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, watchEffect, toRef, type StyleValue } from 'vue'
-import type { ComponentShape } from '@/common/type.ts'
-import type { UploadError, ControlColor } from '@/components/Control/type.ts'
+import { ref, computed, withDefaults, watchEffect, toRef, inject, type StyleValue } from 'vue'
+import type { UploadError, ControlColor, ControlShape } from '@/components/Control/type.ts'
 import { ACCEPT_IMAGE_FILE_TYPE, DEFAULT_FILE_SIZE } from '../../constant.ts'
 import Image from '@/components/UI/Image/Image.vue'
 import UploadControl from './UploadControl.vue'
@@ -14,7 +13,7 @@ export interface SingleImageUploadProps {
   controlClassName?: string
   rootStyle?: StyleValue
   controlStyle?: StyleValue
-  shape?: Exclude<ComponentShape, 'round'>
+  shape?: ControlShape
   color?: ControlColor
   limit?: number
   defaultImageUrl?: string
@@ -34,7 +33,7 @@ const props = withDefaults(defineProps<SingleImageUploadProps>(), {
 
 const emits = defineEmits(['onUpload'])
 
-const form = useFormStore()
+const form = inject('form', null)
 
 const image = ref<File | null>(null)
 
@@ -46,13 +45,15 @@ const dragged = ref<boolean>(false)
 
 const uploading = ref<boolean>(props.loading)
 
-const controlColor = computed<ControlColor>(() => (form.isVee ? form.formColor : props.color))
+const controlColor = computed<ControlColor>(() => (form?.isVee ? form?.formColor : props.color))
 
-const shapeClassName = computed<string>(() => `single-image-upload-${props.shape}`)
+const controlShape = computed<ControlShape>(() => (form?.isVee ? form?.formShape : props.shape))
+
+const shapeClassName = computed<string>(() => `single-image-upload-${controlShape.value}`)
 
 const colorClassName = computed<string>(() => `single-image-upload-${controlColor.value}`)
 
-const gapClassName = computed<string>(() => (form.isVee ? 'single-image-upload-gap' : ''))
+const gapClassName = computed<string>(() => (form?.isVee ? 'single-image-upload-gap' : ''))
 
 const disabledClassName = computed<string>(() => (props.disabled ? 'upload-group-disabled' : ''))
 
