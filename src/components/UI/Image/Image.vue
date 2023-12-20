@@ -24,7 +24,7 @@ export interface ImageProps {
 
 const props = withDefaults(defineProps<ImageProps>(), {
   rootClassName: '',
-  sizes: 'sm',
+  sizes: 'auto',
   objectFit: 'fill',
   lazyType: 'lazy',
   src: 'https://cdn.hswstatic.com/gif/space-smell-2.jpg',
@@ -32,13 +32,17 @@ const props = withDefaults(defineProps<ImageProps>(), {
   hasRemove: false
 })
 
-const emits = defineEmits(['onClick', 'onRemove'])
+const emits = defineEmits(['onClick', 'onRemove', 'onCheck'])
 
 const { src } = toRefs(props)
 
 const view = ref<string>('')
 
+const isChecked = ref<boolean>(false)
+
 const loading = ref<boolean>(true)
+
+const rootCheckedClassName = computed<string>(() => (isChecked.value ? 'image-checked' : ''))
 
 const fitClassName = computed<string>(() => `image-${props.objectFit}`)
 
@@ -57,20 +61,32 @@ const handleLoad = () => (loading.value = false)
 const handleRemove = () => emits('onRemove')
 
 const handleClick = () => emits('onClick')
+
+const handleCheck = (checked: boolean) => {
+  isChecked.value = checked
+  emits('onCheck', checked)
+}
 </script>
 
 <template>
-  <div id="image" :style="inlineStyle" :class="['image', fitClassName, rootClassName]" @click="handleClick">
+  <div
+    id="image"
+    :style="inlineStyle"
+    :class="['image', fitClassName, rootCheckedClassName, rootClassName]"
+    @click="handleClick"
+  >
     <ImageLoading v-if="loading" :imageSize="imageSize" />
     <ImageView
-      :loading="loading"
+      :src="src"
       :imageSize="imageSize"
       :lazyType="lazyType"
+      :isChecked="isChecked"
+      :loading="loading"
       :hasView="hasView"
       :hasRemove="hasRemove"
-      :src="src"
       @onLoad="handleLoad"
       @onRemove="handleRemove"
+      @onCheck="handleCheck"
     />
   </div>
 </template>

@@ -4,7 +4,7 @@ import { ref, computed, onMounted } from 'vue'
 import { UI, Control } from './components'
 import type { MenuItems } from '@/components/UI/Layout/Menu/type.ts'
 
-const { Section, Layout, Button } = UI
+const { Section, Image, Layout, Button } = UI
 
 const {
   Form,
@@ -122,7 +122,9 @@ const initialValues: FormData = {
     </Body>
   </Container> -->
   <Section>
-    <Form :initialValues="initialValues" color="red" shape="round">
+    <Image hasView sizes="lg" />
+
+    <!-- <Form :initialValues="initialValues" color="red" shape="round">
       <SingleImageUpload />
 
       <MultipleImageUpload />
@@ -161,6 +163,6 @@ const initialValues: FormData = {
       <Radio name="role" value="user">User</Radio>
 
       <Button>Save</Button>
-    </Form>
+    </Form> -->
   </Section>
 </template>
