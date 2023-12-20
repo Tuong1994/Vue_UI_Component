@@ -5,14 +5,14 @@ import type { ComponentSize } from '@/common/type.ts'
 import type { ControlColor, ControlShape } from '@/components/Control/type.ts'
 import useFormStore from './FormStore.ts'
 
-export interface FormProps {
+export interface FormProps<M> {
   initialValues: M
   color?: ControlColor
   sizes?: ComponentSize
   shape?: ControlShape
 }
 
-const props = withDefaults(defineProps<FormProps>(), {
+const props = withDefaults(defineProps<FormProps<M>>(), {
   color: 'blue',
   sizes: 'md',
   shape: 'square'

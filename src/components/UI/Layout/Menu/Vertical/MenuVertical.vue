@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, watchEffect, type StyleValue } from 'vue'
+import { ref, computed, withDefaults, type StyleValue } from 'vue'
 import type { MenuItems } from '../type.ts'
 import MenuVerticalItem from './MenuVerticalItem.vue'
 import useLayoutStore, { type LayoutColor } from '@/components/UI/Layout/LayoutStore.ts'

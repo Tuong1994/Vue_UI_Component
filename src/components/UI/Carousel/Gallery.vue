@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, watchEffect, toRefs, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
+import type { CarouselItems } from './type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import Image from '@/components/UI/Image/Image.vue'
 import useCarousel from './useCarousel.ts'

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, type StyleValue } from 'vue'
 import type { ComponentColor } from '@/common/type.ts'
-import { TabsItem, TabsItems } from './type.ts'
-import { iconName } from '@/components/UI/Icon/constant.ts'
+import type { TabsItem, TabsItems } from './type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 
 export interface TabsProps {
@@ -29,8 +28,6 @@ const activeTab = ref({ tabId: props.items[0].id, comName: props.items[0].comNam
 const colorClassName = computed<string>(() => `tabs-${props.color}`)
 
 const headItemStyle = computed<StyleValue>(() => ({ width: `calc(100% / ${props.items.length})` }))
-
-const activeClassName = (tabId: string) => (activeTab.tabId === tabId ? 'head-item-active' : '')
 
 const handleChangeTab = (tab: TabsItem) => (activeTab.value = { tabId: tab.id, comName: tab.comName })
 </script>

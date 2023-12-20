@@ -4,7 +4,6 @@ import { useField } from 'vee-validate'
 import type { FormRule } from '@/components/Control/type.ts'
 import type { ComponentColor, ComponentSize } from '@/common/type.ts'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
-import useFormStore from '@/components/Control/Form/FormStore.ts'
 
 export interface RadioProps {
   rootClassName?: string
@@ -32,14 +31,13 @@ const props = withDefaults(defineProps<RadioProps>(), {
   checked: false
 })
 
-const form = inject('form', null)
+const form = inject('form', null) as any
 
 const { name } = toRefs(props)
 
 const {
   value: veeValue,
   errorMessage,
-  setValue,
   handleChange: veeOnChange
 } = useField(name, !props.disabled ? props.rule : undefined, {
   initialValue: form?.formData[name.value]
@@ -52,8 +50,6 @@ const emits = defineEmits(['onCheck', 'onBlur'])
 const isCheck = ref<boolean>(false)
 
 const hasLabel = computed<boolean>(() => slots.default !== undefined)
-
-const controlValue = computed<string>(() => (form?.isVee ? veeValue?.value : props.value))
 
 const controlColor = computed<ComponentColor>(() => (form?.isVee ? form?.formColor : props.color))
 

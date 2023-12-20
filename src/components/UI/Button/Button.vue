@@ -3,7 +3,6 @@ import { computed, withDefaults, inject } from 'vue'
 import type { ControlShape } from '@/components/Control/type.ts'
 import type { ComponentColor, ComponentSize } from '@/common/type'
 import Spinner from '@/components/UI/Loading/Spinner.vue'
-import useFormStore from '@/components/Control/Form/FormStore.ts'
 
 type ButtonType = 'submit' | 'button' | 'reset'
 
@@ -25,9 +24,9 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   type: 'button'
 })
 
-const form = inject('form', null)
+const form = inject('form', null) as any
 
-const buttonShape = computed<ComponentShape>(() => (form?.isVee ? form?.formShape : props.shape))
+const buttonShape = computed<ControlShape>(() => (form?.isVee ? form?.formShape : props.shape))
 
 const buttonSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize : props.sizes))
 
@@ -48,6 +47,7 @@ const colorClassName = computed<string>(() => {
   if (props.ghost && !buttonColor.value) return 'button-ghost'
   if (!props.ghost && buttonColor.value) return `button-color button-${buttonColor.value}`
   if (props.ghost && buttonColor.value) return `button-ghost button-ghost-${buttonColor.value}`
+  return ''
 })
 </script>
 

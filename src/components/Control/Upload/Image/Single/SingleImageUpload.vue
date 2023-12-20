@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<SingleImageUploadProps>(), {
 
 const emits = defineEmits(['onUpload'])
 
-const form = inject('form', null)
+const form = inject('form', null) as any
 
 const image = ref<File | null>(null)
 
@@ -95,7 +95,7 @@ const handleDrop = (e: DragEvent) => {
   e.preventDefault()
   e.stopPropagation()
   dragged.value = false
-  if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+  if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
     const imageFile = e.dataTransfer.files[0]
     handleUpload(imageFile)
   }
@@ -106,7 +106,7 @@ const handleRemove = () => {
   if (image.value && inputEl && inputEl.files) {
     const fileTransfer = new DataTransfer()
     const uploadedImages: File[] = Array.from(inputEl.files)
-    const filterImages: File[] = uploadedImages.filter((img) => img.name !== image.name)
+    const filterImages: File[] = uploadedImages.filter((img) => img.name !== image.value?.name)
 
     filterImages.forEach((file) => {
       const remainImage = new File([file.name], file.name)

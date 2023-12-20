@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, toRef, type StyleValue } from 'vue'
-import type { MenuItems } from '../type.ts'
+import { ref, computed, withDefaults, type StyleValue } from 'vue'
+import type { MenuItem } from '../type.ts'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import Tooltip from '@/components/UI/Tooltip/Tooltip.vue'
@@ -24,7 +24,7 @@ const open = ref<boolean>(false)
 
 const layout = useLayoutStore()
 
-const hasChild = computed<boolean>(() => props.item.children && props.item.children.length > 0)
+const hasChild = computed<boolean>(() => Boolean(props.item.children && props.item.children.length > 0))
 
 const actived = computed<boolean>(() => (hasChild.value ? open.value : props.activeId === props.item.id))
 
@@ -83,7 +83,7 @@ const handleOpen = (e: Event, id: string) => {
           </div>
 
           <div v-if="item.type === 'text'" class="content-text">{{ item.label }}</div>
-          <router-link v-if="item.type === 'link'" :to="item.path" class="content-text">
+          <router-link v-if="item.type === 'link'" :to="(item.path as string)" class="content-text">
             {{ item.label }}
           </router-link>
         </div>

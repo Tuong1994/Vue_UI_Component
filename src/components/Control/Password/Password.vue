@@ -6,7 +6,6 @@ import type { FormRule, ControlColor, ControlShape } from '@/components/Control/
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
-import useFormStore from '@/components/Control/Form/FormStore.ts'
 
 type InputType = 'password' | 'text'
 
@@ -38,7 +37,7 @@ const props = withDefaults(defineProps<InputPasswordProps>(), {
   name: ''
 })
 
-const form = inject('form', null)
+const form = inject('form', null) as any
 
 const name = toRef(props, 'name')
 
@@ -74,7 +73,7 @@ const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
 
 const hasAddonAfter = computed<boolean>(() => slots.addonAfter !== undefined)
 
-const showClearIcon = computed<boolean>(() => (form?.isVee ? Boolean(inputValue?.value) : props.modelValue))
+const showClearIcon = computed<boolean>(() => Boolean(form?.isVee ? inputValue?.value : props.modelValue))
 
 const colorClassName = computed<string>(() => `input-${controlColor.value}`)
 
@@ -106,7 +105,7 @@ const handleSwitchInputType = (type: InputType) => (inputType.value = type)
 const onChangeFn = form?.isVee ? onChange : handleChange
 
 watchEffect(() => {
-  if (errorMessage?.value) inputRef.value.click()
+  if (errorMessage?.value && inputRef.value) inputRef.value.click()
 })
 </script>
 

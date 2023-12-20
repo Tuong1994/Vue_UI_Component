@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, useSlots, type StyleValue } from 'vue'
+import { computed, withDefaults, useSlots, toRefs, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import type { ComponentColor, ComponentShape } from '@/common/type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
@@ -20,8 +20,11 @@ const props = withDefaults(defineProps<AvatarProps>(), {
   size: 30,
   shape: 'circle',
   color: 'blue',
-  letter: ''
+  letter: '',
+  badge: ''
 })
+
+const { rootStyle } = toRefs(props)
 
 const slots = useSlots()
 
@@ -40,7 +43,7 @@ const letterContent = computed<string>(() =>
 )
 
 const rootInlineStyle = computed<StyleValue>(() => ({
-  ...props.rootStyle,
+  ...(rootStyle?.value as object),
   width: `${props.size}px`,
   height: `${props.size}px`
 }))

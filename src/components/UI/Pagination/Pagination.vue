@@ -15,7 +15,7 @@ export interface PaginationProps {
   simple?: boolean
   hasContent?: boolean
   color?: Exclude<ComponentColor, 'white' | 'gray'>
-  shape?: Exclude<ComponentShape, "circle">
+  shape?: Exclude<ComponentShape, 'circle'>
 }
 
 type ActionType = 'first' | 'prev' | 'page' | 'next' | 'last'
@@ -59,6 +59,7 @@ const colorClassName = computed<string>(() => {
   if (props.ghost && !props.color) return `pagination-ghost`
   if (!props.ghost && props.color) return `pagination-color pagination-${props.color}`
   if (props.ghost && props.color) return `pagination-ghost pagination-ghost-${props.color}`
+  return ''
 })
 
 const hasContentClassName = computed<string>(() => (props.hasContent ? 'pagination-flex-between' : ''))

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, withDefaults, type StyleValue, watchEffect } from 'vue'
+import { computed, withDefaults, watchEffect, toRefs, type StyleValue } from 'vue'
 import type { ComponentJustify, ComponentAligns } from '@/common/type.ts'
 import useGridStore from './GridStore.ts'
 
@@ -18,6 +18,8 @@ const props = withDefaults(defineProps<GridRowProps>(), {
   gutters: () => []
 })
 
+const { rootStyle } = toRefs(props)
+
 const grid = useGridStore()
 
 const justifyClassName = computed<string>(() => `grid-row-${props.justify}`)
@@ -25,16 +27,18 @@ const justifyClassName = computed<string>(() => `grid-row-${props.justify}`)
 const alignClassName = computed<string>(() => `grid-row-${props.aligns}`)
 
 const inlineStyle = computed<StyleValue>(() => {
-  if (!props.gutters.length) return { ...props.rootStyle, gap: '10px' }
-  if (props.gutters.length === 1) return { ...props.rootStyle, gap: `${props.gutters[0]}px` }
+  const style = rootStyle?.value as object
+  if (!props.gutters.length) return { ...style, gap: '10px' }
+  if (props.gutters.length === 1) return { ...style, gap: `${props.gutters[0]}px` }
   if (props.gutters.length === 2)
-    return { ...props.rootStyle, rowGap: `${props.gutters[0]}px`, columnGap: `${props.gutters[1]}px` }
+    return { ...style, rowGap: `${props.gutters[0]}px`, columnGap: `${props.gutters[1]}px` }
+  return { ...style }
 })
 
 watchEffect(() => {
   if (!props.gutters.length) return
-  if (props.gutters.length === 1) return grid.addGutters(props.gutters[0])
-  if (props.gutters.length === 2) return grid.addGutters(props.gutters[0], props.gutters[1])
+  if (props.gutters.length === 1) return grid.addGutters(props.gutters[0] as number)
+  if (props.gutters.length === 2) return grid.addGutters(props.gutters[0] as number, props.gutters[1])
 })
 </script>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, type StyleValue, watchEffect } from 'vue'
+import { ref, computed, withDefaults, watchEffect, toRefs, type StyleValue } from 'vue'
 import type { ColSpan } from './type.ts'
 import useGridStore from './GridStore.ts'
 import useViewPoint from '@/hooks/useViewPoint.ts'
@@ -17,6 +17,8 @@ const props = withDefaults(defineProps<GridRowProps>(), {
   rootClassName: ''
 })
 
+const { rootStyle } = toRefs(props)
+
 const grid = useGridStore()
 
 const { isPhone, isTablet, isLaptop, isDesktop } = useViewPoint()
@@ -25,9 +27,9 @@ const width = ref<string>('auto')
 
 const hidden = ref<boolean>(false)
 
-const inlineStyle = computed<StyleValue>(() => ({ ...props.rootStyle, width: width.value }))
+const inlineStyle = computed<StyleValue>(() => ({ ...(rootStyle?.value as object), width: width.value }))
 
-const gapSize = computed<number>(() => (!grid.gutters.length ? 10 : grid.gutters[0]))
+const gapSize = computed<number>(() => (!grid.gutters.length ? 10 : (grid.gutters[0] as number)))
 
 const calculateWidth = (span: ColSpan) => `calc((100% / 24) * ${span} - ${gapSize.value}px)`
 
@@ -41,17 +43,20 @@ watchEffect(() => {
     return (width.value = calculateWidth(props.span))
   }
 
-  if (isPhone.value && props.xs) {
+  if (isPhone.value) {
+    if (props.xs === undefined) return (width.value = 'auto')
     if (props.xs === 0) return (hidden.value = true)
     if (props.xs !== 24) return (width.value = calculateWidth(props.xs))
   }
 
-  if (isTablet.value && props.md) {
+  if (isTablet.value) {
+    if (props.md === undefined) return (width.value = 'auto')
     if (props.md === 0) return (hidden.value = true)
     if (props.md !== 24) return (width.value = calculateWidth(props.md))
   }
 
-  if (isLaptop.value && props.lg) {
+  if (isLaptop.value) {
+    if (props.lg === undefined) return (width.value = 'auto')
     if (props.lg === 0) return (hidden.value = true)
     if (props.lg !== 24) return (width.value = calculateWidth(props.lg))
   }

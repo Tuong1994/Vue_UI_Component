@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, toRef, type StyleValue } from 'vue'
-import type { MenuItems } from '../type.ts'
+import type { MenuItem } from '../type.ts'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import useRender from '@/hooks/useRender.ts'
@@ -21,7 +21,7 @@ const emits = defineEmits(['onOpenMenu'])
 
 const activeId = toRef(props, 'activeId')
 
-const hasChild = computed<boolean>(() => props.item.children && props.item.children.length > 0)
+const hasChild = computed<boolean>(() => Boolean(props.item.children && props.item.children.length > 0))
 
 const actived = computed<boolean>(() => props.activeId.includes(props.item.id))
 
@@ -40,11 +40,7 @@ const handleOpenMenu = (id: string) => {
 </script>
 
 <template>
-  <div
-    :style="itemStyle"
-    :class="['horizontal-item', itemClassName]"
-    @click="() => handleOpenMenu(item.id)"
-  >
+  <div :style="itemStyle" :class="['horizontal-item', itemClassName]" @click="() => handleOpenMenu(item.id)">
     <div :class="['item-label', labelActiveClassName]">
       <div class="label-content">
         <div v-if="item.labelIcon" class="content-icon">
@@ -52,7 +48,7 @@ const handleOpenMenu = (id: string) => {
         </div>
 
         <div v-if="item.type === 'text'" class="content-text">{{ item.label }}</div>
-        <router-link v-if="item.type === 'link'" :to="item.path" class="content-text">
+        <router-link v-if="item.type === 'link'" :to="item.path as string" class="content-text">
           {{ item.label }}
         </router-link>
       </div>

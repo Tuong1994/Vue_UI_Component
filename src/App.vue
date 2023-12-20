@@ -4,7 +4,9 @@ import { ref, computed, onMounted } from 'vue'
 import { UI, Control } from './components'
 import type { MenuItems } from '@/components/UI/Layout/Menu/type.ts'
 
-const { Section, Image, Layout, Button } = UI
+const { Section, Image, Typography, Layout, Button } = UI
+
+const { Title } = Typography
 
 const {
   Form,

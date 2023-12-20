@@ -1,12 +1,12 @@
 <script setup lang="ts" generic="M">
 import { ref, computed, withDefaults, watchEffect, type StyleValue } from 'vue'
-import type { TableColumns, TableRowKey, TableColor } from './type.ts'
+import type { TableColumns, TableRowKey, TableColor, TableExpand } from './type.ts'
 import TableHead from './TableHead.vue'
 import TableBody from './TableBody.vue'
 import TableEmpty from './TableEmpty.vue'
-import TableLoading from "./TableLoading.vue"
+import TableLoading from './TableLoading.vue'
 
-export interface TableProps {
+export interface TableProps<M> {
   rootClassName?: string
   rootStyle?: StyleValue
   tableClassName?: string
@@ -21,7 +21,7 @@ export interface TableProps {
   expand?: TableExpand
 }
 
-const props = withDefaults(defineProps<TableProps>(), {
+const props = withDefaults(defineProps<TableProps<M>>(), {
   rootClassName: '',
   tableClassName: '',
   color: 'blue',
@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<TableProps>(), {
   hasSelectRow: false,
   hasExpand: false,
   dataSource: () => [],
-  columns: () => [],
+  columns: () => []
 })
 
 const emits = defineEmits(['onRowSelect'])
@@ -41,7 +41,7 @@ const colorClassName = computed<string>(() => `table-${props.color}`)
 const handleSelectAll = () => {
   if (rowSelectedKeys.value.length === props.dataSource.length) return (rowSelectedKeys.value = [])
   rowSelectedKeys.value = props.dataSource.map((data, idx) =>
-    props.rowKey ? data[props.rowKey as keyof M] : `row-${idx}`
+    props.rowKey ? (data[props.rowKey as keyof M] as TableRowKey) : `row-${idx}`
   )
 }
 
@@ -80,7 +80,7 @@ watchEffect(() => emits('onRowSelect', rowSelectedKeys.value))
       </table>
       <TableEmpty v-if="dataSource.length === 0" />
     </div>
-    
+
     <TableLoading v-if="loading" />
   </div>
 </template>

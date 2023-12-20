@@ -17,8 +17,9 @@ const handleTouchStart = (e: TouchEvent) => {
   e.preventDefault()
   e.stopPropagation()
   dragged.value = true
-  touchX.value = e.touches[0].screenX - e.currentTarget.getBoundingClientRect().left
-  touchY.value = e.touches[0].screenY - e.currentTarget.getBoundingClientRect().top
+  const targetWithBoundingRect = e.currentTarget as HTMLElement
+  touchX.value = e.touches[0].screenX - targetWithBoundingRect.getBoundingClientRect().left
+  touchY.value = e.touches[0].screenY - targetWithBoundingRect.getBoundingClientRect().top
 }
 
 const handleTouchMove = (e: TouchEvent) => {
@@ -39,8 +40,9 @@ const handleMouseStart = (e: MouseEvent) => {
   e.preventDefault()
   e.stopPropagation()
   dragged.value = true
-  mouseX.value = e.screenX - e.currentTarget.getBoundingClientRect().left
-  mouseY.value = e.screenY - e.currentTarget.getBoundingClientRect().top
+  const targetWithBoundingRect = e.currentTarget as HTMLElement
+  mouseX.value = e.screenX - targetWithBoundingRect.getBoundingClientRect().left
+  mouseY.value = e.screenY - targetWithBoundingRect.getBoundingClientRect().top
 }
 
 const handleMouseMove = (e: MouseEvent) => {

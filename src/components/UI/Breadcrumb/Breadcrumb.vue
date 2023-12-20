@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { computed, withDefaults, type StyleValue } from 'vue'
+import { withDefaults, type StyleValue } from 'vue'
 import type { BreadcrumbItems, BreadcrumbItem } from './type.ts'
-import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 
 export interface BreadcrumbProps {

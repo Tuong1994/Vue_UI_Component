@@ -33,7 +33,7 @@ import {
   faCaretRight,
   faArrowsLeftRightToLine,
 } from '@fortawesome/free-solid-svg-icons'
-import App from './App.vue'
+import App from "./App.vue"
 import router from './router'
 import './style/main.scss'
 

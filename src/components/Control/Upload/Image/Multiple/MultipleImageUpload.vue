@@ -5,7 +5,6 @@ import { ACCEPT_IMAGE_FILE_TYPE, DEFAULT_FILE_SIZE } from '../../constant'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import UploadControl from './UploadControl.vue'
 import UploadViewArea from './UploadViewArea.vue'
-import useFormStore from '@/components/Control/Form/FormStore.ts'
 import utils from '@/utils'
 
 export interface MultipleImageUploadProps {
@@ -37,7 +36,7 @@ const emits = defineEmits(['onUpload', 'onRemoveDefaultImage'])
 
 const slots = useSlots()
 
-const form = inject('form', null)
+const form = inject('form', null) as any
 
 const images = ref<UploadItems>([])
 
@@ -115,7 +114,7 @@ const handleDrop = (e: DragEvent) => {
   e.preventDefault()
   e.stopPropagation()
   dragged.value = false
-  if (e.dataTransfer.files) {
+  if (e.dataTransfer && e.dataTransfer.files) {
     const imageFiles: File[] = Array.from(e.dataTransfer.files)
     handleUpload(imageFiles)
   }

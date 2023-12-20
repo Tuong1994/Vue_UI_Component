@@ -70,10 +70,10 @@ watchEffect((onStop) => {
   >
     <div className="item-content">
       <div className="content-icon">
-        <Icon v-if="type === 'success'" :iconName="options.successIconName" />
-        <Icon v-if="type === 'error'" :iconName="options.errorIconName" />
-        <Icon v-if="type === 'warning'" :iconName="options.warningIconName" />
-        <Icon v-if="type === 'info'" :iconName="options.infoIconName" />
+        <Icon v-if="type === 'success'" :iconName="options.successIconName as string" />
+        <Icon v-if="type === 'error'" :iconName="options.errorIconName as string" />
+        <Icon v-if="type === 'warning'" :iconName="options.warningIconName as string" />
+        <Icon v-if="type === 'info'" :iconName="options.infoIconName as string" />
       </div>
 
       <div className="content-message">

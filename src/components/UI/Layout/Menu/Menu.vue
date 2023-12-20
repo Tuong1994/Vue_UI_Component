@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type StyleValue } from 'vue'
+import type { StyleValue } from 'vue'
 import type { MenuItems } from './type.ts'
 import type { LayoutColor } from '../LayoutStore.ts'
 import MenuHorizontal from './Horizontal/MenuHorizontal.vue'

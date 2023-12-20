@@ -6,7 +6,6 @@ import type { FormRule, ControlColor, ControlShape } from '@/components/Control/
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
-import useFormStore from '@/components/Control/Form/FormStore.ts'
 
 export interface TextAreaProps {
   rootClassName?: string
@@ -39,7 +38,7 @@ const props = withDefaults(defineProps<TextAreaProps>(), {
   rows: 5
 })
 
-const form = inject('form', null)
+const form = inject('form', null) as any
 
 const name = toRef(props, 'name')
 
@@ -69,7 +68,7 @@ const controlSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize 
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
-const showClearIcon = computed<boolean>(() => (form?.isVee ? Boolean(veeValue?.value) : props.modelValue))
+const showClearIcon = computed<boolean>(() => Boolean(form?.isVee ? veeValue?.value : props.modelValue))
 
 const colorClassName = computed<string>(() => `textarea-${controlColor.value}`)
 
@@ -99,7 +98,7 @@ const handleClearInput = () => (form?.isVee ? setValue('') : emits('update:model
 const onChangeFn = form?.isVee ? veeOnChange : handleChange
 
 watchEffect(() => {
-  if (errorMessage?.value) inputRef.value.click()
+  if (errorMessage?.value && inputRef.value) inputRef.value.click()
 })
 </script>
 

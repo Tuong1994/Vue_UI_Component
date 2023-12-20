@@ -44,7 +44,7 @@ const handleSearch = (e: Event) => emits('onSearch', e)
 const handleClearInput = () => emits('onClearInput')
 
 watchEffect(() => {
-  if (errorMessage?.value) controlRef.value.click()
+  if (errorMessage?.value && controlRef.value) controlRef.value.click()
 })
 </script>
 

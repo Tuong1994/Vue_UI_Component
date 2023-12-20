@@ -3,11 +3,10 @@ import { ref, computed, withDefaults, useSlots, toRef, watchEffect, inject, type
 import { useField } from 'vee-validate'
 import { useRender, useDetectBottom, useClickOutside } from '@/hooks'
 import type { ComponentSize } from '@/common/type.ts'
-import type { SelectOptions, FormRule, ControlColor, ControlShape } from '@/components/Control/type.ts'
+import type { SelectOptions, Option, FormRule, ControlColor, ControlShape } from '@/components/Control/type.ts'
 import TreeSelectControl from './TreeSelectControl.vue'
 import TreeSelectOption from './TreeSelectOption.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
-import useFormStore from '@/components/Control/Form/FormStore.ts'
 
 export interface TreeSelectProps {
   rootClassName?: string
@@ -50,7 +49,7 @@ const props = withDefaults(defineProps<TreeSelectProps>(), {
 
 const emits = defineEmits(['onChangeSearch', 'onChangeSelect', 'onChangePage'])
 
-const form = inject('form', null)
+const form = inject('form', null) as any
 
 const name = toRef(props, 'name')
 
@@ -72,7 +71,7 @@ const selectedOption = ref<Option | null>(null)
 
 const search = ref<string>('')
 
-const selectRef = ref<HTMLDivElement | null>(null)
+const selectRef = ref<HTMLDivElement>()
 
 const render = useRender(dropdown)
 

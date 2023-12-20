@@ -6,7 +6,7 @@ import Icon from '@/components/UI/Icon/Icon.vue'
 import TableCell from './TableCell.vue'
 import CheckBox from '@/components/Control/CheckBox/CheckBox.vue'
 
-interface TableHeadProps {
+interface TableHeadProps<M> {
   dataSource: M[]
   columns: TableColumns<M>
   rowSelectedKeys: TableRowKey[]
@@ -14,7 +14,7 @@ interface TableHeadProps {
   hasExpand: boolean
 }
 
-withDefaults(defineProps<TableHeadProps>(), {
+withDefaults(defineProps<TableHeadProps<M>>(), {
   dataSource: () => [],
   columns: () => [],
   rowSelectedKeys: () => []

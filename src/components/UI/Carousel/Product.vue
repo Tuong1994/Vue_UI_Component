@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, watchEffect, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
+import type { CarouselItems } from './type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import useCarousel from './useCarousel.ts'
 import useRender from '@/hooks/useRender.ts'
@@ -50,7 +51,7 @@ const manualStop = ref<boolean>(props.time !== undefined)
 
 const showList = ref<boolean>(false)
 
-const listRef = ref<HTMLDivElement | null>(null)
+const listRef = ref<HTMLDivElement>()
 
 const { translateFull, translatePartial, translateAnimation } = useCarousel({
   items: props.items,

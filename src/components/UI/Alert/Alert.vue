@@ -10,7 +10,7 @@ export interface AlertProps {
   rootClassName?: string
   rootStyle?: StyleValue
   type?: AlertType
-  message?: React.ReactNode | React.ReactNode[]
+  message?: string
   placement?: Exclude<ComponentPlacement, 'left' | 'right'>
   open?: boolean
 }

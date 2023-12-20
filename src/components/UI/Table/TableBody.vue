@@ -1,11 +1,10 @@
 <script setup lang="ts" generic="M">
-import { ref, withDefaults, watchEffect } from 'vue'
+import { ref, withDefaults } from 'vue'
 import type { TableColumns, TableRowKey, TableExpand, TableColor } from './type.ts'
-import Table from './Table.vue'
 import TableCell from './TableCell.vue'
 import CheckBox from '@/components/Control/CheckBox/CheckBox.vue'
 
-interface TableHeadProps {
+interface TableHeadProps<M> {
   dataSource: M[]
   columns: TableColumns<M>
   color: TableColor
@@ -16,19 +15,20 @@ interface TableHeadProps {
   expand?: TableExpand
 }
 
-const props = withDefaults(defineProps<TableHeadProps>(), {
+const props = withDefaults(defineProps<TableHeadProps<M>>(), {
   color: 'blue',
   rowKey: '',
   rowSelectedKeys: () => [],
   dataSource: () => [],
-  columns: () => [],
+  columns: () => []
 })
 
 const emits = defineEmits(['onSelectRow'])
 
 const expandedRowKey = ref<TableRowKey>('')
 
-const key = (data: M, idx: number) => (props.rowKey ? data[props.rowKey as keyof M] : `row-${idx}`)
+const key = (data: M, idx: number) =>
+  props.rowKey ? (data[props.rowKey as keyof M] as TableRowKey) : `row-${idx}`
 
 const selected = (key: TableRowKey) => props.rowSelectedKeys.includes(key)
 

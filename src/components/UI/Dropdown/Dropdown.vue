@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<DropdownProps>(), {
 
 const dropdown = ref<boolean>(false)
 
-const dropdownRef = ref<HTMLDivElement | null>(null)
+const dropdownRef = ref<HTMLDivElement>()
 
 useClickOutside(dropdownRef, dropdown)
 

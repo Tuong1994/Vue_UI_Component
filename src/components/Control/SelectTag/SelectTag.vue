@@ -3,7 +3,7 @@ import { ref, computed, withDefaults, useSlots, toRefs, watchEffect, inject, typ
 import { useField } from 'vee-validate'
 import { useRender, useDetectBottom, useClickOutside } from '@/hooks'
 import type { ComponentSize } from '@/common/type.ts'
-import type { SelectOptions, FormRule, ControlColor, ControlShape } from '@/components/Control/type.ts'
+import type { SelectOptions, Option, FormRule, ControlColor, ControlShape } from '@/components/Control/type.ts'
 import SelectTagControl from './SelectTagControl.vue'
 import SelectTagOption from './SelectTagOption.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
@@ -51,7 +51,7 @@ const props = withDefaults(defineProps<SelectTagProps>(), {
 
 const emits = defineEmits(['onChangeSearch', 'onChangeSelect', 'onChangePage'])
 
-const form = inject('form', null)
+const form = inject('form', null) as any
 
 const { name, defaultTags } = toRefs(props)
 
@@ -73,7 +73,7 @@ const selectedOptions = ref<SelectOptions>([])
 
 const search = ref<string>('')
 
-const selectRef = ref<HTMLDivElement | null>(null)
+const selectRef = ref<HTMLDivElement>()
 
 const render = useRender(dropdown)
 
@@ -173,7 +173,7 @@ const getDefaultOptions = (tags: any[]) => {
 
 // // Set default option
 watchEffect(() => {
-  if (!form?.isVee && defaultTags.value)
+  if (!form?.isVee && defaultTags && defaultTags.value)
     return (selectedOptions.value = getDefaultOptions([...defaultTags.value]))
   if (veeValue.value) selectedOptions.value = getDefaultOptions([...veeValue.value])
 })

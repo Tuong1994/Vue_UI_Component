@@ -12,8 +12,8 @@ const useFormStore = defineStore('form', () => {
 
   const formActive = () => (isVee.value = true)
   const bindData = (data: any) => (formData.value = data)
-  const changeColor = (color: ControlColor) => (formColor.value = color)
   const changeSize = (size: ComponentSize) => (formSize.value = size)
+  const changeColor = (color: ControlColor) => (formColor.value = color)
   const changeShape = (shape: ControlShape) => (formShape.value = shape)
 
   return {

@@ -22,6 +22,7 @@ const colorClassName = computed<string>(() => {
   if (props.ghost && !props.color) return 'badge-ghost'
   if (!props.ghost && props.color) return `badge-color badge-${props.color}`
   if (props.ghost && props.color) return `badge-ghost badge-ghost-${props.color}`
+  return ''
 })
 </script>
 
