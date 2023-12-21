@@ -165,7 +165,7 @@ watchEffect(() => {
     :style="rootStyle"
     :class="['multiple-image-upload', gapClassName, shapeClassName, colorClassName, rootClassName]"
   >
-    <div
+    <label
       :class="['upload-group', dragClassName, errorClassName, disabledClassName]"
       @dragEnter="handleDrag"
       @dragOver="handleDrag"
@@ -181,7 +181,7 @@ watchEffect(() => {
         :disabled="disabled"
         @onChange="handleChange"
       />
-    </div>
+    </label>
 
     <NoteMessage v-if="error && error.active" type="error" :message="errorMessage" />
 

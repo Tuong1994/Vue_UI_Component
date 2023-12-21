@@ -65,11 +65,12 @@
   .upload-group {
     width: $w-full;
     padding: $p-3;
+    cursor: pointer;
+    display: inline-block;
     border: 1px dashed $bg-gray;
     transition: all $transition-time-md $transition-fn;
     .group-control {
       width: $w-full;
-      cursor: pointer;
       .control-input {
         display: none;
       }

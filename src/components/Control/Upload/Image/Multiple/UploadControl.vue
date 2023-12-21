@@ -19,7 +19,7 @@ const handleChange = (e: Event) => emits('onChange', e)
 </script>
 
 <template>
-  <label :style="controlStyle" :class="['group-control', controlClassName]">
+  <div :style="controlStyle" :class="['group-control', controlClassName]">
     <input
       type="file"
       multiple
@@ -35,5 +35,5 @@ const handleChange = (e: Event) => emits('onChange', e)
     </div>
 
     <slot v-if="hasLabel" name="label"></slot>
-  </label>
+  </div>
 </template>

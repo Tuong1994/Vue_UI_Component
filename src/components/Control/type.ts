@@ -1,11 +1,11 @@
 import type { ComponentColor, ComponentShape } from '@/common/type'
-import * as yup from 'yup'
+import type { RuleExpression } from 'vee-validate'
 
 export type ControlColor = Exclude<ComponentColor, 'black' | 'white' | 'gray'>
 
 export type ControlShape = Exclude<ComponentShape, 'circle'>
 
-export type FormRule = typeof yup
+export type FormRule = RuleExpression<any>
 
 // Select
 export type Option = {

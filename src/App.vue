@@ -107,6 +107,8 @@ const initialValues: FormData = {
 //   // { id: '3', label: 'Item 3', labelIcon: 'user', type: 'text', isRoot: true, path: '#' },
 //   // { id: '4', label: 'Item 4', labelIcon: 'user', type: 'text', isRoot: true, path: '#' }
 // ])
+
+const handleSubmit = (formData: FormData) => console.log(formData)
 </script>
 
 <template>
@@ -124,16 +126,14 @@ const initialValues: FormData = {
     </Body>
   </Container> -->
   <Section>
-    <Image hasView sizes="lg" />
-
-    <!-- <Form :initialValues="initialValues" color="red" shape="round">
+    <Form :initialValues="initialValues" color="red" shape="round" @onFinish="handleSubmit">
       <SingleImageUpload />
 
       <MultipleImageUpload />
 
       <FileUpload />
 
-      <Input name="account">
+      <Input name="account" :rule="yup.string().required('This field is required')">
         <template #label>Account</template>
       </Input>
 
@@ -164,7 +164,7 @@ const initialValues: FormData = {
       <Radio name="role" value="admin">Admin</Radio>
       <Radio name="role" value="user">User</Radio>
 
-      <Button>Save</Button>
-    </Form> -->
+      <Button type="submit">Save</Button>
+    </Form>
   </Section>
 </template>
