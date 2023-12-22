@@ -3,50 +3,9 @@ import * as yup from 'yup'
 import { ref, computed, onMounted } from 'vue'
 import { UI, Control } from './components'
 import type { MenuItems } from '@/components/UI/Layout/Menu/type.ts'
+import type { TabsItems } from './components/UI/Tabs/type'
 
-const { Section, Image, Typography, Layout, Button } = UI
-
-const { Title } = Typography
-
-const {
-  Form,
-  Input,
-  InputPassword,
-  TextArea,
-  Select,
-  SelectTag,
-  TreeSelect,
-  DatePicker,
-  CheckBox,
-  Radio,
-  Upload
-} = Control
-
-const { ImageUpload, FileUpload } = Upload
-
-const { SingleImageUpload, MultipleImageUpload } = ImageUpload
-
-interface FormData {
-  account: string
-  password: string
-  gender: number
-  tags: string[]
-  ids: string[]
-  birthday: Date | string
-  note: string
-  role: string
-}
-
-const initialValues: FormData = {
-  account: '',
-  password: '',
-  gender: -1,
-  tags: [],
-  ids: [],
-  birthday: new Date(),
-  note: '',
-  role: ''
-}
+const { Section, Layout, Tabs } = UI
 
 // const { Container, Head, Body, Side, Content, Menu } = Layout
 
@@ -108,7 +67,13 @@ const initialValues: FormData = {
 //   // { id: '4', label: 'Item 4', labelIcon: 'user', type: 'text', isRoot: true, path: '#' }
 // ])
 
-const handleSubmit = (formData: FormData) => console.log(formData)
+const items: TabsItems = [
+  { id: '1', label: 'Tab 1', comName: 'tab-1' },
+  { id: '2', label: 'Tab 2', comName: 'tab-2' },
+  { id: '3', label: 'Tab 3', comName: 'tab-3' },
+  { id: '4', label: 'Tab 4', comName: 'tab-4' },
+  { id: '5', label: 'Tab 5', comName: 'tab-5' }
+]
 </script>
 
 <template>
@@ -126,45 +91,14 @@ const handleSubmit = (formData: FormData) => console.log(formData)
     </Body>
   </Container> -->
   <Section>
-    <Form :initialValues="initialValues" color="red" shape="round" @onFinish="handleSubmit">
-      <SingleImageUpload />
-
-      <MultipleImageUpload />
-
-      <FileUpload />
-
-      <Input name="account" :rule="yup.string().required('This field is required')">
-        <template #label>Account</template>
-      </Input>
-
-      <InputPassword name="password">
-        <template #label>Password</template>
-      </InputPassword>
-
-      <Select name="gender">
-        <template #label>Gender</template>
-      </Select>
-
-      <SelectTag name="tags">
-        <template #label>Tags</template>
-      </SelectTag>
-
-      <DatePicker name="birthday">
-        <template #label>Birthday</template>
-      </DatePicker>
-
-      <TextArea name="note">
-        <template #label>Note</template>
-      </TextArea>
-
-      <CheckBox name="ids" value="1"> ID 1 </CheckBox>
-      <CheckBox name="ids" value="2"> ID 2 </CheckBox>
-      <CheckBox name="ids" value="3"> ID 3 </CheckBox>
-
-      <Radio name="role" value="admin">Admin</Radio>
-      <Radio name="role" value="user">User</Radio>
-
-      <Button type="submit">Save</Button>
-    </Form>
+    <Tabs :items="items">
+      <template #content="com">
+        <div v-if="com.tab === 'tab-1'">Content 1</div>
+        <div v-if="com.tab === 'tab-2'">Content 2</div>
+        <div v-if="com.tab === 'tab-3'">Content 3</div>
+        <div v-if="com.tab === 'tab-4'">Content 4</div>
+        <div v-if="com.tab === 'tab-5'">Content 5</div>
+      </template>
+    </Tabs>
   </Section>
 </template>

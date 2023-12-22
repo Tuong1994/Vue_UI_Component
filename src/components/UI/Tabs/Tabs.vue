@@ -42,8 +42,10 @@ const handleChangeTab = (tab: TabsItem) => (activeTab.value = { tabId: tab.id, c
         :class="['head-item', activeTab.tabId === tab.id ? 'head-item-active' : '']"
         @click="() => handleChangeTab(tab)"
       >
-        <Icon v-if="tab.labelIcon" rootClassName="item-icon" :iconName="tab.labelIcon" />
-        <span>{{ tab.label }}</span>
+        <div class="item-inner">
+          <Icon v-if="tab.labelIcon" rootClassName="inner-icon" :iconName="tab.labelIcon" />
+          <span>{{ tab.label }}</span>
+        </div>
       </div>
     </div>
 
