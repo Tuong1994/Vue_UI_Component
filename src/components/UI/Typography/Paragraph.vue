@@ -5,6 +5,7 @@ import type { TypoAligns, TypoVariant } from './type.ts'
 export interface ParagraphProps {
   rootClassName?: string
   rootStyle?: StyleValue
+  weight?: number
   size?: number
   mark?: boolean
   italic?: boolean
@@ -17,6 +18,7 @@ export interface ParagraphProps {
 
 const props = withDefaults(defineProps<ParagraphProps>(), {
   rootClassName: '',
+  weight: 400,
   size: 14,
   variant: 'default',
   aligns: 'left'
@@ -36,10 +38,14 @@ const italicClassName = computed<string>(() => (props.italic ? 'paragraph-italic
 
 const strongClassName = computed<string>(() => (props.strong ? 'paragraph-strong' : ''))
 
-const inlineStyle = computed<StyleValue>(() => ({
-  ...(rootStyle?.value as object),
-  fontSize: `${props.size}px`
-}))
+const inlineStyle = computed<StyleValue>(() => {
+  if (props.strong) return { ...(rootStyle?.value as object), fontSize: `${props.size}px` }
+  return {
+    ...(rootStyle?.value as object),
+    fontSize: `${props.size}px`,
+    fontWeight: props.weight
+  }
+})
 </script>
 
 <template>

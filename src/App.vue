@@ -2,10 +2,13 @@
 import * as yup from 'yup'
 import { ref, computed, onMounted } from 'vue'
 import { UI, Control } from './components'
+import GridProvider from '@/components/UI/Grid/GridProvider.vue'
 import type { MenuItems } from '@/components/UI/Layout/Menu/type.ts'
 import type { TabsItems } from './components/UI/Tabs/type'
 
-const { Section, Layout, Tabs } = UI
+const { Section, Grid, Layout } = UI
+
+const { Row, Col } = Grid
 
 // const { Container, Head, Body, Side, Content, Menu } = Layout
 
@@ -66,18 +69,11 @@ const { Section, Layout, Tabs } = UI
 //   // { id: '3', label: 'Item 3', labelIcon: 'user', type: 'text', isRoot: true, path: '#' },
 //   // { id: '4', label: 'Item 4', labelIcon: 'user', type: 'text', isRoot: true, path: '#' }
 // ])
-
-const items: TabsItems = [
-  { id: '1', label: 'Tab 1', comName: 'tab-1' },
-  { id: '2', label: 'Tab 2', comName: 'tab-2' },
-  { id: '3', label: 'Tab 3', comName: 'tab-3' },
-  { id: '4', label: 'Tab 4', comName: 'tab-4' },
-  { id: '5', label: 'Tab 5', comName: 'tab-5' }
-]
 </script>
 
 <template>
-  <!-- <Container color="green">
+  <GridProvider>
+    <!-- <Container color="green">
     <Head>
       <Menu :items="items" />
     </Head>
@@ -90,15 +86,18 @@ const items: TabsItems = [
       </Content>
     </Body>
   </Container> -->
-  <Section>
-    <Tabs :items="items">
-      <template #content="com">
-        <div v-if="com.tab === 'tab-1'">Content 1</div>
-        <div v-if="com.tab === 'tab-2'">Content 2</div>
-        <div v-if="com.tab === 'tab-3'">Content 3</div>
-        <div v-if="com.tab === 'tab-4'">Content 4</div>
-        <div v-if="com.tab === 'tab-5'">Content 5</div>
-      </template>
-    </Tabs>
-  </Section>
+    <Section>
+      <Row>
+        <Col :xs="24" :span="14">
+          <div :style="{ width: '100%', background: 'red' }">content</div>
+        </Col>
+        <Col :span="6">
+          <div :style="{ width: '100%', background: 'red' }">content</div>
+        </Col>
+        <Col :span="4">
+          <div :style="{ width: '100%', background: 'red' }">content</div>
+        </Col>
+      </Row>
+    </Section>
+  </GridProvider>
 </template>

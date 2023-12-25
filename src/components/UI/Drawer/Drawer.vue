@@ -12,12 +12,14 @@ export interface DrawerProps {
   headStyle?: StyleValue
   bodyStyle?: StyleValue
   open?: boolean
+  hasHead?: boolean
 }
 
 const props = withDefaults(defineProps<DrawerProps>(), {
   rootClassName: '',
   headClassName: '',
-  bodyClassName: ''
+  bodyClassName: '',
+  hasHead: true
 })
 
 const emits = defineEmits(['onClose'])
@@ -42,7 +44,7 @@ const handleClose = () => emits('onClose')
     <div v-if="render" :class="['drawer-backdrop', backDropActiveClassName]" @click="handleClose" />
 
     <div v-if="render" :style="rootStyle" :class="['drawer', drawerActiveClassName, rootClassName]">
-      <div :style="headStyle" :class="['drawer-head', headFlexClassName, headClassName]">
+      <div v-if="hasHead" :style="headStyle" :class="['drawer-head', headFlexClassName, headClassName]">
         <slot name="head"></slot>
         <Icon :iconName="iconName.X_MARK" rootClassName="head-icon" @click="handleClose" />
       </div>

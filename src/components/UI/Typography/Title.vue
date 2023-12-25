@@ -7,6 +7,7 @@ type TitleLevel = 1 | 2 | 3 | 4 | 5 | 6
 export interface TitleProps {
   rootClassName?: string
   rootStyle?: StyleValue
+  weight?: number
   italic?: boolean
   remove?: boolean
   underline?: boolean
@@ -17,6 +18,7 @@ export interface TitleProps {
 
 const props = withDefaults(defineProps<TitleProps>(), {
   rootClassName: '',
+  weight: 500,
   aligns: 'left',
   variant: 'default',
   level: 1
@@ -34,6 +36,11 @@ const removeClassName = computed<string>(() => (props.remove ? 'title-remove' : 
 
 const italicClassName = computed<string>(() => (props.italic ? 'title-italic' : ''))
 
+const inlineStyle = computed<StyleValue>(() => ({
+  ...(propsRef.rootStyle?.value as object),
+  fontWeight: props.weight
+}))
+
 const commonProps = computed<any>(() => ({
   ...propsRef,
   class: [
@@ -46,7 +53,7 @@ const commonProps = computed<any>(() => ({
     italicClassName.value,
     props.rootClassName
   ],
-  style: propsRef.rootStyle?.value
+  style: inlineStyle
 }))
 </script>
 

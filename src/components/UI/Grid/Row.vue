@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, withDefaults, watchEffect, toRefs, type StyleValue } from 'vue'
+import { computed, withDefaults, watchEffect, toRefs, inject, type StyleValue } from 'vue'
 import type { ComponentJustify, ComponentAligns } from '@/common/type.ts'
 import useGridStore from './GridStore.ts'
 
@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<GridRowProps>(), {
 
 const { rootStyle } = toRefs(props)
 
-const grid = useGridStore()
+const grid = inject('grid', null) as any
 
 const justifyClassName = computed<string>(() => `grid-row-${props.justify}`)
 
@@ -37,8 +37,8 @@ const inlineStyle = computed<StyleValue>(() => {
 
 watchEffect(() => {
   if (!props.gutters.length) return
-  if (props.gutters.length === 1) return grid.addGutters(props.gutters[0] as number)
-  if (props.gutters.length === 2) return grid.addGutters(props.gutters[0] as number, props.gutters[1])
+  if (props.gutters.length === 1) return grid?.addGutters(props.gutters[0] as number)
+  if (props.gutters.length === 2) return grid?.addGutters(props.gutters[0] as number, props.gutters[1])
 })
 </script>
 

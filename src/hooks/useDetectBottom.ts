@@ -1,6 +1,8 @@
 import { ref, onMounted, type Ref } from 'vue'
 
 const useDetectBottom = (nodeRef: Ref<HTMLElement | undefined>, distance = 250) => {
+  if (typeof window === 'undefined') return
+  
   const bottom = ref<boolean>(false)
 
   const nodeBottomDistance = ref<number>(0)

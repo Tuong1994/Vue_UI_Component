@@ -4,6 +4,7 @@ const useViewPoint = () => {
   const screenWidth = ref<number>(window.innerWidth)
 
   watchEffect((onStop) => {
+    if (typeof window === 'undefined') return
     const handleResize = () => (screenWidth.value = window.innerWidth)
     window.addEventListener('resize', handleResize)
     onStop(() => window.removeEventListener('resize', handleResize))
