@@ -6,9 +6,7 @@ import GridProvider from '@/components/UI/Grid/GridProvider.vue'
 import type { MenuItems } from '@/components/UI/Layout/Menu/type.ts'
 import type { TabsItems } from './components/UI/Tabs/type'
 
-const { Section, Grid, Layout } = UI
-
-const { Row, Col } = Grid
+const { Section, Tabs, Layout } = UI
 
 // const { Container, Head, Body, Side, Content, Menu } = Layout
 
@@ -87,17 +85,17 @@ const { Row, Col } = Grid
     </Body>
   </Container> -->
     <Section>
-      <Row>
-        <Col :xs="24" :span="14">
-          <div :style="{ width: '100%', background: 'red' }">content</div>
-        </Col>
-        <Col :span="6">
-          <div :style="{ width: '100%', background: 'red' }">content</div>
-        </Col>
-        <Col :span="4">
-          <div :style="{ width: '100%', background: 'red' }">content</div>
-        </Col>
-      </Row>
+      <Tabs
+        :items="[
+          { id: '1', label: 'Tab 1', comName: 'tab-1' },
+          { id: '2', label: 'Tab 2', comName: 'tab-2' }
+        ]"
+      >
+        <template #content="com">
+          <div v-if="com.tab === 'tab-1'">Content 1</div>
+          <div v-if="com.tab === 'tab-2'">Content 2</div>
+        </template>
+      </Tabs>
     </Section>
   </GridProvider>
 </template>

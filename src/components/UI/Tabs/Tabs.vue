@@ -27,8 +27,6 @@ const activeTab = ref({ tabId: props.items[0].id, comName: props.items[0].comNam
 
 const colorClassName = computed<string>(() => `tabs-${props.color}`)
 
-const headItemStyle = computed<StyleValue>(() => ({ width: `calc(100% / ${props.items.length})` }))
-
 const handleChangeTab = (tab: TabsItem) => (activeTab.value = { tabId: tab.id, comName: tab.comName })
 </script>
 
@@ -38,7 +36,6 @@ const handleChangeTab = (tab: TabsItem) => (activeTab.value = { tabId: tab.id, c
       <div
         v-for="tab in items"
         :key="tab.id"
-        :style="headItemStyle"
         :class="['head-item', activeTab.tabId === tab.id ? 'head-item-active' : '']"
         @click="() => handleChangeTab(tab)"
       >

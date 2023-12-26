@@ -27,6 +27,7 @@ import Drawer from './Drawer/Drawer.vue'
 import Breadcrumb from './Breadcrumb/Breadcrumb.vue'
 import NoteMessage from './NoteMessage/NoteMessage.vue'
 import ToastMessage from './ToastMessage/ToastMessage.vue'
+import InfoRow from './InfoRow/InfoRow.vue'
 
 export {
   Grid,
@@ -57,5 +58,6 @@ export {
   Breadcrumb,
   NoteMessage,
   ToastMessage,
-  Alert
+  Alert,
+  InfoRow
 }

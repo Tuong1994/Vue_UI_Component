@@ -19,6 +19,8 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
 
 const emits = defineEmits(['onClick'])
 
+const activeClassName = (item: BreadcrumbItem) => (item.actived ? 'item-label-active' : '')
+
 const handleClick = (item: BreadcrumbItem) => emits('onClick', item)
 </script>
 
@@ -30,12 +32,17 @@ const handleClick = (item: BreadcrumbItem) => emits('onClick', item)
       :style="itemStyle"
       :class="['breadcrumb-item', itemClassName]"
     >
-      <router-link v-if="item.link" :to="item.link" class="item-label" @click="() => handleClick(item)">
+      <router-link
+        v-if="item.link"
+        :to="item.link"
+        :class="['item-label', activeClassName(item)]"
+        @click="() => handleClick(item)"
+      >
         <Icon v-if="item.labelIcon" :iconName="item.labelIcon" rootClassName="label-icon" :size="12" />
         <span>{{ item.label }}</span>
       </router-link>
 
-      <div v-if="!item.link" class="item-label" @click="() => handleClick(item)">
+      <div v-if="!item.link" :class="['item-label', activeClassName(item)]" @click="() => handleClick(item)">
         <Icon v-if="item.labelIcon" :iconName="item.labelIcon" rootClassName="label-icon" :size="12" />
         <span>{{ item.label }}</span>
       </div>

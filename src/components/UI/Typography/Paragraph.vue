@@ -7,6 +7,7 @@ export interface ParagraphProps {
   rootStyle?: StyleValue
   weight?: number
   size?: number
+  lineHeight?: number
   mark?: boolean
   italic?: boolean
   strong?: boolean
@@ -20,6 +21,7 @@ const props = withDefaults(defineProps<ParagraphProps>(), {
   rootClassName: '',
   weight: 400,
   size: 14,
+  lineHeight: 25,
   variant: 'default',
   aligns: 'left'
 })
@@ -39,12 +41,13 @@ const italicClassName = computed<string>(() => (props.italic ? 'paragraph-italic
 const strongClassName = computed<string>(() => (props.strong ? 'paragraph-strong' : ''))
 
 const inlineStyle = computed<StyleValue>(() => {
-  if (props.strong) return { ...(rootStyle?.value as object), fontSize: `${props.size}px` }
-  return {
+  const defaultStyle = {
     ...(rootStyle?.value as object),
     fontSize: `${props.size}px`,
-    fontWeight: props.weight
+    lineHeight: `${props.lineHeight}px`
   }
+  if (props.strong) return defaultStyle
+  return { ...defaultStyle, fontWeight: props.weight }
 })
 </script>
 
