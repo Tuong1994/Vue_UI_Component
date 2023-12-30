@@ -23,6 +23,9 @@ export interface TextAreaProps {
   disabled?: boolean
   rows?: number
   cols?: number
+  required?: boolean
+  optional?: boolean
+  hasClear?: boolean
   rule?: FormRule
 }
 
@@ -35,7 +38,8 @@ const props = withDefaults(defineProps<TextAreaProps>(), {
   shape: 'square',
   placeholder: 'Type...',
   name: '',
-  rows: 5
+  rows: 5,
+  hasClear: true
 })
 
 const form = inject('form', null) as any
@@ -68,7 +72,11 @@ const controlSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize 
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
-const showClearIcon = computed<boolean>(() => Boolean(form?.isVee ? veeValue?.value : props.modelValue))
+const showClearIcon = computed<boolean>(
+  () => Boolean(form?.isVee ? veeValue?.value : props.modelValue) && props.hasClear
+)
+
+const showOptional = computed<boolean>(() => (props.required ? false : props.optional))
 
 const colorClassName = computed<string>(() => `textarea-${controlColor.value}`)
 
@@ -118,7 +126,9 @@ watchEffect(() => {
   >
     <label>
       <div v-if="hasLabel" :style="labelStyle" :class="['textarea-label', labelClassName]">
+        <span v-if="required" className="label-required">*</span>
         <slot name="label"></slot>
+        <span v-if="showOptional" className="label-optional">(Optional)</span>
       </div>
 
       <div ref="inputRef" class="textarea-group">

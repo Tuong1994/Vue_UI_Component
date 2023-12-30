@@ -1,37 +1,55 @@
 <script setup lang="ts">
 import { computed, withDefaults } from 'vue'
 import { UI } from '@/components'
-import type { SpaceProps } from '../Space/Space.vue'
 import type { ParagraphProps } from '../Typography/Paragraph.vue'
+import type { GridColProps } from '../Grid/Col.vue'
+import type { GridRowProps } from '../Grid/Row.vue'
 
-const { Space, Typography } = UI
+const { Grid, Typography } = UI
+
+const { Row, Col } = Grid
 
 const { Paragraph } = Typography
 
-interface InfoRowProps extends SpaceProps {
+export interface InfoRowProps extends GridRowProps {
   labelProps?: ParagraphProps
   textProps?: ParagraphProps
+  labelSpanProps?: GridColProps
+  textSpanProps?: GridColProps
+  hasColon?: boolean
 }
 
-const props = withDefaults(defineProps<InfoRowProps>(), {
-  size: 'lg'
-})
+const props = withDefaults(defineProps<InfoRowProps>(), {})
 
-const labelDefaultProps = computed<ParagraphProps>(() => ({
-  ...props.labelProps,
-  rootClassName: 'row-label'
+const labelSpanDefaultProps = computed<GridColProps>(() => ({
+  span: 6,
+  ...props.labelSpanProps
 }))
 
-const textDefaultProps = computed<ParagraphProps>(() => ({ ...props.textProps, strong: true }))
+const textSpanDefaultProps = computed<GridColProps>(() => ({
+  span: 16,
+  ...props.textSpanProps
+}))
+
+const labelDefaultProps = computed<ParagraphProps>(() => ({
+  rootClassName: 'row-label',
+  ...props.labelProps
+}))
+
+const textDefaultProps = computed<ParagraphProps>(() => ({ strong: true, ...props.textProps }))
 </script>
 
 <template>
-  <Space v-bind="props" :size="size" rootClassName="info-row">
-    <Paragraph v-bind="labelDefaultProps">
-      <slot name="label"></slot>
-    </Paragraph>
-    <Paragraph v-bind="textDefaultProps">
-      <slot name="text"></slot>
-    </Paragraph>
-  </Space>
+  <Row v-bind="props" rootClassName="info-row">
+    <Col v-bind="labelSpanDefaultProps">
+      <Paragraph v-bind="labelDefaultProps">
+        <slot name="label"></slot>
+      </Paragraph>
+    </Col>
+    <Col v-bind="textSpanDefaultProps">
+      <Paragraph v-bind="textDefaultProps">
+        <slot name="text"></slot>
+      </Paragraph>
+    </Col>
+  </Row>
 </template>

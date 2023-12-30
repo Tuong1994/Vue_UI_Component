@@ -14,10 +14,12 @@ export interface RadioProps {
   controlStyle?: StyleValue
   sizes?: ComponentSize
   color?: Exclude<ComponentColor, 'red' | 'gray'>
-  disabled?: boolean
-  checked?: boolean
   name?: string
   value?: string | number
+  disabled?: boolean
+  checked?: boolean
+  required?: boolean
+  optional?: boolean
   rule?: FormRule
 }
 
@@ -54,6 +56,8 @@ const hasLabel = computed<boolean>(() => slots.default !== undefined)
 const controlColor = computed<ComponentColor>(() => (form?.isVee ? form?.formColor : props.color))
 
 const controlSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize : props.sizes))
+
+const showOptional = computed<boolean>(() => (props.required ? false : props.optional))
 
 const sizeClassName = computed<string>(() => `radio-${controlSize.value}`)
 
@@ -100,7 +104,9 @@ watchEffect(() => {
       <div :style="controlStyle" :class="['group-checked', controlClassName]" />
 
       <div v-if="hasLabel" :style="labelStyle" :class="['group-label', labelClassName]">
+        <span v-if="required" className="label-required">*</span>
         <slot></slot>
+        <span v-if="showOptional" className="label-optional">(Optional)</span>
       </div>
     </label>
 

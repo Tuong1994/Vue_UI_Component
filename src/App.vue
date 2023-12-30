@@ -5,8 +5,63 @@ import { UI, Control } from './components'
 import GridProvider from '@/components/UI/Grid/GridProvider.vue'
 import type { MenuItems } from '@/components/UI/Layout/Menu/type.ts'
 import type { TabsItems } from './components/UI/Tabs/type'
+import type { TableColumns } from './components/UI/Table/type'
 
-const { Section, Tabs, Layout } = UI
+const { Section, Layout } = UI
+
+const { Input, InputPassword, TextArea, Select, SelectTag, TreeSelect, DatePicker, CheckBox, Radio } = Control
+
+// interface Data {
+//   id: string
+//   name: string
+//   quantity: number
+// }
+
+// const dataSouce: Data[] = [
+//   { id: '1', name: 'Product 1', quantity: 1 },
+//   { id: '2', name: 'Product 2', quantity: 5 },
+//   { id: '3', name: 'Product 3', quantity: 3 }
+// ]
+
+// const columns: TableColumns<Data> = [
+//   {
+//     id: 'image',
+//     title: 'Image',
+//     dataIndex: 'id',
+//     component: () => ({
+//       node: Image,
+//       props: {
+//         sizes: 50
+//       }
+//     })
+//   },
+//   {
+//     id: 'name',
+//     title: 'Name',
+//     dataIndex: 'name'
+//   },
+//   {
+//     id: 'name2',
+//     title: 'Name',
+//     dataIndex: 'name'
+//   },
+//   {
+//     id: 'name3',
+//     title: 'Name',
+//     dataIndex: 'name'
+//   },
+//   {
+//     id: 'quantity',
+//     title: 'Quantity',
+//     dataIndex: 'quantity'
+//   },
+//   {
+//     id: 'action',
+//     title: '',
+//     dataIndex: 'id',
+//     render: () => 'Delete'
+//   }
+// ]
 
 // const { Container, Head, Body, Side, Content, Menu } = Layout
 
@@ -67,6 +122,10 @@ const { Section, Tabs, Layout } = UI
 //   // { id: '3', label: 'Item 3', labelIcon: 'user', type: 'text', isRoot: true, path: '#' },
 //   // { id: '4', label: 'Item 4', labelIcon: 'user', type: 'text', isRoot: true, path: '#' }
 // ])
+
+const openModal1 = ref<boolean>(false)
+
+const openModal2 = ref<boolean>(false)
 </script>
 
 <template>
@@ -85,17 +144,29 @@ const { Section, Tabs, Layout } = UI
     </Body>
   </Container> -->
     <Section>
-      <Tabs
-        :items="[
-          { id: '1', label: 'Tab 1', comName: 'tab-1' },
-          { id: '2', label: 'Tab 2', comName: 'tab-2' }
-        ]"
-      >
-        <template #content="com">
-          <div v-if="com.tab === 'tab-1'">Content 1</div>
-          <div v-if="com.tab === 'tab-2'">Content 2</div>
-        </template>
-      </Tabs>
+      <Input required optional>
+        <template #label>Input</template>
+      </Input>
+      <InputPassword required optional>
+        <template #label>Password</template>
+      </InputPassword>
+      <Select required optional>
+        <template #label>Select</template>
+      </Select>
+      <SelectTag required optional>
+        <template #label>Select tag</template>
+      </SelectTag>
+      <TreeSelect required optional>
+        <template #label>Tree select</template>
+      </TreeSelect>
+      <DatePicker required optional>
+        <template #label>Datepicker</template>
+      </DatePicker>
+      <TextArea required optional>
+        <template #label>Textarea</template>
+      </TextArea>
+      <CheckBox required optional>Checkbox</CheckBox>
+      <Radio required optional>Radio</Radio>
     </Section>
   </GridProvider>
 </template>

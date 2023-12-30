@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, withDefaults, type StyleValue } from 'vue'
+import { computed } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import HeaderSelect from './HeaderSelect.vue'
+import type { SelectOptions } from '../type';
 
 interface CalendarHeaderProps {
   currentMonth: number
@@ -28,7 +29,7 @@ const months = computed<string[]>(() => [
   'December'
 ])
 
-const years = computed<number>(() => {
+const years = computed<number[]>(() => {
   let startYear = 1970
   const yearRange: number[] = []
   const currentYear = new Date().getFullYear()

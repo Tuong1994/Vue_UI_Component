@@ -3,7 +3,13 @@ import { ref, computed, withDefaults, useSlots, toRefs, watchEffect, inject, typ
 import { useField } from 'vee-validate'
 import { useRender, useDetectBottom, useClickOutside } from '@/hooks'
 import type { ComponentSize } from '@/common/type.ts'
-import type { SelectOptions, Option, FormRule, ControlColor, ControlShape } from '@/components/Control/type.ts'
+import type {
+  SelectOptions,
+  Option,
+  FormRule,
+  ControlColor,
+  ControlShape
+} from '@/components/Control/type.ts'
 import SelectTagControl from './SelectTagControl.vue'
 import SelectTagOption from './SelectTagOption.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
@@ -26,6 +32,9 @@ export interface SelectTagProps {
   async?: boolean
   loading?: boolean
   disabled?: boolean
+  required?: boolean
+  optional?: boolean
+  hasClear?: boolean
   total?: number
   limit?: number
   rule?: FormRule
@@ -38,11 +47,11 @@ const props = withDefaults(defineProps<SelectTagProps>(), {
   sizes: 'md',
   color: 'blue',
   shape: 'square',
-  placeholder: 'Select...',
   name: '',
   async: false,
   loading: false,
   disabled: false,
+  hasClear: true,
   total: 100,
   limit: 10,
   options: () => [],
@@ -93,7 +102,9 @@ const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
 
 const hasAddonAfter = computed<boolean>(() => slots.addonAfter !== undefined)
 
-const showClearIcon = computed<boolean>(() => Boolean(search.value && !props.disabled))
+const showClearIcon = computed<boolean>(() => Boolean(search.value && !props.disabled && props.hasClear))
+
+const showOptional = computed<boolean>(() => (props.required ? false : props.optional))
 
 const totalPages = computed<number>(() => Math.ceil(props.total / props.limit))
 
@@ -105,11 +116,17 @@ const shapeClassName = computed<string>(() => `select-${controlShape.value}`)
 
 const gapClassName = computed<string>(() => (form?.isVee ? `select-gap-${controlSize.value}` : ''))
 
-const bottomClassName = computed<string>(() => (bottom.value ? 'select-bottom' : ''))
+const bottomClassName = computed<string>(() => (bottom?.value ? 'select-bottom' : ''))
 
 const errorClassName = computed<string>(() => (errorMessage?.value ? 'select-error' : ''))
 
 const disabledClassName = computed<string>(() => (props.disabled ? 'select-disabled' : ''))
+
+const controlPlaceHolder = computed<string>(() => {
+  if (props.placeholder) return props.placeholder
+  if (dropdown) return 'Search...'
+  return 'Select...'
+})
 
 const iconSize = computed<number>(() => {
   if (controlSize.value === 'sm') return 12
@@ -196,14 +213,16 @@ watchEffect(() => {
     ]"
   >
     <label v-if="hasLabel" :style="labelStyle" :class="['select-label', labelClassName]">
+      <span v-if="required" className="label-required">*</span>
       <slot name="label"></slot>
+      <span v-if="showOptional" className="label-optional">(Optional)</span>
     </label>
 
     <div class="select-wrap">
       <SelectTagControl
         :inputClassName="inputClassName"
         :inputStyle="inputStyle"
-        :placeholder="placeholder"
+        :placeholder="controlPlaceHolder"
         :iconSize="iconSize"
         :dropdown="dropdown"
         :disabled="disabled"
@@ -231,7 +250,6 @@ watchEffect(() => {
         :async="async"
         :dropdown="dropdown"
         :loading="loading"
-        :bottom="bottom"
         :options="renderOptions"
         :selectedOptions="selectedOptions"
         :currentPage="currentPage"

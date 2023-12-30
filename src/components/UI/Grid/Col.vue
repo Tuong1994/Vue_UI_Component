@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, watchEffect, toRefs, inject, type StyleValue } from 'vue'
 import type { ColSpan } from './type.ts'
-import useGridStore from './GridStore.ts'
 
-export interface GridRowProps {
+export interface GridColProps {
   rootClassName?: string
   rootStyle?: StyleValue
   isFill?: boolean
@@ -13,7 +12,7 @@ export interface GridRowProps {
   lg?: ColSpan
 }
 
-const props = withDefaults(defineProps<GridRowProps>(), {
+const props = withDefaults(defineProps<GridColProps>(), {
   rootClassName: ''
 })
 

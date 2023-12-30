@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watchEffect, toRef } from 'vue'
+import type { SelectDate } from '../type';
 import CalendarHeader from './CalendarHeader.vue'
 import CalendarDay from './CalendarDay.vue'
 import CalendarDate from './CalendarDate.vue'

@@ -6,7 +6,6 @@ import type { ComponentSize, ComponentColor } from '@/common/type.ts'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
-import useFormStore from '@/components/Control/Form/FormStore.ts'
 
 export interface CheckBoxProps {
   rootClassName?: string
@@ -21,6 +20,8 @@ export interface CheckBoxProps {
   name?: string
   checked?: boolean
   disabled?: boolean
+  required?: boolean
+  optional?: boolean
   rule?: FormRule
 }
 
@@ -34,7 +35,7 @@ const props = withDefaults(defineProps<CheckBoxProps>(), {
   checked: false
 })
 
-const form = inject('form', null)
+const form = inject('form', null) as any
 
 const { name } = toRefs(props)
 
@@ -61,6 +62,8 @@ const controlValue = computed<string>(() => (form?.isVee ? veeValue?.value : pro
 const controlColor = computed<ComponentColor>(() => (form?.isVee ? form?.formColor : props.color))
 
 const controlSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize : props.sizes))
+
+const showOptional = computed<boolean>(() => (props.required ? false : props.optional))
 
 const sizeClassName = computed<string>(() => `checkbox-${controlSize.value}`)
 
@@ -131,7 +134,9 @@ watchEffect(() => {
       </div>
 
       <div v-if="hasLabel" class="group-label">
+        <span v-if="required" className="label-required">*</span>
         <slot></slot>
+        <span v-if="showOptional" className="label-optional">(Optional)</span>
       </div>
     </label>
 

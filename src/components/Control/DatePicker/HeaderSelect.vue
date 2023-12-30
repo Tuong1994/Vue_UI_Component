@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watchEffect, type StyleValue } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import type { SelectOptions, Option } from '../type.ts'
 import { useRender, useClickOutside } from '@/hooks'
 import { iconName } from '@/components/UI/Icon/constant.ts'
@@ -19,7 +19,7 @@ const dropdown = ref<boolean>(false)
 
 const selectedOption = ref<Option | null>(null)
 
-const selectRef = ref<HTMLDivElement | null>(null)
+const selectRef = ref<HTMLDivElement>()
 
 const render = useRender(dropdown)
 

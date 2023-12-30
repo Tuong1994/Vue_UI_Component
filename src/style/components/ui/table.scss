@@ -17,6 +17,7 @@
           th {
             min-width: max-content;
             .table-cell {
+              font-size: $text-sm;
               padding: $p-1 - 0.4 $p-1;
               .cell-checked-mixed {
                 width: $w-2;
@@ -45,7 +46,6 @@
             background: $bg-slate;
           }
           td {
-            min-width: max-content;
             .table-cell {
               padding: $p-1;
             }
@@ -53,6 +53,7 @@
         }
       }
       .table-cell {
+        min-width: max-content;
         width: $w-full;
         display: flex;
         align-items: center;

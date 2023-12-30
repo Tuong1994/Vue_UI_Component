@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, withDefaults, useSlots, toRefs, type StyleValue } from 'vue'
+import { ref, computed, withDefaults, useSlots, toRefs, watchEffect, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
-import type { ComponentSize } from '@/common/type'
+import type { ComponentColor, ComponentSize } from '@/common/type'
 import Button, { type ButtonProps } from '@/components/UI/Button/Button.vue'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import useRender from '@/hooks/useRender.ts'
@@ -22,6 +22,7 @@ export interface ModalProps {
   backdropClose?: boolean
   open?: boolean
   sizes?: ComponentSize
+  color?: ComponentColor
   okButtonTitle?: string
   cancelButtonTitle?: string
   okButtonProps?: ButtonProps
@@ -38,6 +39,7 @@ const props = withDefaults(defineProps<ModalProps>(), {
   hasCloseIcon: true,
   backdropClose: true,
   sizes: 'md',
+  color: 'blue',
   okButtonTitle: 'Ok',
   cancelButtonTitle: 'Cancel',
   okButtonProps: () => ({}),
@@ -54,9 +56,15 @@ const slots = useSlots()
 
 useOverflow(open)
 
+const modalRef = ref<HTMLDivElement>()
+
+const modalBackdropRef = ref<HTMLDivElement>()
+
 const hasHeadTitle = computed<boolean>(() => slots.head !== undefined)
 
 const sizesClassName = computed<string>(() => `modal-${props.sizes}`)
+
+const colorClassName = computed<string>(() => `modal-${props.color}`)
 
 const hasHeadClassName = computed<string>(() => (hasHeadTitle.value ? 'modal-head-flex' : ''))
 
@@ -64,7 +72,22 @@ const backdropActiveClassName = computed<string>(() => (props.open ? 'modal-back
 
 const modalActiveClassName = computed<string>(() => (props.open ? 'modal-active' : ''))
 
-const okActionProps = computed<ButtonProps>(() => ({ ...props.okButtonProps, color: 'blue' }))
+const okButtonColor = computed(() =>
+  props.color === 'white' || props.color === 'gray' ? 'blue' : props.okButtonProps?.color ?? props.color
+)
+
+const okActionProps = computed<ButtonProps>(() => ({ ...props.okButtonProps, color: okButtonColor.value }))
+
+watchEffect(() => {
+  if (!document) return
+  const modals = document.querySelectorAll('.modal-active')
+  if (modalRef.value && modalBackdropRef.value) {
+    const modalzIndex = 35 + modals.length
+    const backdropszIndex = 34 + modals.length
+    modalRef.value.style.zIndex = `${modalzIndex}`
+    modalBackdropRef.value.style.zIndex = `${backdropszIndex}`
+  }
+})
 
 const handleOk = () => emits('onOk')
 
@@ -75,11 +98,16 @@ const handleClose = () => emits('onClose')
   <Teleport to="#portal">
     <div
       v-if="render"
+      ref="modalBackdropRef"
       :class="['modal-backdrop', backdropActiveClassName]"
       @click="() => backdropClose && handleClose()"
     />
 
-    <div v-if="render" :class="['modal', sizesClassName, modalActiveClassName, rootClassName]">
+    <div
+      v-if="render"
+      ref="modalRef"
+      :class="['modal', colorClassName, sizesClassName, modalActiveClassName, rootClassName]"
+    >
       <div v-if="hasHead" :class="['modal-head', hasHeadClassName, headClassName]">
         <slot v-if="hasHeadTitle" name="head"></slot>
 

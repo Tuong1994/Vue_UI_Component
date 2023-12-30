@@ -21,6 +21,9 @@ export interface InputProps {
   placeholder?: string
   name?: string
   disabled?: boolean
+  required?: boolean
+  optional?: boolean
+  hasClear?: boolean
   rule?: FormRule
 }
 
@@ -32,7 +35,8 @@ const props = withDefaults(defineProps<InputProps>(), {
   color: 'blue',
   shape: 'square',
   placeholder: 'Type...',
-  name: ''
+  name: '',
+  hasClear: true
 })
 
 const form = inject('form', null) as any
@@ -69,7 +73,11 @@ const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
 
 const hasAddonAfter = computed<boolean>(() => slots.addonAfter !== undefined)
 
-const showClearIcon = computed<boolean>(() => Boolean(form?.isVee ? veeValue?.value : props.modelValue))
+const showClearIcon = computed<boolean>(
+  () => Boolean(form?.isVee ? veeValue?.value : props.modelValue) && props.hasClear
+)
+
+const showOptional = computed<boolean>(() => (props.required ? false : props.optional))
 
 const colorClassName = computed<string>(() => `input-${controlColor.value}`)
 
@@ -119,7 +127,9 @@ watchEffect(() => {
   >
     <label>
       <div v-if="hasLabel" :style="labelStyle" :class="['input-label', labelClassName]">
+        <span v-if="required" className="label-required">*</span>
         <slot name="label"></slot>
+        <span v-if="showOptional" className="label-optional">(Optional)</span>
       </div>
 
       <div ref="inputRef" class="input-group">

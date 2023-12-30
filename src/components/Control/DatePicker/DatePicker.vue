@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, toRefs, useSlots, watchEffect, inject, type StyleValue } from 'vue'
 import { useField } from 'vee-validate'
-import type { ComponentSize } from '@/common/type/ts'
-import type { ControlColor, ControlShape } from '@/components/Control/type.ts'
+import type { ComponentSize } from '@/common/type.ts'
+import type { ControlColor, ControlShape, FormRule, SelectDate } from '@/components/Control/type.ts'
 import { useRender, useClickOutside, useDetectBottom } from '@/hooks'
 import DatePickerControl from './DatePickerControl.vue'
 import DatePickerCalender from './DatePickerCalendar.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
-import useFormStore from '@/components/Control/Form/FormStore.ts'
 
 export interface DatePickerProps {
   rootClassName?: string
@@ -25,6 +24,10 @@ export interface DatePickerProps {
   sizes?: ComponentSize
   color?: ControlColor
   shape?: ControlShape
+  required?: boolean
+  optional?: boolean
+  hasReset?: boolean
+  rule?: FormRule
 }
 
 const props = withDefaults(defineProps<DatePickerProps>(), {
@@ -36,14 +39,15 @@ const props = withDefaults(defineProps<DatePickerProps>(), {
   color: 'blue',
   shape: 'square',
   format: 'DD/MM/YYYY',
-  defaultDate: new Date()
+  hasReset: true,
+  defaultDate: () => new Date()
 })
 
 const emits = defineEmits(['onChangeSelect'])
 
 const slots = useSlots()
 
-const form = inject('form', null)
+const form = inject('form', null) as any
 
 const { defaultDate, name } = toRefs(props)
 
@@ -59,7 +63,7 @@ const selectedDate = ref<Date>(defaultDate.value)
 
 const dropdown = ref<boolean>(false)
 
-const datepickerRef = ref<HTMLDivElement | null>(null)
+const datepickerRef = ref<HTMLDivElement>()
 
 const render = useRender(dropdown)
 
@@ -80,8 +84,10 @@ const hasAddonBefore = computed<boolean>(() => slots.addonBefore !== undefined)
 const hasAddonAfter = computed<boolean>(() => slots.addonAfter !== undefined)
 
 const showResetIcon = computed<boolean>(() =>
-  Boolean(selectedDate.value.getDate() !== new Date().getDate() && !props.disabled)
+  Boolean(selectedDate.value.getDate() !== new Date().getDate() && !props.disabled && props.hasReset)
 )
+
+const showOptional = computed<boolean>(() => (props.required ? false : props.optional))
 
 const sizeClassName = computed<string>(() => `datepicker-${controlSize.value}`)
 
@@ -91,7 +97,7 @@ const shapeClassName = computed<string>(() => `datepicker-${controlShape.value}`
 
 const gapClassName = computed<string>(() => (form?.isVee ? `datepicker-gap-${controlSize.value}` : ''))
 
-const bottomClassName = computed<string>(() => (bottom.value ? 'datepicker-bottom' : ''))
+const bottomClassName = computed<string>(() => (bottom?.value ? 'datepicker-bottom' : ''))
 
 const disabledClassName = computed<string>(() => (props.disabled ? 'datepicker-disabled' : ''))
 
@@ -139,7 +145,9 @@ watchEffect(() => {
     ]"
   >
     <label v-if="hasLabel" :style="labelStyle" :class="['datepicker-label', labelClassName]">
+      <span v-if="required" className="label-required">*</span>
       <slot name="label"></slot>
+      <span v-if="showOptional" className="label-optional">(Optional)</span>
     </label>
 
     <div class="datepicker-wrap">

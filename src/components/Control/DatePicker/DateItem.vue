@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, withDefaults, toRefs } from 'vue'
+import type { SelectDate } from '../type';
 import useSelectRange from './useSelectRange.ts'
 
 interface DateItemProps {

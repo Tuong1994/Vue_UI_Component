@@ -1,4 +1,4 @@
-import { computed, watchEffect, type Ref } from 'vue'
+import { computed, type Ref } from 'vue'
 import type { SelectDate } from '../type'
 
 type Params = {

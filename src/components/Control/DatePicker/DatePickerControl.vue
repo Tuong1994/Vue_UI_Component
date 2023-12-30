@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, withDefaults, useSlots, type StyleValue } from 'vue'
+import { withDefaults, useSlots, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import moment from 'moment'
