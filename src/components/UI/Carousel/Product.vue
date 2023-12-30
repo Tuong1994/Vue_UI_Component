@@ -2,10 +2,9 @@
 import { ref, computed, withDefaults, watchEffect, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import type { CarouselItems } from './type.ts'
+import { useRender, useClickOutside } from '@/hooks'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import useCarousel from './useCarousel.ts'
-import useRender from '@/hooks/useRender.ts'
-import useClickOutside from '@/hooks/useClickOutside.ts'
 
 export interface CarouselProductProps {
   rootClassName?: string

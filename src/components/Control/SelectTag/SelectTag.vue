@@ -13,7 +13,6 @@ import type {
 import SelectTagControl from './SelectTagControl.vue'
 import SelectTagOption from './SelectTagOption.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
-import useFormStore from '@/components/Control/Form/FormStore.ts'
 
 export interface SelectTagProps {
   rootClassName?: string

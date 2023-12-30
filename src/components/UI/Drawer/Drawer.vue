@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, withDefaults, toRefs, useSlots, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
+import { useRender } from '@/hooks'
 import Icon from '@/components/UI/Icon/Icon.vue'
-import useRender from '@/hooks/useRender.ts'
 
 export interface DrawerProps {
   rootClassName?: string

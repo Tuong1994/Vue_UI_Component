@@ -47,7 +47,13 @@ const handleCheck = (checked: boolean) => emits('onCheck', checked)
 
 <template>
   <div :style="imageSize" :class="['image-view', loadedClassName]">
-    <img v-lazyload="lazyType" :class="['view-area', viewCheckedClassName]" :data-src="src" @load="handleLoad" />
+    <img
+      v-lazyload="lazyType"
+      :style="imageSize"
+      :data-src="src"
+      :class="['view-area', viewCheckedClassName]"
+      @load="handleLoad"
+    />
 
     <div v-if="hasView" class="view-actions">
       <Icon :iconName="iconName.EYE" class="actions-icon" @click="handleOpenViewer" />

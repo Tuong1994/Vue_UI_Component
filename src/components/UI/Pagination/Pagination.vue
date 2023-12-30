@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, type StyleValue, watch } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
+import { useViewPoint } from '@/hooks'
 import type { ComponentColor, ComponentShape } from '@/common/type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import usePagination from './usePagination.ts'
-import useViewPoint from '@/hooks/useViewPoint.ts'
 
 export interface PaginationProps {
   rootClassName?: string

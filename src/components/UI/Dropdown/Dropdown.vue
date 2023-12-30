@@ -2,8 +2,7 @@
 import { ref, computed, withDefaults, type StyleValue } from 'vue'
 import type { ComponentPlacement } from '@/common/type.ts'
 import type { DropdownItems } from './type.ts'
-import useRender from '@/hooks/useRender.ts'
-import useClickOutside from '@/hooks/useClickOutside.ts'
+import { useRender, useClickOutside } from '@/hooks'
 
 type TriggerType = 'hover' | 'click'
 

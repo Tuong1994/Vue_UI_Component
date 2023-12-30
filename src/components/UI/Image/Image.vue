@@ -4,7 +4,7 @@ import type { ComponentSize } from '@/common/type.ts'
 import ImageLoading from './ImageLoading.vue'
 import ImageView from './ImageView.vue'
 
-type ImageSize = (ComponentSize & number) | any
+type ImageSize = ComponentSize
 
 type ImageObjectFit = 'fill' | 'cover' | 'contain' | 'none'
 
@@ -13,7 +13,9 @@ export type ImageLazyType = 'immediate' | 'lazy'
 export interface ImageProps {
   rootClassName?: string
   rootStyle?: StyleValue
-  sizes?: ImageSize
+  size?: ImageSize
+  imgWidth?: number | string
+  imgHeight?: number | string
   objectFit?: ImageObjectFit
   lazyType?: ImageLazyType
   src?: string
@@ -23,7 +25,6 @@ export interface ImageProps {
 
 const props = withDefaults(defineProps<ImageProps>(), {
   rootClassName: '',
-  sizes: 'auto',
   objectFit: 'fill',
   lazyType: 'lazy',
   src: 'https://cdn.hswstatic.com/gif/space-smell-2.jpg',
@@ -44,11 +45,19 @@ const rootCheckedClassName = computed<string>(() => (isChecked.value ? 'image-ch
 const fitClassName = computed<string>(() => `image-${props.objectFit}`)
 
 const imageSize = computed<StyleValue>(() => {
-  if (typeof props.sizes === 'number') return { width: `${props.sizes}px`, height: `${props.sizes}px` }
-  if (props.sizes === 'sm') return { width: '100px', height: '100px' }
-  if (props.sizes === 'md') return { width: '200px', height: '200px' }
-  if (props.sizes === 'lg') return { width: '300px', height: '300px' }
-  return { width: props.sizes, height: props.sizes }
+  if (props.size) {
+    if (props.size === 'sm') return { width: `100px`, height: `100px` }
+    if (props.size === 'md') return { width: `200px`, height: `200px` }
+    if (props.size === 'lg') return { width: `300px`, height: `300px` }
+  }
+  if (props.imgWidth && !props.imgHeight) return { width: props.imgWidth, height: 'auto' }
+  if (props.imgHeight && !props.imgWidth) return { width: 'auto', height: props.imgHeight }
+  if (props.imgWidth && props.imgHeight) {
+    const width = typeof props.imgWidth === 'string' ? props.imgWidth : `${props.imgWidth}px`
+    const height = typeof props.imgHeight === 'string' ? props.imgHeight : `${props.imgHeight}px`
+    return { width, height }
+  }
+  return { width: 'auto', height: 'auto' }
 })
 
 const inlineStyle = computed<StyleValue>(() => ({ ...(rootStyle?.value as object), imageSize }))
