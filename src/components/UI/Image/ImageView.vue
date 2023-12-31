@@ -19,6 +19,7 @@ interface ImageViewProps {
   loading: boolean
   hasView: boolean
   hasRemove: boolean
+  hasCheck: boolean
   isChecked: boolean
 }
 
@@ -60,7 +61,7 @@ const handleCheck = (checked: boolean) => emits('onCheck', checked)
       <Icon v-if="hasRemove" :iconName="iconName.TRASH" class="actions-icon" @click="handleRemove" />
     </div>
 
-    <CheckBox :rootClassName="`view-check ${checkedClassName}`" @onCheck="handleCheck" />
+    <CheckBox v-if="hasCheck" :rootClassName="`view-check ${checkedClassName}`" @onCheck="handleCheck" />
   </div>
 
   <ImageViewer :open="openViewer.active" :imgUrl="openViewer.imgUrl" @onClose="handleCloseViewer" />

@@ -10,7 +10,7 @@ interface TableHeadProps<M> {
   color: TableColor
   rowKey: TableRowKey
   rowSelectedKeys: TableRowKey[]
-  hasSelectRow: boolean
+  hasRowSelection: boolean
   hasExpand: boolean
   expand?: TableExpand
 }
@@ -44,7 +44,7 @@ const handleExpand = (key: TableRowKey) => {
   <tbody>
     <template v-for="(data, idx) in dataSource" :key="key(data, idx)">
       <tr :class="selected(key(data, idx)) ? 'table-row-selected' : ''">
-        <td v-if="hasSelectRow">
+        <td v-if="hasRowSelection">
           <TableCell>
             <CheckBox
               :color="color"
@@ -83,7 +83,7 @@ const handleExpand = (key: TableRowKey) => {
         <td />
         <td :colspan="columns.length + 1">
           <TableCell>
-            <component :is="expand?.node" v-bind="expand?.props" />
+            <slot name="expand" :data="data"></slot>
           </TableCell>
         </td>
       </tr>

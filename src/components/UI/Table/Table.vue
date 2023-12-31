@@ -16,7 +16,7 @@ export interface TableProps<M> {
   columns: TableColumns<M>
   rowKey?: TableRowKey
   loading?: boolean
-  hasSelectRow?: boolean
+  hasRowSelection?: boolean
   hasExpand?: boolean
   expand?: TableExpand
 }
@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<TableProps<M>>(), {
   tableClassName: '',
   color: 'blue',
   rowKey: '',
-  hasSelectRow: false,
+  hasRowSelection: false,
   hasExpand: false,
   dataSource: () => [],
   columns: () => []
@@ -61,7 +61,7 @@ watchEffect(() => emits('onRowSelect', rowSelectedKeys.value))
           :dataSource="dataSource"
           :columns="columns"
           :hasExpand="hasExpand"
-          :hasSelectRow="hasSelectRow"
+          :hasRowSelection="hasRowSelection"
           :rowSelectedKeys="rowSelectedKeys"
           @onSelectAll="handleSelectAll"
         />
@@ -73,10 +73,14 @@ watchEffect(() => emits('onRowSelect', rowSelectedKeys.value))
           :rowKey="rowKey"
           :expand="expand"
           :hasExpand="hasExpand"
-          :hasSelectRow="hasSelectRow"
+          :hasRowSelection="hasRowSelection"
           :rowSelectedKeys="rowSelectedKeys"
           @onSelectRow="(key) => handleSelectRow(key)"
-        />
+        >
+          <template #expand="data">
+            <slot name="expand" :expand="data"></slot>
+          </template>
+        </TableBody>
       </table>
       <TableEmpty v-if="dataSource.length === 0" />
     </div>

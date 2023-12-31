@@ -10,7 +10,7 @@ interface TableHeadProps<M> {
   dataSource: M[]
   columns: TableColumns<M>
   rowSelectedKeys: TableRowKey[]
-  hasSelectRow: boolean
+  hasRowSelection: boolean
   hasExpand: boolean
 }
 
@@ -28,7 +28,7 @@ const handleSelectAll = () => emits('onSelectAll')
 <template>
   <thead>
     <tr>
-      <th v-if="hasSelectRow">
+      <th v-if="hasRowSelection">
         <TableCell>
           <div
             v-if="rowSelectedKeys.length > 0 && rowSelectedKeys.length !== dataSource.length"

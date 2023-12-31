@@ -21,6 +21,7 @@ export interface ImageProps {
   src?: string
   hasView?: boolean
   hasRemove?: boolean
+  hasCheck?: boolean
 }
 
 const props = withDefaults(defineProps<ImageProps>(), {
@@ -29,7 +30,8 @@ const props = withDefaults(defineProps<ImageProps>(), {
   lazyType: 'lazy',
   src: 'https://cdn.hswstatic.com/gif/space-smell-2.jpg',
   hasView: false,
-  hasRemove: false
+  hasRemove: false,
+  hasCheck: false
 })
 
 const emits = defineEmits(['onClick', 'onRemove', 'onCheck'])
@@ -90,6 +92,7 @@ const handleCheck = (checked: boolean) => {
       :loading="loading"
       :hasView="hasView"
       :hasRemove="hasRemove"
+      :hasCheck="hasCheck"
       @onLoad="handleLoad"
       @onRemove="handleRemove"
       @onCheck="handleCheck"

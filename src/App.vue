@@ -7,9 +7,7 @@ import type { MenuItems } from '@/components/UI/Layout/Menu/type.ts'
 import type { TabsItems } from './components/UI/Tabs/type'
 import type { TableColumns } from './components/UI/Table/type'
 
-const { Section, Layout } = UI
-
-const { Input, InputPassword, TextArea, Select, SelectTag, TreeSelect, DatePicker, CheckBox, Radio } = Control
+const { Section, Image, Table, Layout } = UI
 
 // interface Data {
 //   id: string
@@ -123,9 +121,94 @@ const { Input, InputPassword, TextArea, Select, SelectTag, TreeSelect, DatePicke
 //   // { id: '4', label: 'Item 4', labelIcon: 'user', type: 'text', isRoot: true, path: '#' }
 // ])
 
-const openModal1 = ref<boolean>(false)
+interface Data {
+  id: string
+  content: string
+  productName: string
+  child: Data[]
+}
 
-const openModal2 = ref<boolean>(false)
+const dataSource: Data[] = [
+  {
+    id: '1',
+    content: 'This is a comment 1',
+    productName: 'Product 1',
+    child: [
+      {
+        id: 'child-1',
+        content: 'This is a child comment 1',
+        productName: 'Product 1',
+        child: []
+      },
+      {
+        id: 'child-2',
+        content: 'This is a child comment 2',
+        productName: 'Product 2',
+        child: []
+      },
+      {
+        id: 'child-3',
+        content: 'This is a child comment 3',
+        productName: 'Product 3',
+        child: []
+      }
+    ]
+  },
+  {
+    id: '2',
+    content: 'This is a comment 2',
+    productName: 'Product 2',
+    child: [
+      {
+        id: 'child-1',
+        content: 'This is a child comment 1',
+        productName: 'Product 1',
+        child: []
+      },
+      {
+        id: 'child-2',
+        content: 'This is a child comment 2',
+        productName: 'Product 2',
+        child: []
+      }
+    ]
+  },
+  {
+    id: '3',
+    content: 'This is a comment 3',
+    productName: 'Product 3',
+    child: [
+      {
+        id: 'child-1',
+        content: 'This is a child comment 1',
+        productName: 'Product 1',
+        child: []
+      }
+    ]
+  }
+]
+
+const columns: TableColumns<Data> = [
+  {
+    id: 'id',
+    title: 'Image',
+    dataIndex: 'id',
+    component: () => ({
+      node: Image,
+      props: { imgWidth: 50, imgHeight: 50 }
+    })
+  },
+  {
+    id: 'content',
+    title: 'Content',
+    dataIndex: 'content'
+  },
+  {
+    id: 'productName',
+    title: 'Product name',
+    dataIndex: 'productName'
+  }
+]
 </script>
 
 <template>
@@ -144,29 +227,11 @@ const openModal2 = ref<boolean>(false)
     </Body>
   </Container> -->
     <Section>
-      <Input required optional>
-        <template #label>Input</template>
-      </Input>
-      <InputPassword required optional>
-        <template #label>Password</template>
-      </InputPassword>
-      <Select required optional>
-        <template #label>Select</template>
-      </Select>
-      <SelectTag required optional>
-        <template #label>Select tag</template>
-      </SelectTag>
-      <TreeSelect required optional>
-        <template #label>Tree select</template>
-      </TreeSelect>
-      <DatePicker required optional>
-        <template #label>Datepicker</template>
-      </DatePicker>
-      <TextArea required optional>
-        <template #label>Textarea</template>
-      </TextArea>
-      <CheckBox required optional>Checkbox</CheckBox>
-      <Radio required optional>Radio</Radio>
+      <Table hasRowSelection hasExpand :dataSource="dataSource" :columns="columns">
+        <template #expand="com">
+          <Table :dataSource="com.expand.data.child" :columns="columns" />
+        </template>
+      </Table>
     </Section>
   </GridProvider>
 </template>
