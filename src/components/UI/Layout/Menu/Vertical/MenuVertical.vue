@@ -31,7 +31,6 @@ const colorClassName = computed<string>(() => `menu-vertical-${menuColor.value}`
 const themeClassName = computed<string>(() => (layout.theme === 'dark' ? 'menu-vertical-dark' : ''))
 
 const handleSelectMenu = (params: { e: Event; id: string }) => {
-  console.log(params)
   const { id } = params
   if (activeId.value) activeId.value = ''
   activeId.value = id

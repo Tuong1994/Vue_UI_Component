@@ -28,7 +28,9 @@ const hasChild = computed<boolean>(() => Boolean(props.item.children && props.it
 
 const actived = computed<boolean>(() => (hasChild.value ? open.value : props.activeId === props.item.id))
 
-const showTooltipContent = computed<boolean>(() => layout.shrinked && props.item.isRoot && !hasChild.value)
+const showTooltipContent = computed<boolean>(() =>
+  Boolean(layout.shrinked && props.item.isRoot && !hasChild.value)
+)
 
 const rootLabelClassName = computed<string>(() => (props.item.isRoot ? 'item-label-root' : ''))
 
@@ -52,13 +54,12 @@ const shrinkClassName = computed<string>(() => (layout.shrinked ? 'vertical-item
 
 const handleOpen = (e: Event, id: string) => {
   if (e.type === 'click') {
-    open.value = true
-    console.count('trigger')
     if (!hasChild.value) {
       emits('onSelectMenu', { e, id })
+    } else {
+      open.value = !open.value
     }
   }
-
   if (layout.shrinked && props.item.isRoot) open.value = !open.value
 }
 </script>
@@ -83,7 +84,7 @@ const handleOpen = (e: Event, id: string) => {
           </div>
 
           <div v-if="item.type === 'text'" class="content-text">{{ item.label }}</div>
-          <router-link v-if="item.type === 'link'" :to="(item.path as string)" class="content-text">
+          <router-link v-if="item.type === 'link'" :to="item.path as string" class="content-text">
             {{ item.label }}
           </router-link>
         </div>

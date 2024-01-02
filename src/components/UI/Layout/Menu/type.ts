@@ -3,10 +3,10 @@ type MenuItemType = 'text' | 'link'
 export type MenuItem = {
   id: string
   label: string
-  isRoot: boolean;
+  labelIcon?: string
   type: MenuItemType
   path?: string
-  labelIcon?: string
+  isRoot?: boolean;
   children?: MenuItem[]
 }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, toRef, type StyleValue } from 'vue'
+import { computed, withDefaults, toRef, type StyleValue } from 'vue'
 import type { MenuItem } from '../type.ts'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
@@ -9,7 +9,7 @@ interface MenuHorizontalItemProps {
   itemClassName?: string
   itemStyle?: StyleValue
   item: MenuItem
-  activeId: string[]
+  activeIds: string[]
 }
 
 const props = withDefaults(defineProps<MenuHorizontalItemProps>(), {
@@ -19,11 +19,11 @@ const props = withDefaults(defineProps<MenuHorizontalItemProps>(), {
 
 const emits = defineEmits(['onOpenMenu'])
 
-const activeId = toRef(props, 'activeId')
+const activeIds = toRef(props, 'activeIds')
 
 const hasChild = computed<boolean>(() => Boolean(props.item.children && props.item.children.length > 0))
 
-const actived = computed<boolean>(() => props.activeId.includes(props.item.id))
+const actived = computed<boolean>(() => props.activeIds.findIndex((id) => id === props.item.id) > -1)
 
 const labelActiveClassName = computed<string>(() => (actived.value ? 'item-label-active' : ''))
 
@@ -31,16 +31,16 @@ const dropDownActiveClassName = computed<string>(() => (actived.value ? 'item-dr
 
 const render = useRender(actived)
 
-const handleOpenMenu = (id: string) => {
-  console.log(props.activeId)
-  emits('onOpenMenu', id)
-}
-// @mouseenter="() => handleOpenMenu(item.id)"
-// @mouseleave="() => handleOpenMenu(item.id)"
+const handleOpenMenu = (id: string) => emits('onOpenMenu', id)
 </script>
 
+<!-- @mouseenter="() => handleOpenMenu(item.id)"
+@mouseleave="() => handleOpenMenu(item.id)" -->
 <template>
-  <div :style="itemStyle" :class="['horizontal-item', itemClassName]" @click="() => handleOpenMenu(item.id)">
+  <div
+    :style="itemStyle"
+    :class="['horizontal-item', itemClassName]"
+  >
     <div :class="['item-label', labelActiveClassName]">
       <div class="label-content">
         <div v-if="item.labelIcon" class="content-icon">
@@ -58,12 +58,12 @@ const handleOpenMenu = (id: string) => {
       </div>
     </div>
 
-    <div v-if="hasChild && render" :class="['item-dropdown', dropDownActiveClassName]">
+    <div v-if="hasChild" :class="['item-dropdown', dropDownActiveClassName]">
       <MenuHorizontalItem
         v-for="child in item.children"
         :key="child.id"
         :item="child"
-        :activeId="activeId"
+        :activeIds="activeIds"
         :itemClassName="itemClassName"
         @onOpenMenu="() => handleOpenMenu(child.id)"
       />

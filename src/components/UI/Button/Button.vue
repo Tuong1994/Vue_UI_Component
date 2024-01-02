@@ -14,6 +14,7 @@ export interface ButtonProps {
   ghost?: boolean
   loading?: boolean
   disabled?: boolean
+  text?: boolean
   type?: ButtonType
 }
 
@@ -34,15 +35,20 @@ const buttonColor = computed<ComponentColor>(() => (form?.isVee ? form?.formColo
 
 const buttonDisabled = computed<boolean>(() => props.disabled || props.loading)
 
+const isLoading = computed<boolean>(() => props.loading && !props.text)
+
 const sizeClassName = computed<string>(() => `button-${buttonSize.value}`)
 
 const shapeClassName = computed<string>(() => `button-${buttonShape.value}`)
 
-const loadingClassName = computed<string>(() => (props.loading ? 'button-loading' : ''))
+const textClassName = computed<string>(() => (props.text ? 'button-text' : ''))
+
+const loadingClassName = computed<string>(() => (isLoading.value ? 'button-loading' : ''))
 
 const disabledClassName = computed<string>(() => (props.disabled ? 'button-disabled' : ''))
 
 const colorClassName = computed<string>(() => {
+  if (props.text) return ''
   if (!props.ghost && !buttonColor.value) return ''
   if (props.ghost && !buttonColor.value) return 'button-ghost'
   if (!props.ghost && buttonColor.value) return `button-color button-${buttonColor.value}`
@@ -61,11 +67,12 @@ const colorClassName = computed<string>(() => {
       sizeClassName,
       colorClassName,
       loadingClassName,
+      textClassName,
       disabledClassName,
       rootClassName
     ]"
   >
-    <span v-if="loading" class="button-loading-icon"><Spinner /></span>
+    <span v-if="isLoading" class="button-loading-icon"><Spinner /></span>
     <span><slot></slot></span>
   </button>
 </template>

@@ -247,6 +247,23 @@
   }
 }
 
+// Text
+.button-text {
+  border-color: transparent;
+  background: transparent;
+  color: $text-blue;
+  * {
+    color: $text-blue;
+  }
+  &::after,
+  &::before {
+    content: unset;
+  }
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
 // Loading
 .button-loading {
   user-select: none;

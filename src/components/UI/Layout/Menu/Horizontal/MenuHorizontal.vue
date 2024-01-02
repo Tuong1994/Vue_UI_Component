@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<MenuHorizontalProps>(), {
 
 const layout = useLayoutStore()
 
-const activeId = ref<string[]>([])
+const activeIds = ref<string[]>([])
 
 const menuColor = computed<LayoutColor>(() => (layout.isLayout ? layout.color : props.color))
 
@@ -31,10 +31,9 @@ const layoutClassName = computed<string>(() => (layout.isLayout ? 'menu-horizont
 const colorClassName = computed<string>(() => `menu-horizontal-${menuColor.value}`)
 
 const handleOpenMenu = (id: string) => {
-  // const idx = activeId.value.indexOf(id)
-  // if (idx === -1) activeId.value = [...activeId.value, id]
-  // else activeId.value = [...activeId.value].filter((active) => active !== id)
-  activeId.value = [...activeId.value, id]
+  const idx = activeIds.value.indexOf(id)
+  if (idx === -1) activeIds.value = [...activeIds.value, id]
+  else activeIds.value = [...activeIds.value].filter((active) => active !== id)
 }
 </script>
 
@@ -44,7 +43,7 @@ const handleOpenMenu = (id: string) => {
       v-for="item in items"
       :key="item.id"
       :item="item"
-      :activeId="activeId"
+      :activeIds="activeIds"
       :itemClassName="itemClassName"
       @onOpenMenu="handleOpenMenu"
     />
