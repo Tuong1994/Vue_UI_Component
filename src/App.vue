@@ -6,8 +6,13 @@ import GridProvider from '@/components/UI/Grid/GridProvider.vue'
 import type { MenuItems } from '@/components/UI/Layout/Menu/type.ts'
 import type { TabsItems } from './components/UI/Tabs/type'
 import type { TableColumns } from './components/UI/Table/type'
+import useAlert from './components/UI/Alert/useAlert'
 
-const { Section, Button, Layout } = UI
+const { Section, Card, Loading, Grid, Layout } = UI
+
+const { Skeleton } = Loading
+
+const { Row, Col } = Grid
 
 const { Container, Head, Body, Side, Content, Menu } = Layout
 
@@ -158,9 +163,27 @@ const items = computed<MenuItems>(() => [
 
 <template>
   <GridProvider>
+    <Section>
+      <Row justify="between">
+        <Col :span="8">
+          <Card>
+            <template #body>
+              <Row>
+                <Col :span="8"> <Skeleton type="image" /> </Col>
+                <Col :span="16">
+                  <Skeleton type="title" />
+                  <Skeleton type="paragraph" />
+                  <Skeleton type="button" />
+                </Col>
+              </Row>
+            </template>
+          </Card>
+        </Col>
+      </Row>
+    </Section>
     <!-- <Menu :items="items" /> -->
 
-    <Container color="green">
+    <!-- <Container color="green">
       <Head> </Head>
       <Body>
         <Side>
@@ -170,7 +193,7 @@ const items = computed<MenuItems>(() => [
           <Section> </Section>
         </Content>
       </Body>
-    </Container>
+    </Container> -->
 
     <!-- <Section>
       <Table hasRowSelection hasExpand :dataSource="dataSource" :columns="columns">

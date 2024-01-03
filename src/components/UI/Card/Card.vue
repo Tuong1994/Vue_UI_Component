@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, withDefaults, type StyleValue } from 'vue'
+import { computed, withDefaults, useSlots, type StyleValue } from 'vue'
 
 export interface CardProps {
   rootClassName?: string
@@ -17,12 +17,16 @@ const props = withDefaults(defineProps<CardProps>(), {
   bodyClassName: ''
 })
 
+const slots = useSlots()
+
+const hasHead = computed<boolean>(() => slots.head !== undefined)
+
 const hoverClassName = computed<string>(() => (props.hoverable ? 'card-hoverable' : ''))
 </script>
 
 <template>
   <div :style="rootStyle" :class="['card', hoverClassName, rootClassName]">
-    <div :style="headStyle" :class="['card-head', headStyle]">
+    <div v-if="hasHead" :style="headStyle" :class="['card-head', headStyle]">
       <slot name="head"></slot>
     </div>
 

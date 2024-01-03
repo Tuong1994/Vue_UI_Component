@@ -1,44 +1,40 @@
 <script setup lang="ts">
 import { computed, withDefaults, toRefs, watchEffect, type StyleValue } from 'vue'
-import type { AlertType } from './type.ts'
-import type { ComponentPlacement } from '@/common/type.ts'
-import { iconName } from '@/components/UI/Icon/constant.ts'
+import type { AlertIcon, AlertPlacement, AlertType } from './type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import useRender from '@/hooks/useRender.ts'
+import useAlertStore from './AlertStore'
 
 export interface AlertProps {
   rootClassName?: string
   rootStyle?: StyleValue
-  type?: AlertType
-  message?: string
-  placement?: Exclude<ComponentPlacement, 'left' | 'right'>
-  open?: boolean
 }
 
 let timeout: any
 
-const props = withDefaults(defineProps<AlertProps>(), {
-  rootClassName: '',
-  type: 'info',
-  placement: 'top'
+withDefaults(defineProps<AlertProps>(), {
+  rootClassName: ''
 })
+const alertStore = useAlertStore()
 
-const emits = defineEmits(['onClose'])
+const hadOpen = computed<boolean>(() => Boolean(alertStore.open))
 
-const { open } = toRefs(props)
+const render = useRender(hadOpen)
 
-const render = useRender(open)
+const alertPlacement = computed<AlertPlacement>(() => alertStore.options.placement ?? 'top')
 
-const typeClassName = computed<string>(() => `alert-${props.type}`)
+const alertIcon = computed<AlertIcon>(() => alertStore.options.icons as AlertIcon)
 
-const placementClassName = computed<string>(() => `alert-${props.placement}`)
+const typeClassName = computed<string>(() => `alert-${alertStore.type}`)
 
-const activeClassName = computed<string>(() => (props.open ? 'alert-active' : ''))
+const placementClassName = computed<string>(() => `alert-${alertPlacement.value}`)
 
-const handleClose = () => emits('onClose')
+const activeClassName = computed<string>(() => (alertStore.open ? 'alert-active' : ''))
+
+const handleClose = () => alertStore.onClose()
 
 watchEffect((onStop) => {
-  if (props.open) timeout = setTimeout(() => handleClose(), 3000)
+  if (alertStore.open) timeout = setTimeout(() => handleClose(), 3000)
   onStop(() => clearTimeout(timeout))
 })
 </script>
@@ -52,12 +48,12 @@ watchEffect((onStop) => {
       @click="handleClose"
     >
       <div className="alert-icon">
-        <Icon v-if="type === 'success'" :iconName="iconName.CIRCLE_CHECK" />
-        <Icon v-if="type === 'error'" :iconName="iconName.X_MARK_CIRCLE" />
-        <Icon v-if="type === 'warning'" :iconName="iconName.CIRCLE_EXCLAMATION" />
-        <Icon v-if="type === 'info'" :iconName="iconName.CIRCLE_INFO" />
+        <Icon v-if="alertStore.type === 'success'" :iconName="alertIcon.successIconName as string" />
+        <Icon v-if="alertStore.type === 'error'" :iconName="alertIcon.errorIconName as string" />
+        <Icon v-if="alertStore.type === 'warning'" :iconName="alertIcon.warningIconName as string" />
+        <Icon v-if="alertStore.type === 'info'" :iconName="alertIcon.infoIconName as string" />
       </div>
-      <p className="alert-message">{{ message }}</p>
+      <p className="alert-message">{{ alertStore.message }}</p>
     </div>
   </Teleport>
 </template>
