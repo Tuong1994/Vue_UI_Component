@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, useSlots, watchEffect, inject, type StyleValue } from 'vue'
 import { ACCEPT_FILE_TYPE, DEFAULT_FILE_SIZE } from '../constant.ts'
-import type { UploadItems, ControlColor, ControlShape } from '@/components/Control/type.ts'
+import type {
+  UploadItems,
+  ControlColor,
+  ControlShape,
+  UploadError,
+  UploadItem
+} from '@/components/Control/type.ts'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import UploadControl from './UploadControl.vue'
 import UploadFiles from './UploadFiles.vue'
-import useFormStore from '@/components/Control/Form/FormStore.ts'
 import utils from '@/utils'
+import useLayoutStore from '@/components/UI/Layout/LayoutStore'
 
 export interface FileUploadProps {
   rootClassName?: string
@@ -32,9 +38,11 @@ const props = withDefaults(defineProps<FileUploadProps>(), {
 
 const emits = defineEmits(['onUpload'])
 
-const form = inject('form', null)
+const form = inject('form', null) as any
 
 const slots = useSlots()
+
+const layout = useLayoutStore()
 
 const files = ref<UploadItems>([])
 
@@ -54,6 +62,8 @@ const shapeClassName = computed<string>(() => `file-upload-${controlShape.value}
 
 const gapClassName = computed<string>(() => (form?.isVee ? 'file-upload-gap' : ''))
 
+const themeClassName = computed<string>(() => `file-upload-${layout.theme}`)
+
 const errorMessage = computed<string | undefined>(() => {
   if (!error.value) return ''
   if (error.value.type === 'fileSize')
@@ -70,7 +80,7 @@ const handleUpload = (fileList: File[]) => {
   }
 
   const uploadFiles: UploadItems = fileList.map((file) => ({ id: utils.uuid(), file }))
-  if (!files.length) files.value = uploadFiles
+  if (!files.value.length) files.value = uploadFiles
   else files.value = [...files.value, ...uploadFiles]
   error.value = null
 }
@@ -93,7 +103,7 @@ const handleDrop = (e: DragEvent) => {
   e.preventDefault()
   e.stopPropagation()
   dragged.value = false
-  if (e.dataTransfer.files) {
+  if (e.dataTransfer && e.dataTransfer.files) {
     const uploadFiles: File[] = Array.from(e.dataTransfer.files)
     handleUpload(uploadFiles)
   }
@@ -126,7 +136,7 @@ watchEffect(() => {
 <template>
   <div
     :style="rootStyle"
-    :class="['file-upload', colorClassName, shapeClassName, gapClassName, rootClassName]"
+    :class="['file-upload', colorClassName, shapeClassName, gapClassName, themeClassName, rootClassName]"
   >
     <UploadControl
       id="fileUpload"

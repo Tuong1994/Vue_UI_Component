@@ -25,6 +25,7 @@
   }
 }
 
+// Bordered
 .accordion-bordered {
   border: 0.5px solid $bg-gray;
   .accordion-label {
@@ -32,6 +33,7 @@
   }
 }
 
+// Collapsed
 .accordion-collapsed {
   .accordion-label {
     border-bottom-color: $bg-gray;
@@ -41,4 +43,13 @@
       }
     }
   }
+}
+
+// Theme
+.accordion-light {
+  background: $bg-white;
+}
+
+.accordion-dark {
+  background: $bg-deep-blue;
 }

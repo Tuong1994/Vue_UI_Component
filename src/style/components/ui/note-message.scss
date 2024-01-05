@@ -8,10 +8,15 @@
 }
 
 .note-message-error {
-  color: $text-red;
+  color: $text-red !important;
 }
 
 // Italic
 .note-message-italic {
   font-style: italic;
+}
+
+// Theme
+.note-message-dark {
+  color: $text-white;
 }

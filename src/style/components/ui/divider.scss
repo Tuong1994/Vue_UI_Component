@@ -7,7 +7,7 @@
   position: relative;
   .horizontal-content {
     width: max-content;
-    padding: $p-1 - 0.2;
+    padding: $p-1 - 0.5 $p-1;
     background: $bg-white;
     font-weight: $font-medium;
     position: absolute;
@@ -57,4 +57,17 @@
   max-height: $h-full;
   background: $bg-gray;
   margin: 0 $m-1;
+}
+
+// Theme
+.divider-horizontal-light {
+  .horizontal-content {
+    background: $bg-white;
+  }
+}
+
+.divider-horizontal-dark {
+  .horizontal-content {
+    background: $bg-deep-blue !important;
+  }
 }

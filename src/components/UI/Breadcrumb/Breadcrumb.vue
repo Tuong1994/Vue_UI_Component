@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { withDefaults, type StyleValue } from 'vue'
+import { computed, withDefaults, type StyleValue } from 'vue'
 import type { BreadcrumbItems, BreadcrumbItem } from './type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
+import useLayoutStore from '../Layout/LayoutStore'
 
 export interface BreadcrumbProps {
   rootClassName?: string
@@ -19,13 +20,17 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
 
 const emits = defineEmits(['onClick'])
 
+const layout = useLayoutStore()
+
+const themeClassName = computed<string>(() => `breadcrumb-${layout.theme}`)
+
 const activeClassName = (item: BreadcrumbItem) => (item.actived ? 'item-label-active' : '')
 
 const handleClick = (item: BreadcrumbItem) => emits('onClick', item)
 </script>
 
 <template>
-  <div :style="rootStyle" :class="['breadcrumb', rootClassName]">
+  <div :style="rootStyle" :class="['breadcrumb', themeClassName, rootClassName]">
     <div
       v-for="(item, idx) in items"
       :key="item.id"

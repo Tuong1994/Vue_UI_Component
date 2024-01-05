@@ -5,6 +5,7 @@ import TableHead from './TableHead.vue'
 import TableBody from './TableBody.vue'
 import TableEmpty from './TableEmpty.vue'
 import TableLoading from './TableLoading.vue'
+import useLayoutStore from '../Layout/LayoutStore'
 
 export interface TableProps<M> {
   rootClassName?: string
@@ -34,9 +35,13 @@ const props = withDefaults(defineProps<TableProps<M>>(), {
 
 const emits = defineEmits(['onRowSelect'])
 
+const layout = useLayoutStore()
+
 const rowSelectedKeys = ref<TableRowKey[]>([])
 
 const colorClassName = computed<string>(() => `table-${props.color}`)
+
+const themeClassName = computed<string>(() => `table-${layout.theme}`)
 
 const handleSelectAll = () => {
   if (rowSelectedKeys.value.length === props.dataSource.length) return (rowSelectedKeys.value = [])
@@ -54,7 +59,7 @@ watchEffect(() => emits('onRowSelect', rowSelectedKeys.value))
 </script>
 
 <template>
-  <div :style="rootStyle" :class="['table', colorClassName, rootClassName]">
+  <div :style="rootStyle" :class="['table', colorClassName, themeClassName, rootClassName]">
     <div class="table-content">
       <table :style="tableStyle" :class="tableClassName">
         <TableHead

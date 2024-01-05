@@ -19,7 +19,6 @@
       width: $w-10;
       height: $h-4;
       padding: $p-1 - 0.4;
-      border-bottom: 1px solid $bg-slate;
       transition: all $transition-time-md $transition-fn;
       cursor: pointer;
       .item-inner {
@@ -225,5 +224,25 @@
         background: $bg-white;
       }
     }
+  }
+}
+
+// Theme
+.tabs-dark {
+  .tabs-head {
+    background: $bg-black;
+    .head-item {
+      .item-inner {
+        background: $bg-deep-blue;
+      }
+    }
+    .head-item-active {
+      .item-inner {
+        box-shadow: 0 0 5px $bg-black;
+      }
+    }
+  }
+  .tabs-content {
+    background: $bg-deep-blue;
   }
 }

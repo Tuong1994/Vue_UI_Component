@@ -30,7 +30,7 @@
         cursor: pointer;
         margin-left: $m-1 - 0.5;
         position: absolute;
-        top: 5px;
+        top: 8px;
         right: 8px;
         z-index: 1;
         &:hover path {
@@ -43,19 +43,6 @@
       }
     }
   }
-}
-
-// Gap
-.textarea-gap-sm {
-  margin-bottom: $m-1;
-}
-
-.textarea-gap-md {
-  margin-bottom: $m-1 + 0.5;
-}
-
-.textarea-gap-lg {
-  margin-bottom: $m-2;
 }
 
 // Disabled
@@ -130,6 +117,19 @@
       }
     }
   }
+}
+
+// Gap
+.textarea-gap-sm {
+  margin-bottom: $m-1;
+}
+
+.textarea-gap-md {
+  margin-bottom: $m-1 + 0.5;
+}
+
+.textarea-gap-lg {
+  margin-bottom: $m-2;
 }
 
 // Shape
@@ -219,6 +219,24 @@
     }
     &:focus-within {
       border-color: $bg-pink;
+    }
+  }
+}
+
+// Theme
+.textarea-light {
+  .textarea-group {
+    background: $bg-white;
+  }
+}
+
+.textarea-dark {
+  .textarea-group {
+    background: $bg-deep-blue;
+    .control-action {
+      &:hover path {
+        color: $text-white !important;
+      }
     }
   }
 }

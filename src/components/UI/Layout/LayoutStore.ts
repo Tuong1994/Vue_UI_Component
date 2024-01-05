@@ -9,6 +9,8 @@ export type LayoutColor = Exclude<ComponentColor, 'white' | 'gray'>
 const useLayoutStore = defineStore('layout', () => {
   const shrinked = ref<boolean>(false)
   const isLayout = ref<boolean>(false)
+  const showSide = ref<boolean>(false)
+  const resizeContent = ref<boolean>(false)
   const theme = ref<LayoutTheme>('light')
   const color = ref<LayoutColor>('blue')
 
@@ -16,8 +18,25 @@ const useLayoutStore = defineStore('layout', () => {
   const switchColor = (type: LayoutColor) => (color.value = type)
   const onLayout = () => (isLayout.value = true)
   const onShrinked = () => (shrinked.value = !shrinked.value)
+  const onResizeContent = () => (resizeContent.value = true)
+  const onShowSide = () => (showSide.value = true)
+  const onHideSide = () => (showSide.value = false)
 
-  return { shrinked, isLayout, theme, color, switchTheme, switchColor, onLayout, onShrinked }
+  return {
+    shrinked,
+    isLayout,
+    showSide,
+    resizeContent,
+    theme,
+    color,
+    switchTheme,
+    switchColor,
+    onLayout,
+    onShrinked,
+    onResizeContent,
+    onShowSide,
+    onHideSide
+  }
 })
 
 export default useLayoutStore

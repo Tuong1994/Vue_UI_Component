@@ -5,6 +5,7 @@ import { useViewPoint } from '@/hooks'
 import type { ComponentColor, ComponentShape } from '@/common/type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import usePagination from './usePagination.ts'
+import useLayoutStore from '../Layout/LayoutStore'
 
 export interface PaginationProps {
   rootClassName?: string
@@ -42,6 +43,8 @@ const { pageRange, totalPages } = usePagination({
   currentPage
 })
 
+const layout = useLayoutStore()
+
 const leftBtnsDisabled = computed<boolean>(() => currentPage.value === 1)
 
 const rightBtnsDisabled = computed<boolean>(() => currentPage.value === totalPages)
@@ -62,7 +65,9 @@ const colorClassName = computed<string>(() => {
   return ''
 })
 
-const hasContentClassName = computed<string>(() => (props.hasContent ? 'pagination-flex-between' : ''))
+const flexBetweenClassName = computed<string>(() => (props.hasContent ? 'pagination-flex-between' : ''))
+
+const themeClassName = computed<string>(() => `pagination-${layout.theme}`)
 
 const content = computed<string>(() => {
   const start = (currentPage.value - 1) * props.limit
@@ -103,7 +108,14 @@ watch(currentPage, (newValue) => emits('onChangePage', newValue))
 <template>
   <div
     :style="rootStyle"
-    :class="['pagination', colorClassName, shapeClassName, hasContentClassName, rootClassName]"
+    :class="[
+      'pagination',
+      colorClassName,
+      shapeClassName,
+      flexBetweenClassName,
+      themeClassName,
+      rootClassName
+    ]"
   >
     <div v-if="hasContent" class="pagination-content">
       {{ content }}

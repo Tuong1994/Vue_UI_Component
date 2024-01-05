@@ -157,6 +157,34 @@
   }
 }
 
+// Theme
+.table-dark {
+  box-shadow: 0 0 5px $bg-black;
+  .table-content {
+    table {
+      tbody {
+        tr {
+          background: $bg-deep-blue;
+          border-color: $bg-black;
+          &:hover {
+            background: $bg-black;
+          }
+        }
+      }
+      .table-cell {
+        .cell-expand-action {
+          .action-icon {
+            &::after,
+            &::before {
+              background: $bg-white-rgba-md !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 // Color
 .table-blue {
   .table-content {

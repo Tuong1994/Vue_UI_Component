@@ -11,7 +11,7 @@ export interface LayoutContainerProps {
 
 const props = withDefaults(defineProps<LayoutContainerProps>(), {
   rootClassName: '',
-  theme: 'dark',
+  theme: 'light',
   color: 'blue'
 })
 

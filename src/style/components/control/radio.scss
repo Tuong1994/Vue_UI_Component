@@ -67,16 +67,8 @@
   }
 }
 
-.radio-gap-sm {
-  margin-bottom: $m-1;
-}
-
-.radio-gap-md {
+.radio-gap {
   margin-bottom: $m-1 + 0.5;
-}
-
-.radio-gap-lg {
-  margin-bottom: $m-2;
 }
 
 // Size
@@ -125,12 +117,26 @@
   }
 }
 
+// Gap
+.radio-gap-sm {
+  margin-bottom: $m-1;
+}
+
+.radio-gap-md {
+  margin-bottom: $m-1 + 0.5;
+}
+
+.radio-gap-lg {
+  margin-bottom: $m-2;
+}
+
 // Color
 .radio-blue {
   .radio-group {
     .group-control {
       &:checked ~ .group-checked {
         background: $bg-blue;
+        border-color: $bg-blue;
       }
     }
     &:hover .group-checked {
@@ -144,6 +150,7 @@
     .group-control {
       &:checked ~ .group-checked {
         background: $bg-red;
+        border-color: $bg-red;
       }
     }
     &:hover .group-checked {
@@ -157,6 +164,7 @@
     .group-control {
       &:checked ~ .group-checked {
         background: $bg-green;
+        border-color: $bg-green;
       }
     }
     &:hover .group-checked {
@@ -170,6 +178,7 @@
     .group-control {
       &:checked ~ .group-checked {
         background: $bg-orange;
+        border-color: $bg-orange;
       }
     }
     &:hover .group-checked {
@@ -183,6 +192,7 @@
     .group-control {
       &:checked ~ .group-checked {
         background: $bg-yellow;
+        border-color: $bg-yellow;
       }
     }
     &:hover .group-checked {
@@ -196,6 +206,7 @@
     .group-control {
       &:checked ~ .group-checked {
         background: $bg-purple;
+        border-color: $bg-purple;
       }
     }
     &:hover .group-checked {
@@ -209,6 +220,7 @@
     .group-control {
       &:checked ~ .group-checked {
         background: $bg-pink;
+        border-color: $bg-pink;
       }
     }
     &:hover .group-checked {
@@ -222,6 +234,7 @@
     .group-control {
       &:checked ~ .group-checked {
         background: $bg-black;
+        border-color: $bg-black;
       }
     }
     &:hover .group-checked {
@@ -235,6 +248,7 @@
     .group-control {
       &:checked ~ .group-checked {
         background: $bg-white;
+        border-color: $bg-white;
       }
       &:checked ~ .group-checked::after {
         background: $bg-black;
@@ -242,6 +256,23 @@
     }
     &:hover .group-checked {
       border-color: $bg-white;
+    }
+  }
+}
+
+// Theme
+.radio-light {
+  .group-checked {
+    &::after {
+      background: $bg-white;
+    }
+  }
+}
+
+.radio-dark {
+  .group-checked {
+    &::after {
+      background: $bg-deep-blue !important;
     }
   }
 }

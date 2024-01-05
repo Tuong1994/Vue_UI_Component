@@ -58,19 +58,6 @@
   }
 }
 
-// Gap
-.input-gap-sm {
-  margin-bottom: $m-1;
-}
-
-.input-gap-md {
-  margin-bottom: $m-1 + 0.5;
-}
-
-.input-gap-lg {
-  margin-bottom: $m-2;
-}
-
 // Disabled
 .input-disabled {
   .input-label {
@@ -143,6 +130,19 @@
       }
     }
   }
+}
+
+// Gap
+.input-gap-sm {
+  margin-bottom: $m-1;
+}
+
+.input-gap-md {
+  margin-bottom: $m-1 + 0.5;
+}
+
+.input-gap-lg {
+  margin-bottom: $m-2;
 }
 
 // Shape
@@ -232,6 +232,24 @@
     }
     &:focus-within {
       border-color: $bg-pink;
+    }
+  }
+}
+
+// Theme
+.input-light {
+  .input-group {
+    background: $bg-white;
+  }
+}
+
+.input-dark {
+  .input-group {
+    background: $bg-deep-blue;
+    .control-action {
+      &:hover path {
+        color: $text-white !important;
+      }
     }
   }
 }

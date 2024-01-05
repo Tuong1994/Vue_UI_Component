@@ -4,3 +4,9 @@
     width: $w-10;
   }
 }
+
+.info-row-dark {
+  * {
+    color: $text-white;
+  }
+}

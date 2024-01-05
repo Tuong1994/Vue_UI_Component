@@ -2,6 +2,7 @@
 import { ref, computed, withDefaults, useSlots, watch, toRef, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
+import useLayoutStore from '../Layout/LayoutStore'
 
 type AccordionType = 'default' | 'group'
 
@@ -41,6 +42,8 @@ const isCollapsed = toRef(props, 'isCollapsed')
 
 const slots = useSlots()
 
+const layout = useLayoutStore()
+
 const collapse = ref<boolean>(false)
 
 const hasExtraLabel = computed<boolean>(() => slots.extraLabel !== undefined)
@@ -52,6 +55,8 @@ const collapsed = computed<boolean>(() => (props.type === 'default' ? collapse.v
 const borderedClassName = computed<string>(() => (props.bordered ? 'accordion-bordered' : ''))
 
 const collapsedClassName = computed<string>(() => (collapsed.value ? 'accordion-collapsed' : ''))
+
+const themeClassName = computed<string>(() => `accordion-${layout.theme}`)
 
 const handleCollapse = () => {
   if (props.type !== 'default') return
@@ -77,7 +82,7 @@ watch(isCollapsed, (newValue) => {
 <template>
   <div
     :style="rootStyle"
-    :class="['accordion', borderedClassName, collapsedClassName, rootClassName]"
+    :class="['accordion', borderedClassName, collapsedClassName, themeClassName, rootClassName]"
     @click="handleSelect"
   >
     <div :style="labelStyle" :class="['accordion-label', labelClassName]" @click="handleCollapse">

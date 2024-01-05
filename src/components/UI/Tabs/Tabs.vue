@@ -3,6 +3,7 @@ import { ref, computed, withDefaults, type StyleValue } from 'vue'
 import type { ComponentColor } from '@/common/type.ts'
 import type { TabsItem, TabsItems } from './type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
+import useLayoutStore from '../Layout/LayoutStore'
 
 export interface TabsProps {
   rootClassName?: string
@@ -23,15 +24,19 @@ const props = withDefaults(defineProps<TabsProps>(), {
   items: () => []
 })
 
+const layout = useLayoutStore()
+
 const activeTab = ref({ tabId: props.items[0].id, comName: props.items[0].comName })
 
 const colorClassName = computed<string>(() => `tabs-${props.color}`)
+
+const themeClassName = computed<string>(() => `tabs-${layout.theme}`)
 
 const handleChangeTab = (tab: TabsItem) => (activeTab.value = { tabId: tab.id, comName: tab.comName })
 </script>
 
 <template>
-  <div :style="rootStyle" :class="['tabs', colorClassName, rootClassName]">
+  <div :style="rootStyle" :class="['tabs', colorClassName, themeClassName, rootClassName]">
     <div :style="headStyle" :class="['tabs-head', headClassName]">
       <div
         v-for="tab in items"

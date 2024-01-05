@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, withDefaults, type StyleValue, useSlots } from 'vue'
+import useLayoutStore from '../Layout/LayoutStore'
 
 type DividerType = 'horizontal' | 'vertical'
 
@@ -21,18 +22,22 @@ const props = withDefaults(defineProps<DividerProps>(), {
 
 const slots = useSlots()
 
+const layout = useLayoutStore()
+
 const hasContent = computed<boolean>(() => slots.default !== undefined)
 
 const placementClassName = computed<string>(() => `divider-horizontal-${props.placement}`)
 
 const plainClassName = computed<string>(() => (props.plain ? `divider-horizontal-plain` : ''))
+
+const themeClassName = computed<string>(() => `divider-horizontal-${layout.theme}`)
 </script>
 
 <template>
   <div
     v-if="type === 'horizontal'"
     :style="rootStyle"
-    :class="['divider-horizontal', placementClassName, plainClassName, rootClassName]"
+    :class="['divider-horizontal', placementClassName, plainClassName, themeClassName, rootClassName]"
   >
     <div v-if="hasContent" class="horizontal-content">
       <slot></slot>

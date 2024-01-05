@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, withDefaults, toRefs, type StyleValue } from 'vue'
 import type { TypoAligns, TypoVariant } from './type.ts'
+import useLayoutStore from '../Layout/LayoutStore'
 
 export interface ParagraphProps {
   rootClassName?: string
@@ -26,6 +27,8 @@ const props = withDefaults(defineProps<ParagraphProps>(), {
   aligns: 'left'
 })
 
+const layout = useLayoutStore()
+
 const { rootStyle } = toRefs(props)
 
 const alignsClassName = computed<string>(() => `paragraph-${props.aligns}`)
@@ -39,6 +42,8 @@ const removeClassName = computed<string>(() => (props.remove ? 'paragraph-remove
 const italicClassName = computed<string>(() => (props.italic ? 'paragraph-italic' : ''))
 
 const strongClassName = computed<string>(() => (props.strong ? 'paragraph-strong' : ''))
+
+const themeClassName = computed<string>(() => `paragraph-${layout.theme}`)
 
 const inlineStyle = computed<StyleValue>(() => {
   const defaultStyle = {
@@ -62,6 +67,7 @@ const inlineStyle = computed<StyleValue>(() => {
       removeClassName,
       italicClassName,
       strongClassName,
+      themeClassName,
       rootClassName
     ]"
   >

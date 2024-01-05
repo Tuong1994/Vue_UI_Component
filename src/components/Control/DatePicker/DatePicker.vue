@@ -7,6 +7,7 @@ import type { ControlColor, ControlShape, FormRule, SelectDate } from '@/compone
 import DatePickerControl from './DatePickerControl.vue'
 import DatePickerCalender from './DatePickerCalendar.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
+import useLayoutStore from '@/components/UI/Layout/LayoutStore'
 
 export interface DatePickerProps {
   rootClassName?: string
@@ -59,6 +60,8 @@ const {
   initialValue: form?.formData[name.value]
 })
 
+const layout = useLayoutStore()
+
 const selectedDate = ref<Date>(defaultDate.value)
 
 const dropdown = ref<boolean>(false)
@@ -103,6 +106,8 @@ const disabledClassName = computed<string>(() => (props.disabled ? 'datepicker-d
 
 const errorClassName = computed<string>(() => (errorMessage?.value ? 'datepicker-error' : ''))
 
+const themeClassName = computed<string>(() => `datepicker-${layout.theme}`)
+
 const iconSize = computed<number>(() => {
   if (controlSize.value === 'sm') return 12
   if (controlSize.value === 'lg') return 16
@@ -140,6 +145,7 @@ watchEffect(() => {
       gapClassName,
       bottomClassName,
       errorClassName,
+      themeClassName,
       rootClassName,
       disabledClassName
     ]"

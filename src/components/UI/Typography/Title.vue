@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, withDefaults, toRefs, type StyleValue } from 'vue'
 import type { TypoAligns, TypoVariant } from './type.ts'
+import useLayoutStore from '../Layout/LayoutStore'
 
 type TitleLevel = 1 | 2 | 3 | 4 | 5 | 6
 
@@ -24,6 +25,8 @@ const props = withDefaults(defineProps<TitleProps>(), {
   level: 1
 })
 
+const layout = useLayoutStore()
+
 const propsRef = toRefs(props)
 
 const alignsClassName = computed<string>(() => `title-${props.aligns}`)
@@ -35,6 +38,8 @@ const underlineClassName = computed<string>(() => (props.underline ? 'title-unde
 const removeClassName = computed<string>(() => (props.remove ? 'title-remove' : ''))
 
 const italicClassName = computed<string>(() => (props.italic ? 'title-italic' : ''))
+
+const themeClassName = computed<string>(() => `title-${layout.theme}`)
 
 const inlineStyle = computed<StyleValue>(() => ({
   ...(propsRef.rootStyle?.value as object),
@@ -51,6 +56,7 @@ const commonProps = computed<any>(() => ({
     underlineClassName.value,
     removeClassName.value,
     italicClassName.value,
+    themeClassName.value,
     props.rootClassName
   ],
   style: inlineStyle

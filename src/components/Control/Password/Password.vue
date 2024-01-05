@@ -6,6 +6,7 @@ import type { FormRule, ControlColor, ControlShape } from '@/components/Control/
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
+import useLayoutStore from '@/components/UI/Layout/LayoutStore'
 
 type InputType = 'password' | 'text'
 
@@ -57,6 +58,8 @@ const {
 
 const slots = useSlots()
 
+const layout = useLayoutStore()
+
 const emits = defineEmits(['update:modelValue'])
 
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -95,6 +98,8 @@ const errorClassName = computed<string>(() => (errorMessage?.value ? 'input-erro
 
 const disabledClassName = computed<string>(() => (props.disabled ? 'input-disabled' : ''))
 
+const themeClassName = computed<string>(() => `input-${layout.theme}`)
+
 const iconSize = computed<number>(() => {
   if (controlSize.value === 'sm') return 12
   if (controlSize.value === 'lg') return 16
@@ -127,6 +132,7 @@ watchEffect(() => {
       sizeClassName,
       shapeClassName,
       errorClassName,
+      themeClassName,
       rootClassName,
       disabledClassName
     ]"

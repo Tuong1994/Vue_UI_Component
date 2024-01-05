@@ -183,6 +183,26 @@
   }
 }
 
+// Theme
+.pagination-dark {
+  .pagination-content {
+    color: $text-white;
+  }
+}
+
+.pagination-dark.pagination-ghost {
+  .pagination-range {
+    background: $bg-deep-blue;
+    .range-btn,
+    .range-dot {
+      color: $text-white;
+      * {
+        color: $text-white;
+      }
+    }
+  }
+}
+
 .pagination-ghost-blue {
   .pagination-range {
     .range-btn:hover {
@@ -193,8 +213,8 @@
       }
     }
     .range-btn-active {
-      border-color: $bg-blue;
-      color: $text-blue;
+      border-color: $bg-blue !important;
+      color: $text-blue !important;
     }
   }
 }
@@ -209,8 +229,8 @@
       }
     }
     .range-btn-active {
-      border-color: $bg-green;
-      color: $text-green;
+      border-color: $bg-green !important;
+      color: $text-green !important;
     }
   }
 }
@@ -225,8 +245,8 @@
       }
     }
     .range-btn-active {
-      border-color: $bg-red;
-      color: $text-red;
+      border-color: $bg-red !important;
+      color: $text-red !important;
     }
   }
 }
@@ -241,8 +261,8 @@
       }
     }
     .range-btn-active {
-      border-color: $bg-orange;
-      color: $text-orange;
+      border-color: $bg-orange !important;
+      color: $text-orange !important;
     }
   }
 }
@@ -257,8 +277,8 @@
       }
     }
     .range-btn-active {
-      border-color: $bg-yellow;
-      color: $text-yellow;
+      border-color: $bg-yellow !important;
+      color: $text-yellow !important;
     }
   }
 }
@@ -273,8 +293,8 @@
       }
     }
     .range-btn-active {
-      border-color: $bg-purple;
-      color: $text-purple;
+      border-color: $bg-purple !important;
+      color: $text-purple !important;
     }
   }
 }
@@ -289,8 +309,8 @@
       }
     }
     .range-btn-active {
-      border-color: $bg-pink;
-      color: $text-pink;
+      border-color: $bg-pink !important;
+      color: $text-pink !important;
     }
   }
 }
@@ -305,8 +325,8 @@
       }
     }
     .range-btn-active {
-      border-color: $bg-black;
-      color: $text-black;
+      border-color: $bg-black !important;
+      color: $text-black !important;
     }
   }
 }

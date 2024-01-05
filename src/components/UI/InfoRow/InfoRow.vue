@@ -4,6 +4,7 @@ import { UI } from '@/components'
 import type { ParagraphProps } from '../Typography/Paragraph.vue'
 import type { GridColProps } from '../Grid/Col.vue'
 import type { GridRowProps } from '../Grid/Row.vue'
+import useLayoutStore from '../Layout/LayoutStore'
 
 const { Grid, Typography } = UI
 
@@ -20,6 +21,10 @@ export interface InfoRowProps extends GridRowProps {
 }
 
 const props = withDefaults(defineProps<InfoRowProps>(), {})
+
+const layout = useLayoutStore()
+
+const themeClassName = computed<string>(() => `info-row-${layout.theme}`)
 
 const labelSpanDefaultProps = computed<GridColProps>(() => ({
   span: 6,
@@ -40,7 +45,7 @@ const textDefaultProps = computed<ParagraphProps>(() => ({ strong: true, ...prop
 </script>
 
 <template>
-  <Row v-bind="props" rootClassName="info-row">
+  <Row v-bind="props" :rootClassName="`info-row ${themeClassName}`">
     <Col v-bind="labelSpanDefaultProps">
       <Paragraph v-bind="labelDefaultProps">
         <slot name="label"></slot>

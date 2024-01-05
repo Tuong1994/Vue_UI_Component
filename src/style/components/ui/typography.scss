@@ -69,6 +69,13 @@
   text-align: justify;
 }
 
+.title-dark {
+  color: $text-white;
+  * {
+    color: $text-white;
+  }
+}
+
 // Variant
 .title-secondary {
   color: $text-gray;
@@ -144,6 +151,13 @@
 
 .paragraph-justify {
   text-align: justify;
+}
+
+.paragraph-dark {
+  color: $text-white;
+  * {
+    color: $text-white;
+  }
 }
 
 // Variant

@@ -11,7 +11,6 @@ interface UploadControlProps {
   multiple?: boolean
   hasLabel: boolean
   dragged: boolean
-  hasLabel: boolean
   error: UploadError | null
   accept: string
 }

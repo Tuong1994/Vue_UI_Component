@@ -4,6 +4,7 @@ import { useField } from 'vee-validate'
 import type { FormRule } from '@/components/Control/type.ts'
 import type { ComponentColor, ComponentSize } from '@/common/type.ts'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
+import useLayoutStore from '@/components/UI/Layout/LayoutStore'
 
 export interface RadioProps {
   rootClassName?: string
@@ -47,6 +48,8 @@ const {
 
 const slots = useSlots()
 
+const layout = useLayoutStore()
+
 const emits = defineEmits(['onCheck', 'onBlur'])
 
 const isCheck = ref<boolean>(false)
@@ -69,6 +72,8 @@ const errorClassName = computed<string>(() => (errorMessage?.value ? 'radio-grou
 
 const disabledClassName = computed<string>(() => (props.disabled ? 'radio-group-disabled' : ''))
 
+const themeClassName = computed<string>(() => `radio-${layout.theme}`)
+
 const handleChange = (e: Event) => {
   if (form?.isVee) return veeOnChange(props.value)
 
@@ -88,7 +93,10 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div :style="rootStyle" :class="['radio', gapClassName, sizeClassName, colorClassName, rootClassName]">
+  <div
+    :style="rootStyle"
+    :class="['radio', gapClassName, sizeClassName, colorClassName, themeClassName, rootClassName]"
+  >
     <label :class="['radio-group', errorClassName, disabledClassName]">
       <input
         type="radio"

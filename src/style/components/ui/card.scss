@@ -15,8 +15,18 @@
   }
 }
 
+// Hoverable
 .card-hoverable {
   &:hover {
     box-shadow: 2px 2px 10px $bg-gray;
   }
+}
+
+// Theme
+.card-light {
+  background: $bg-white;
+}
+
+.card-dark {
+  background: $bg-deep-blue;
 }

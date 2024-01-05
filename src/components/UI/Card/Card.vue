@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, withDefaults, useSlots, type StyleValue } from 'vue'
+import useLayoutStore from '../Layout/LayoutStore'
 
 export interface CardProps {
   rootClassName?: string
@@ -19,13 +20,17 @@ const props = withDefaults(defineProps<CardProps>(), {
 
 const slots = useSlots()
 
+const layout = useLayoutStore()
+
 const hasHead = computed<boolean>(() => slots.head !== undefined)
 
 const hoverClassName = computed<string>(() => (props.hoverable ? 'card-hoverable' : ''))
+
+const themeClassName = computed<string>(() => `card-${layout.theme}`)
 </script>
 
 <template>
-  <div :style="rootStyle" :class="['card', hoverClassName, rootClassName]">
+  <div :style="rootStyle" :class="['card', hoverClassName, themeClassName, rootClassName]">
     <div v-if="hasHead" :style="headStyle" :class="['card-head', headStyle]">
       <slot name="head"></slot>
     </div>

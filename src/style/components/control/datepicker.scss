@@ -227,19 +227,6 @@
   }
 }
 
-// Gap
-.datepicker-gap-sm {
-  margin-bottom: $m-1;
-}
-
-.datepicker-gap-md {
-  margin-bottom: $m-1 + 0.5;
-}
-
-.datepicker-gap-lg {
-  margin-bottom: $m-2;
-}
-
 // Bottom
 .datepicker-bottom {
   .datepicker-wrap {
@@ -248,24 +235,11 @@
       bottom: 100%;
     }
     .wrap-calendar-active {
-      bottom: calc(100% + 5px);
+      bottom: 120%;
       opacity: 1;
       animation: dropup $transition-time-xs $transition-fn;
     }
   }
-}
-
-// Error
-.datepicker-error {
-  .datepicker-label {
-    color: $text-red;
-    * {
-      color: $text-red;
-    }
-  }
-  // .wrap-group {
-  //   border-color: $bg-red !important;
-  // }
 }
 
 // Disabled
@@ -286,6 +260,19 @@
       cursor: not-allowed;
     }
   }
+}
+
+// Error
+.datepicker-error {
+  .datepicker-label {
+    color: $text-red;
+    * {
+      color: $text-red;
+    }
+  }
+  // .wrap-group {
+  //   border-color: $bg-red !important;
+  // }
 }
 
 // Size
@@ -333,6 +320,19 @@
       }
     }
   }
+}
+
+// Gap
+.datepicker-gap-sm {
+  margin-bottom: $m-1;
+}
+
+.datepicker-gap-md {
+  margin-bottom: $m-1 + 0.5;
+}
+
+.datepicker-gap-lg {
+  margin-bottom: $m-2;
 }
 
 // Shape
@@ -543,5 +543,30 @@
         color: $text-white;
       }
     }
+  }
+}
+
+// Theme
+.datepicker-white {
+  .wrap-group {
+    background: $bg-white;
+  }
+  .wrap-calendar {
+    background: $bg-white;
+  }
+}
+
+.datepicker-dark {
+  .wrap-group {
+    background: $bg-deep-blue !important;
+    .control-action {
+      &:hover path {
+        color: $text-white !important;
+      }
+    }
+  }
+  .wrap-calendar {
+    background: $bg-deep-blue !important;
+    box-shadow: 0 0 10px $bg-black !important;
   }
 }
