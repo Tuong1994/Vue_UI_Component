@@ -117,6 +117,7 @@ const handleChange = (e: Event) => {
 const handleClearInput = () => (form?.isVee ? setValue('') : emits('update:modelValue', ''))
 
 watchEffect(() => {
+  if (!form?.autoFocusValidation) return
   if (errorMessage?.value && inputRef.value) inputRef.value.click()
 })
 </script>

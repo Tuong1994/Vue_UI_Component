@@ -12,6 +12,7 @@ interface SelectTagControlProps {
   placeholder?: string
   errorMessage?: string
   iconSize: number
+  autoFocusValidation?: boolean;
   showClearIcon: boolean
   dropdown: boolean
   disabled: boolean
@@ -45,6 +46,7 @@ const handleSearch = (e: Event) => emits('onSearch', e)
 const handleClearInput = () => emits('onClearInput')
 
 watchEffect(() => {
+  if(!props.autoFocusValidation) return
   if (errorMessage?.value && controlRef.value) controlRef.value.click()
 })
 </script>

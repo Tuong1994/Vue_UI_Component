@@ -10,6 +10,7 @@ interface SelectControlProps {
   placeholder?: string
   errorMessage?: string
   iconSize: number
+  autoFocusValidation?: boolean
   loading: boolean
   showClearIcon: boolean
   dropdown: boolean
@@ -41,6 +42,7 @@ const handleSearch = (e: Event) => emits('onSearch', e)
 const handleClearInput = () => emits('onClearInput')
 
 watchEffect(() => {
+  if (!props.autoFocusValidation) return
   if (errorMessage?.value && controlRef.value) controlRef.value.click()
 })
 </script>

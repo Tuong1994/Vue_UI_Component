@@ -238,6 +238,7 @@ watchEffect(() => {
         :hasAddonAfter="hasAddonAfter"
         :renderValue="renderValue"
         :errorMessage="errorMessage"
+        :autoFocusValidation="form?.autoFocusValidation"
         @onDropdown="handleDropdown"
         @onSearch="handleSearch"
         @onClearInput="handleClearInput"

@@ -120,6 +120,7 @@ const handleSwitchInputType = (type: InputType) => (inputType.value = type)
 const onChangeFn = form?.isVee ? onChange : handleChange
 
 watchEffect(() => {
+  if (!form?.autoFocusValidation) return
   if (errorMessage?.value && inputRef.value) inputRef.value.click()
 })
 </script>

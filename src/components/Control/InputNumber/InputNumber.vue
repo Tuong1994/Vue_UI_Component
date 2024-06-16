@@ -20,7 +20,7 @@ export interface InputPhoneProps {
   sizes?: ComponentSize
   color?: ControlColor
   shape?: ControlShape
-  modelValue?: string | number;
+  modelValue?: string | number
   placeholder?: string
   name?: string
   disabled?: boolean
@@ -117,6 +117,7 @@ const handleChange = (e: Event) => {
 const handleClearInput = () => (form?.isVee ? setValue(0) : emits('update:modelValue', 0))
 
 watchEffect(() => {
+  if (!form?.autoFocusValidation) return
   if (errorMessage?.value && inputRef.value) inputRef.value.click()
 })
 </script>

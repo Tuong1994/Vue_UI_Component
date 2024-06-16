@@ -245,6 +245,7 @@ watchEffect(() => {
         :renderValue="renderValue"
         :errorMessage="errorMessage"
         :selectedOptions="selectedOptions"
+        :autoFocusValidation="form?.autoFocusValidation"
         @onDropdown="handleDropdown"
         @onSearch="handleSearch"
         @onClearInput="handleClearInput"
