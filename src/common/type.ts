@@ -1,3 +1,8 @@
+import type { VN } from './lang/vn'
+import type { EN } from './lang/en'
+
+export type Lang = VN | EN
+
 export type ComponentShape = 'square' | 'circle' | 'round'
 
 export type ComponentSize = 'sm' | 'md' | 'lg'

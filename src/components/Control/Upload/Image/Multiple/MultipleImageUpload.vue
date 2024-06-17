@@ -1,10 +1,18 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, watchEffect, useSlots, inject, type StyleValue } from 'vue'
-import type { UploadError, UploadItem, UploadItems, ControlColor, ControlShape } from '@/components/Control/type'
+import type {
+  UploadError,
+  UploadItem,
+  UploadItems,
+  ControlColor,
+  ControlShape
+} from '@/components/Control/type'
 import { ACCEPT_IMAGE_FILE_TYPE, DEFAULT_FILE_SIZE } from '../../constant'
+import { REPLACE_NUM_REGEX, REPLACE_TYPE_REGEX } from '@/common/constant/regex'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import UploadControl from './UploadControl.vue'
 import UploadViewArea from './UploadViewArea.vue'
+import useLangStore from '@/stores/LangStore'
 import utils from '@/utils'
 
 export interface MultipleImageUploadProps {
@@ -35,6 +43,8 @@ const props = withDefaults(defineProps<MultipleImageUploadProps>(), {
 const emits = defineEmits(['onUpload', 'onRemoveDefaultImage'])
 
 const slots = useSlots()
+
+const t = useLangStore()
 
 const form = inject('form', null) as any
 
@@ -71,11 +81,12 @@ const errorClassName = computed<string>(() => (error.value ? 'upload-group-error
 const errorMessage = computed<string | undefined>(() => {
   if (!error.value) return ''
   if (error.value.type === 'fileSize')
-    return `File size must not greater than ${props.limit / (1024 * 1024)}MB`
-  if (error.value.type === 'fileMax') return `Can only upload ${props.maxUpload} image per time`
+    return t.lang.common.form.others.fileSize.replace(REPLACE_NUM_REGEX, `${props.limit / (1024 * 1024)}`)
+  if (error.value.type === 'fileMax')
+    return t.lang.common.form.others.fileMax.replace(REPLACE_NUM_REGEX, `${props.maxUpload}`)
   if (error.value.type === 'fileType') {
     const types = props.fileAccepted.split(',').map((type) => type.replace('image/', ''))
-    return `Only accept file type ${types.join(', ')}`
+    return t.lang.common.form.others.fileType.replace(REPLACE_TYPE_REGEX, `${types.join(', ')}`)
   }
 })
 

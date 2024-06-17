@@ -5,6 +5,7 @@ import type { FormRule } from '@/components/Control/type.ts'
 import type { ComponentColor, ComponentSize } from '@/common/type.ts'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
+import useLangStore from '@/stores/LangStore'
 
 export interface RadioProps {
   rootClassName?: string
@@ -37,6 +38,8 @@ const props = withDefaults(defineProps<RadioProps>(), {
 const form = inject('form', null) as any
 
 const { name } = toRefs(props)
+
+const t = useLangStore()
 
 const {
   value: veeValue,
@@ -116,7 +119,7 @@ watchEffect(() => {
       <div v-if="hasLabel" :style="labelStyle" :class="['group-label', labelClassName]">
         <span v-if="required" className="label-required">*</span>
         <slot></slot>
-        <span v-if="showOptional" className="label-optional">(Optional)</span>
+        <span v-if="showOptional" className="label-optional">({{ t.lang.common.form.others.optional }})</span>
       </div>
     </label>
 

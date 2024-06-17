@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, useSlots, watchEffect, inject, type StyleValue } from 'vue'
 import { ACCEPT_FILE_TYPE, DEFAULT_FILE_SIZE } from '../constant.ts'
+import { REPLACE_NUM_REGEX, REPLACE_TYPE_REGEX } from '@/common/constant/regex'
 import type {
   UploadItems,
   ControlColor,
@@ -13,6 +14,7 @@ import UploadControl from './UploadControl.vue'
 import UploadFiles from './UploadFiles.vue'
 import utils from '@/utils'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
+import useLangStore from '@/stores/LangStore'
 
 export interface FileUploadProps {
   rootClassName?: string
@@ -44,6 +46,8 @@ const slots = useSlots()
 
 const layout = useLayoutStore()
 
+const t = useLangStore()
+
 const files = ref<UploadItems>([])
 
 const error = ref<UploadError | null>(null)
@@ -69,8 +73,9 @@ const gapClassName = computed<string>(() => (form?.isVee ? 'file-upload-gap' : '
 const errorMessage = computed<string | undefined>(() => {
   if (!error.value) return ''
   if (error.value.type === 'fileSize')
-    return `File size must not greater than ${props.limit / (1024 * 1024)}MB`
-  if (error.value.type === 'fileType') return `Only accept file type ${props.fileAccepted}}`
+    return t.lang.common.form.others.fileSize.replace(REPLACE_NUM_REGEX, `${props.limit / (1024 * 1024)}`)
+  if (error.value.type === 'fileType')
+    return t.lang.common.form.others.fileType.replace(REPLACE_TYPE_REGEX, `${props.fileAccepted}`)
 })
 
 const handleUpload = (fileList: File[]) => {

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, watchEffect, inject, type StyleValue } from 'vue'
-import type { UploadError, ControlColor, ControlShape } from '@/components/Control/type.ts'
 import { ACCEPT_IMAGE_FILE_TYPE, DEFAULT_FILE_SIZE } from '../../constant.ts'
+import { REPLACE_NUM_REGEX, REPLACE_TYPE_REGEX } from '@/common/constant/regex'
+import type { UploadError, ControlColor, ControlShape } from '@/components/Control/type.ts'
 import Image from '@/components/UI/Image/Image.vue'
 import UploadControl from './UploadControl.vue'
 import UploadLoading from './UploadLoading.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
+import useLangStore from '@/stores/LangStore'
 
 export interface SingleImageUploadProps {
   rootClassName?: string
@@ -31,6 +33,8 @@ const props = withDefaults(defineProps<SingleImageUploadProps>(), {
 })
 
 const emits = defineEmits(['onUpload'])
+
+const t = useLangStore()
 
 const form = inject('form', null) as any
 
@@ -65,10 +69,10 @@ const dragClassName = computed<string>(() => (dragged.value ? 'upload-group-drag
 const errorMessage = computed<string | undefined>(() => {
   if (!error.value) return ''
   if (error.value.type === 'fileSize')
-    return `File size must not greater than ${props.limit / (1024 * 1024)}MB`
+    return t.lang.common.form.others.fileSize.replace(REPLACE_NUM_REGEX, `${props.limit / (1024 * 1024)}`)
   if (error.value.type === 'fileType') {
     const types = props.fileAccepted.split(',').map((type) => type.replace('image/', ''))
-    return `Only accept file type ${types.join(', ')}`
+    return t.lang.common.form.others.fileType.replace(REPLACE_TYPE_REGEX, `${types.join(', ')}`)
   }
 })
 

@@ -2,6 +2,7 @@
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import type { StyleValue } from 'vue'
 import Icon from '@/components/UI/Icon/Icon.vue'
+import useLangStore from '@/stores/LangStore'
 
 interface UploadControlProps {
   controlClassName?: string
@@ -14,6 +15,8 @@ interface UploadControlProps {
 defineProps<UploadControlProps>()
 
 const emits = defineEmits(['onChange'])
+
+const t = useLangStore()
 
 const handleChange = (e: Event) => emits('onChange', e)
 </script>
@@ -31,7 +34,7 @@ const handleChange = (e: Event) => emits('onChange', e)
 
     <div v-if="!hasLabel" className="control-label">
       <Icon :iconName="iconName.CLOUD_UPLOAD" :size="30" class="label-icon" />
-      <p>Select or drag image here</p>
+      <p>{{ t.lang.common.form.placeholder.imagesUpload }}</p>
     </div>
 
     <slot v-if="hasLabel" name="label"></slot>

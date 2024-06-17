@@ -14,6 +14,7 @@ import SelectControl from './SelectControl.vue'
 import SelectOption from './SelectOption.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
+import useLangStore from '@/stores/LangStore'
 
 export interface SelectProps {
   rootClassName?: string
@@ -77,6 +78,8 @@ const slots = useSlots()
 
 const layout = useLayoutStore()
 
+const t = useLangStore()
+
 const dropdown = ref<boolean>(false)
 
 const currentPage = ref<number>(1)
@@ -133,10 +136,10 @@ const disabledClassName = computed<string>(() => (controlDisabled.value ? 'selec
 
 const themeClassName = computed<string>(() => `select-${layout.theme}`)
 
-const controlPlaceHolder = computed<string>(() => {
+const controlPlaceholder = computed<string>(() => {
   if (props.placeholder) return props.placeholder
-  if (dropdown.value && props.hasSearch) return 'Search...'
-  return 'Select...'
+  if (dropdown.value && props.hasSearch) return t.lang.common.form.placeholder.search
+  return t.lang.common.form.placeholder.select
 })
 
 const iconSize = computed<number>(() => {
@@ -227,7 +230,7 @@ watchEffect(() => {
       <SelectControl
         :inputClassName="inputClassName"
         :inputStyle="inputStyle"
-        :placeholder="controlPlaceHolder"
+        :placeholder="controlPlaceholder"
         :iconSize="iconSize"
         :dropdown="dropdown"
         :disabled="controlDisabled"

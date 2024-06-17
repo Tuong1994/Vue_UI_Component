@@ -6,6 +6,7 @@ import type { ComponentSize, ComponentColor } from '@/common/type.ts'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
+import useLangStore from '@/stores/LangStore'
 
 export interface CheckBoxProps {
   rootClassName?: string
@@ -50,6 +51,8 @@ const {
 })
 
 const slots = useSlots()
+
+const t = useLangStore()
 
 const emits = defineEmits(['onCheck', 'onInput', 'onBlur'])
 
@@ -138,7 +141,7 @@ watchEffect(() => {
       <div v-if="hasLabel" class="group-label">
         <span v-if="required" className="label-required">*</span>
         <slot></slot>
-        <span v-if="showOptional" className="label-optional">(Optional)</span>
+        <span v-if="showOptional" className="label-optional">({{ t.lang.common.form.others.optional }})</span>
       </div>
     </label>
 

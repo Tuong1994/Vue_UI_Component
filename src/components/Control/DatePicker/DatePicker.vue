@@ -8,6 +8,7 @@ import DatePickerControl from './DatePickerControl.vue'
 import DatePickerCalender from './DatePickerCalendar.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
+import useLangStore from '@/stores/LangStore'
 
 export interface DatePickerProps {
   rootClassName?: string
@@ -61,6 +62,8 @@ const {
 })
 
 const layout = useLayoutStore()
+
+const t = useLangStore()
 
 const selectedDate = ref<Date>(defaultDate.value)
 
@@ -158,7 +161,7 @@ watchEffect(() => {
     <label v-if="hasLabel" :style="labelStyle" :class="['datepicker-label', labelClassName]">
       <span v-if="required" className="label-required">*</span>
       <slot name="label"></slot>
-      <span v-if="showOptional" className="label-optional">(Optional)</span>
+      <span v-if="showOptional" className="label-optional">({{ t.lang.common.form.others.optional }})</span>
     </label>
 
     <div class="datepicker-wrap">

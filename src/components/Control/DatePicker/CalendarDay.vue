@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { ELang } from '@/common/enum'
+import { daysEn, daysVn } from './data'
+import useLangStore from '@/stores/LangStore'
 
-const days = computed<string[]>(() => ['Sun', 'Mon', 'Tue', 'Web', 'Thur', 'Fri', 'Sat'])
+const t = useLangStore()
+
+const days = computed<string[]>(() => (t.locale === ELang.EN ? daysEn : daysVn))
 </script>
 
 <template>

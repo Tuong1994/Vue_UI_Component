@@ -7,6 +7,7 @@ import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
+import useLangStore from '@/stores/LangStore'
 
 export interface TextAreaProps {
   rootClassName?: string
@@ -37,7 +38,6 @@ const props = withDefaults(defineProps<TextAreaProps>(), {
   sizes: 'md',
   color: 'blue',
   shape: 'square',
-  placeholder: 'Type...',
   name: '',
   rows: 5,
   hasClear: true
@@ -61,6 +61,8 @@ const slots = useSlots()
 
 const layout = useLayoutStore()
 
+const t = useLangStore()
+
 const emits = defineEmits(['update:modelValue'])
 
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -74,6 +76,8 @@ const controlShape = computed<ControlShape>(() => (form?.isVee ? form?.formShape
 const controlSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize : props.sizes))
 
 const controlDisabled = computed<boolean>(() => (form?.isVee ? form?.formDisabled : props.disabled))
+
+const controlPlaceholder = computed<string>(() => props.placeholder ?? t.lang.common.form.placeholder.enter)
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
@@ -137,7 +141,7 @@ watchEffect(() => {
       <div v-if="hasLabel" :style="labelStyle" :class="['textarea-label', labelClassName]">
         <span v-if="required" className="label-required">*</span>
         <slot name="label"></slot>
-        <span v-if="showOptional" className="label-optional">(Optional)</span>
+        <span v-if="showOptional" className="label-optional">({{ t.lang.common.form.others.optional }})</span>
       </div>
 
       <div ref="inputRef" class="textarea-group">
@@ -148,7 +152,7 @@ watchEffect(() => {
             :cols="cols"
             :value="controlValue"
             :disabled="controlDisabled"
-            :placeholder="placeholder"
+            :placeholder="controlPlaceholder"
             :class="['control-box', inputClassName]"
             @input="onChangeFn"
             @blur="veeOnBlur"

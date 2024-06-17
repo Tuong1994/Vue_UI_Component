@@ -77,6 +77,13 @@ const handleFilter = () => emits('onFilter')
 
 const handleCancelFilter = () => emits('onCancelFilter')
 
+const handleRowSelect = () => {
+  console.log(rowSelectedKeys.value)
+  emits('onRowSelect', rowSelectedKeys.value)
+}
+
+const handleCancelSelect = () => (rowSelectedKeys.value = [])
+
 watchEffect(() => emits('onRowSelect', rowSelectedKeys.value))
 </script>
 
@@ -101,7 +108,16 @@ watchEffect(() => emits('onRowSelect', rowSelectedKeys.value))
           :hasRowSelection="hasRowSelection"
           :rowSelectedKeys="rowSelectedKeys"
           @onSelectAll="handleSelectAll"
-        />
+          @onRowSelect="handleRowSelect"
+          @onCancelSelect="handleCancelSelect"
+        >
+          <template #headRemoveButton>
+            <slot name="headRemoveButton"></slot>
+          </template>
+          <template #headCancelButton>
+            <slot name="headCancelButton"></slot>
+          </template>
+        </TableHead>
         <TableBody
           v-if="dataSource.length > 0"
           :color="color"

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, type StyleValue } from 'vue'
-import type { UploadError } from '@/components/Control/type.ts'
 import { iconName } from '@/components/UI/Icon/constant.ts'
+import type { UploadError } from '@/components/Control/type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
+import useLangStore from '@/stores/LangStore'
 
 interface UploadControlProps {
   controlClassName?: string
@@ -18,6 +19,8 @@ interface UploadControlProps {
 const props = defineProps<UploadControlProps>()
 
 const emits = defineEmits(['onChange', 'onDrag', 'onDrop'])
+
+const t = useLangStore()
 
 const dragClassName = computed<string>(() => (props.dragged ? 'upload-group-dragged' : ''))
 
@@ -52,7 +55,7 @@ const handleDrop = (e: DragEvent) => emits('onDrop', e)
 
     <div v-if="!hasLabel" class="group-label">
       <Icon :iconName="iconName.UPLOAD" :size="18" />
-      <span>Choose file</span>
+      <span>{{ t.lang.common.form.placeholder.filesUpload }}</span>
     </div>
 
     <slot v-if="hasLabel" name="label"></slot>

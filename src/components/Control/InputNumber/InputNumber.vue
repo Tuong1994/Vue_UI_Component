@@ -8,6 +8,7 @@ import { ONLY_DIGIT_REGEX } from '../regex'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
+import useLangStore from '@/stores/LangStore'
 import formatNumber from './formatNumber'
 
 export interface InputPhoneProps {
@@ -37,7 +38,6 @@ const props = withDefaults(defineProps<InputPhoneProps>(), {
   sizes: 'md',
   color: 'blue',
   shape: 'square',
-  placeholder: 'Type...',
   name: '',
   hasClear: true
 })
@@ -59,6 +59,8 @@ const slots = useSlots()
 
 const layout = useLayoutStore()
 
+const t = useLangStore()
+
 const emits = defineEmits(['update:modelValue'])
 
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -74,6 +76,8 @@ const controlSize = computed<ComponentSize>(() => (form?.isVee ? form?.formSize 
 const controlShape = computed<ControlShape>(() => (form?.isVee ? form?.formShape : props.shape))
 
 const controlDisabled = computed<boolean>(() => (form?.isVee ? form?.formDisabled : props.disabled))
+
+const controlPlaceholder = computed<string>(() => props.placeholder ?? t.lang.common.form.placeholder.enter)
 
 const hasLabel = computed<boolean>(() => slots.label !== undefined)
 
@@ -141,7 +145,7 @@ watchEffect(() => {
       <div v-if="hasLabel" :style="labelStyle" :class="['input-label', labelClassName]">
         <span v-if="required" className="label-required">*</span>
         <slot name="label"></slot>
-        <span v-if="showOptional" className="label-optional">(Optional)</span>
+        <span v-if="showOptional" className="label-optional">({{ t.lang.common.form.others.optional }})</span>
       </div>
 
       <div ref="inputRef" class="input-group">
@@ -156,7 +160,7 @@ watchEffect(() => {
             :name="name"
             :value="controlValue"
             :disabled="controlDisabled"
-            :placeholder="placeholder"
+            :placeholder="controlPlaceholder"
             :class="['control-box', inputClassName]"
             @input="handleChange"
             @blur="veeOnBlur"

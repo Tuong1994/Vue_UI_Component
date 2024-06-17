@@ -1,33 +1,25 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
+import { ELang } from '@/common/enum'
+import { monthsEn, monthsVn } from './data'
+import type { SelectOptions } from '../type'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import HeaderSelect from './HeaderSelect.vue'
-import type { SelectOptions } from '../type';
+import useLangStore from '@/stores/LangStore'
 
 interface CalendarHeaderProps {
   currentMonth: number
   currentYear: number
 }
 
-const props = defineProps<CalendarHeaderProps>()
+defineProps<CalendarHeaderProps>()
 
 const emits = defineEmits(['onSwitchMonth', 'onSelectMonth', 'onSelectYear'])
 
-const months = computed<string[]>(() => [
-  'Janunary',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-])
+const t = useLangStore()
+
+const months = computed<string[]>(() => (t.locale === ELang.EN ? monthsEn : monthsVn))
 
 const years = computed<number[]>(() => {
   let startYear = 1970
@@ -39,9 +31,13 @@ const years = computed<number[]>(() => {
   return yearRange
 })
 
-const monthOptions = computed<SelectOptions>(() => months.value.map((month, idx) => ({ label: month, value: idx })))
+const monthOptions = computed<SelectOptions>(() =>
+  months.value.map((month, idx) => ({ label: month, value: idx }))
+)
 
-const yearOptions = computed<SelectOptions>(() => years.value.map((year) => ({ label: String(year), value: year })))
+const yearOptions = computed<SelectOptions>(() =>
+  years.value.map((year) => ({ label: String(year), value: year }))
+)
 
 const handleSwitchMonth = (type: 'prev' | 'next') => emits('onSwitchMonth', type)
 

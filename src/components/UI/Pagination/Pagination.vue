@@ -6,6 +6,7 @@ import type { ComponentColor, ComponentShape } from '@/common/type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import usePagination from './usePagination.ts'
 import useLayoutStore from '../Layout/LayoutStore'
+import useLangStore from '@/stores/LangStore'
 
 export interface PaginationProps {
   rootClassName?: string
@@ -34,6 +35,10 @@ const emits = defineEmits(['onChangePage'])
 
 const { isPhone } = useViewPoint()
 
+const layout = useLayoutStore()
+
+const t = useLangStore()
+
 const currentPage = ref<number>(1)
 
 const { pageRange, totalPages } = usePagination({
@@ -42,8 +47,6 @@ const { pageRange, totalPages } = usePagination({
   limit: props.limit,
   currentPage
 })
-
-const layout = useLayoutStore()
 
 const leftBtnsDisabled = computed<boolean>(() => currentPage.value === 1)
 
@@ -74,7 +77,8 @@ const content = computed<string>(() => {
   const end = start + props.limit
   const from = start === 0 ? 1 : start
   const to = end === props.total ? props.total : end
-  return `Showing ${from} - ${to} of ${props.total} items`
+  const { showing, of, result } = t.lang.common.pagination
+  return `${showing} ${from} - ${to} ${of} ${props.total} ${result}`
 })
 
 const handleChangePage = (type: ActionType, page?: number) => {

@@ -14,6 +14,7 @@ import SelectTagControl from './SelectTagControl.vue'
 import SelectTagOption from './SelectTagOption.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
+import useLangStore from '@/stores/LangStore'
 
 export interface SelectTagProps {
   rootClassName?: string
@@ -78,6 +79,8 @@ const slots = useSlots()
 
 const layout = useLayoutStore()
 
+const t = useLangStore()
+
 const dropdown = ref<boolean>(false)
 
 const currentPage = ref<number>(1)
@@ -132,10 +135,10 @@ const disabledClassName = computed<string>(() => (controlDisabled.value ? 'selec
 
 const themeClassName = computed<string>(() => `select-${layout.theme}`)
 
-const controlPlaceHolder = computed<string>(() => {
+const controlPlaceholder = computed<string>(() => {
   if (props.placeholder) return props.placeholder
-  if (dropdown.value && props.hasSearch) return 'Search...'
-  return 'Select...'
+  if (dropdown.value && props.hasSearch) return t.lang.common.form.placeholder.search
+  return t.lang.common.form.placeholder.select
 })
 
 const iconSize = computed<number>(() => {
@@ -226,14 +229,14 @@ watchEffect(() => {
     <label v-if="hasLabel" :style="labelStyle" :class="['select-label', labelClassName]">
       <span v-if="required" className="label-required">*</span>
       <slot name="label"></slot>
-      <span v-if="showOptional" className="label-optional">(Optional)</span>
+      <span v-if="showOptional" className="label-optional">({{ t.lang.common.form.others.optional }})</span>
     </label>
 
     <div class="select-wrap">
       <SelectTagControl
         :inputClassName="inputClassName"
         :inputStyle="inputStyle"
-        :placeholder="controlPlaceHolder"
+        :placeholder="controlPlaceholder"
         :iconSize="iconSize"
         :dropdown="dropdown"
         :disabled="controlDisabled"
