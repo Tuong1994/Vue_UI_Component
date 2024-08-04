@@ -1,4 +1,5 @@
 .grid-row {
+  min-width: $w-full;
   display: flex;
   flex-wrap: wrap;
 }

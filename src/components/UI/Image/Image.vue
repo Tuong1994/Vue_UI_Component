@@ -52,13 +52,11 @@ const imageSize = computed<StyleValue>(() => {
     if (props.size === 'md') return { width: `200px`, height: `200px` }
     if (props.size === 'lg') return { width: `300px`, height: `300px` }
   }
-  if (props.imgWidth && !props.imgHeight) return { width: props.imgWidth, height: 'auto' }
-  if (props.imgHeight && !props.imgWidth) return { width: 'auto', height: props.imgHeight }
-  if (props.imgWidth && props.imgHeight) {
-    const width = typeof props.imgWidth === 'string' ? props.imgWidth : `${props.imgWidth}px`
-    const height = typeof props.imgHeight === 'string' ? props.imgHeight : `${props.imgHeight}px`
-    return { width, height }
-  }
+  const width = typeof props.imgWidth === 'string' ? props.imgWidth : `${props.imgWidth}px`
+  const height = typeof props.imgHeight === 'string' ? props.imgHeight : `${props.imgHeight}px`
+  if (props.imgWidth && !props.imgHeight) return { width, height: 'auto' }
+  if (props.imgHeight && !props.imgWidth) return { width: 'auto', height }
+  if (props.imgWidth && props.imgHeight) return { width, height }
   return { width: 'auto', height: 'auto' }
 })
 
