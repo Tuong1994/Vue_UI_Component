@@ -59,11 +59,14 @@ watch(dropdown, (newValue) => emits('onDropdown', newValue))
     ref="dropdownRef"
     :style="rootStyle"
     :class="['dropdown', placementClassName, themeClassName, rootClassName]"
-    @click="trigger === 'click' && handleDropdown()"
     @mouseenter="trigger === 'hover' && handleDropdown()"
     @mouseleave="trigger === 'hover' && handleDropdown()"
   >
-    <div :style="labelStyle" :class="['dropdown-label', labelClassName]">
+    <div
+      :style="labelStyle"
+      :class="['dropdown-label', labelClassName]"
+      @click="trigger === 'click' && handleDropdown()"
+    >
       <slot name="label"></slot>
     </div>
     <div v-if="render" :class="['dropdown-list', activeClassName, boxClassName]">

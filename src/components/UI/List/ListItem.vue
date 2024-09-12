@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { withDefaults, type StyleValue } from 'vue'
+import { withDefaults, computed, type StyleValue } from 'vue'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import useListStore from './ListStore.ts'
 
@@ -8,20 +8,23 @@ export interface ListItemProps {
   contentClassName?: string
   rootStyle?: StyleValue
   contentStyle?: StyleValue
+  icon?: string
 }
 
 const props = withDefaults(defineProps<ListItemProps>(), {
   rootClassName: '',
-  contentClassName: '',
+  contentClassName: ''
 })
 
 const list = useListStore()
+
+const iconName = computed<string>(() => (props.icon ? props.icon : list.icon))
 </script>
 
 <template>
   <li :style="rootStyle" :class="['list-item', rootClassName]">
     <div class="item-icon">
-      <Icon :iconName="list.icon" />
+      <Icon :iconName="iconName" />
     </div>
     <div :style="contentStyle" :class="['item-content', contentClassName]">
       <slot></slot>
