@@ -77,10 +77,7 @@ const handleFilter = () => emits('onFilter')
 
 const handleCancelFilter = () => emits('onCancelFilter')
 
-const handleRowSelect = () => {
-  console.log(rowSelectedKeys.value)
-  emits('onRowSelect', rowSelectedKeys.value)
-}
+const handleRowSelect = () => emits('onRowSelect', rowSelectedKeys.value)
 
 const handleCancelSelect = () => (rowSelectedKeys.value = [])
 
