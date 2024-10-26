@@ -2,10 +2,14 @@
 import * as yup from 'yup'
 import { UI, Control } from '@/components'
 import type { TableColumns, TableRowKey } from '@/components/UI/Table/type'
+import useLayoutStore from '@/components/UI/Layout/LayoutStore'
 
-const { Section, Button, Image, Table } = UI
+const { Section, Button, Image, Table, Divider, Layout } = UI
 
-const { Form, Input, InputPassword, InputPhone, TextArea, Select, DatePicker, Upload } = Control
+const { Container, Content } = Layout
+
+const { Form, Input, InputPassword, InputPhone, TextArea, Select, DatePicker, CheckBox, Radio, Upload } =
+  Control
 
 const { FileUpload, ImageUpload } = Upload
 
@@ -16,6 +20,7 @@ interface Data {
   password: string
   phone: string
   note: string
+  gender: string
   role: number
   birthday: Date
 }
@@ -33,8 +38,11 @@ const initialValues: Data = {
   phone: '',
   note: '',
   role: -1,
+  gender: '',
   birthday: new Date()
 }
+
+const layout = useLayoutStore()
 
 const dataSource: TableData[] = [
   {
@@ -117,11 +125,20 @@ const columns: TableColumns<TableData> = [
     dataIndex: 'productName'
   }
 ]
+
+const handleClick = () => {
+  if (layout.theme === 'dark') return layout.switchTheme('light')
+  layout.switchTheme('dark')
+}
 </script>
 
 <template>
-  <Section>
-    <Table
+  <Container>
+    <Content>
+      <Section>
+        <Button @click="handleClick">Change mode</Button>
+        <Divider />
+        <!-- <Table
       hasRowSelection
       hasExpand
       hasPagination
@@ -132,35 +149,46 @@ const columns: TableColumns<TableData> = [
       <template #expand="com">
         <Table :dataSource="com.expand.data.child" :columns="columns" />
       </template>
-    </Table>
+    </Table> -->
 
-    <!-- <Form
-      :initialValues="initialValues"
-      :autoFocusValidation="false"
-      @onFinish="(value) => console.log(value)"
-    >
-      <MultipleImageUpload />
+        <Form
+          :initialValues="initialValues"
+          :autoFocusValidation="false"
+          @onFinish="(value) => console.log(value)"
+        >
+          <MultipleImageUpload />
 
-      <FileUpload />
-      <Input name="email" :rule="yup.string().required('This field is required')">
-        <template #label>Email</template>
-      </Input>
-      <InputPassword name="password" :rule="yup.string().required('This field is required')">
-        <template #label>Password</template>
-      </InputPassword>
-      <InputPhone name="phone" :rule="yup.string().required('This field is required')">
-        <template #label>Phone</template>
-      </InputPhone>
-      <Select name="role" :rule="yup.number().min(1, 'This field is required')">
-        <template #label>Role</template>
-      </Select>
-      <DatePicker name="birthday">
-        <template #label>Birthday</template>
-      </DatePicker>
-      <TextArea name="note" :rule="yup.string().required('This field is required')">
-        <template #label>Note</template>
-      </TextArea>
-      <Button type="submit">Submit</Button>
-    </Form> -->
-  </Section>
+          <FileUpload />
+          <Input name="email" :rule="yup.string().required('This field is required')">
+            <template #label>Email</template>
+          </Input>
+          <InputPassword name="password" :rule="yup.string().required('This field is required')">
+            <template #label>Password</template>
+          </InputPassword>
+          <InputPhone name="phone" :rule="yup.string().required('This field is required')">
+            <template #label>Phone</template>
+          </InputPhone>
+          <Select
+            name="role"
+            :rule="yup.number().min(1, 'This field is required')"
+            :options="[
+              { label: 'admin', value: 1 },
+              { label: 'user', value: 2 }
+            ]"
+          >
+            <template #label>Role</template>
+          </Select>
+          <DatePicker name="birthday">
+            <template #label>Birthday</template>
+          </DatePicker>
+          <TextArea name="note" :rule="yup.string().required('This field is required')">
+            <template #label>Note</template>
+          </TextArea>
+          <CheckBox>Male</CheckBox>
+          <Radio>Male</Radio>
+          <Button type="submit">Submit</Button>
+        </Form>
+      </Section>
+    </Content>
+  </Container>
 </template>

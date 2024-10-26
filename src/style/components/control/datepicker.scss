@@ -154,12 +154,24 @@
               left: 0;
               z-index: 10;
               opacity: 0;
-              transition: all $transition-time-sm $transition-fn;
+              transition: background-color $transition-time-sm $transition-fn;
+              &::-webkit-scrollbar {
+                width: 5px;
+                height: 5px;
+              }
+              &::-webkit-scrollbar-thumb {
+                background: $bg-black;
+                border-radius: $rounded;
+              }
+              &::-webkit-scrollbar-track {
+                background: $bg-slate;
+                border-radius: $rounded;
+              }
               .dropdown-item {
                 padding: $p-1 - 0.5;
                 font-size: $text-xs + 0.1;
                 cursor: pointer;
-                transition: background $transition-time-sm $transition-fn;
+                transition: background-color $transition-time-sm $transition-fn;
                 &:hover {
                   background: $bg-slate;
                 }
@@ -568,5 +580,14 @@
   .wrap-calendar {
     background: $bg-deep-blue !important;
     box-shadow: 0 0 10px $bg-black !important;
+    .select-dropdown {
+      background: $bg-deep-blue !important;
+      box-shadow: 0 0 10px $bg-black !important;
+      .dropdown-item {
+        &:hover {
+          background: $bg-black !important;
+        }
+      }
+    }
   }
 }
