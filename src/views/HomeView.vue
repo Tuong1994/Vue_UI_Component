@@ -3,8 +3,9 @@ import * as yup from 'yup'
 import { UI, Control } from '@/components'
 import type { TableColumns, TableRowKey } from '@/components/UI/Table/type'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
+import { iconName } from '@/components/UI/Icon/constant'
 
-const { Section, Button, Image, Table, Divider, Layout } = UI
+const { Section, Button, Image, Table, Divider, Tabs, Layout } = UI
 
 const { Container, Content } = Layout
 
@@ -126,6 +127,12 @@ const columns: TableColumns<TableData> = [
   }
 ]
 
+const tabItems = [
+  { id: 'item-1', label: 'Item 1', comName: 'item-1', labelIcon: iconName.USER },
+  { id: 'item-2', label: 'Item 2', comName: 'item-2', labelIcon: iconName.USER },
+  { id: 'item-3', label: 'Item 3', comName: 'item-3', labelIcon: iconName.USER }
+]
+
 const handleClick = () => {
   if (layout.theme === 'dark') return layout.switchTheme('light')
   layout.switchTheme('dark')
@@ -138,6 +145,22 @@ const handleClick = () => {
       <Section>
         <Button @click="handleClick">Change mode</Button>
         <Divider />
+
+        <Tabs :items="tabItems">
+          <template #content="tab">
+            <div v-if="tab.content.comName === 'item-1'">Content 1</div>
+            <div v-if="tab.content.comName === 'item-2'">Content 2</div>
+            <div v-if="tab.content.comName === 'item-3'">Content 3</div>
+          </template>
+        </Tabs>
+
+        <Tabs type="vertical" :items="tabItems">
+          <template #content="tab">
+            <div v-if="tab.content.comName === 'item-1'">Content 1</div>
+            <div v-if="tab.content.comName === 'item-2'">Content 2</div>
+            <div v-if="tab.content.comName === 'item-3'">Content 3</div>
+          </template>
+        </Tabs>
         <!-- <Table
       hasRowSelection
       hasExpand
@@ -151,7 +174,7 @@ const handleClick = () => {
       </template>
     </Table> -->
 
-        <Form
+        <!-- <Form
           :initialValues="initialValues"
           :autoFocusValidation="false"
           @onFinish="(value) => console.log(value)"
@@ -187,7 +210,7 @@ const handleClick = () => {
           <CheckBox>Male</CheckBox>
           <Radio>Male</Radio>
           <Button type="submit">Submit</Button>
-        </Form>
+        </Form> -->
       </Section>
     </Content>
   </Container>

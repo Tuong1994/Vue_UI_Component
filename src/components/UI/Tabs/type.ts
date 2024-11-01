@@ -1,3 +1,5 @@
+export type TabsType = 'horizontal' | 'vertical'
+
 export type TabsItem = {
   id: string
   label: string

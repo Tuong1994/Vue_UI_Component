@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, defineEmits, type StyleValue } from 'vue'
+import { withDefaults, defineEmits, type StyleValue } from 'vue'
 import type { ComponentColor } from '@/common/type.ts'
-import type { TabsItem, TabsItems } from './type.ts'
-import Icon from '@/components/UI/Icon/Icon.vue'
-import useLayoutStore from '../Layout/LayoutStore'
+import type { TabsItem, TabsItems, TabsType } from './type.ts'
+import TabsHorizontal from './TabsHorizontal.vue'
+import TabsVertical from './TabsVertical.vue'
 
 export interface TabsProps {
   rootClassName?: string
@@ -12,6 +12,7 @@ export interface TabsProps {
   rootStyle?: StyleValue
   headStyle?: StyleValue
   contentStyle?: StyleValue
+  type?: TabsType
   items: TabsItems
   color?: Exclude<ComponentColor, 'black' | 'white' | 'gray'>
 }
@@ -21,43 +22,24 @@ const props = withDefaults(defineProps<TabsProps>(), {
   headClassName: '',
   contentClassName: '',
   color: 'blue',
+  type: 'horizontal',
   items: () => []
 })
 
 const emits = defineEmits(['onSelectTab'])
 
-const layout = useLayoutStore()
-
-const activeTab = ref({ tabId: props.items[0].id, comName: props.items[0].comName })
-
-const colorClassName = computed<string>(() => `tabs-${props.color}`)
-
-const themeClassName = computed<string>(() => `tabs-${layout.theme}`)
-
-const handleChangeTab = (tab: TabsItem) => {
-  activeTab.value = { tabId: tab.id, comName: tab.comName }
-  emits('onSelectTab', tab)
-}
+const handleSelectTab = (tab: TabsItem) => emits('onSelectTab', tab)
 </script>
 
 <template>
-  <div :style="rootStyle" :class="['tabs', colorClassName, themeClassName, rootClassName]">
-    <div :style="headStyle" :class="['tabs-head', headClassName]">
-      <div
-        v-for="tab in items"
-        :key="tab.id"
-        :class="['head-item', activeTab.tabId === tab.id ? 'head-item-active' : '']"
-        @click="() => handleChangeTab(tab)"
-      >
-        <div class="item-inner">
-          <Icon v-if="tab.labelIcon" rootClassName="inner-icon" :iconName="tab.labelIcon" />
-          <span>{{ tab.label }}</span>
-        </div>
-      </div>
-    </div>
-
-    <div :style="contentStyle" :class="['tabs-content', contentClassName]">
-      <slot name="content" :tab="activeTab.comName"></slot>
-    </div>
-  </div>
+  <TabsHorizontal v-if="type === 'horizontal'" v-bind="props" @onSelectTab="handleSelectTab">
+    <template #content="comName">
+      <slot name="content" :content="comName"></slot>
+    </template>
+  </TabsHorizontal>
+  <TabsVertical v-if="type === 'vertical'" v-bind="props" @onSelectTab="handleSelectTab">
+    <template #content="comName">
+      <slot name="content" :content="comName"></slot>
+    </template>
+  </TabsVertical>
 </template>
