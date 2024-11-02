@@ -8,7 +8,7 @@ export type AlertOptions = {
   placement?: AlertPlacement
 }
 
-const useAlertStore = defineStore('toast', () => {
+const useAlertStore = defineStore('alert', () => {
   const open = ref<boolean>(false)
   const message = ref<string>('')
   const type = ref<AlertType>('info')
