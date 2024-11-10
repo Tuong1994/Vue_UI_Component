@@ -24,7 +24,7 @@ export interface SelectProps {
   labelStyle?: StyleValue
   inputStyle?: StyleValue
   options?: SelectOptions
-  defaultValue?: number | string
+  defaultValue?: number | string | boolean
   name?: string
   placeholder?: string
   sizes?: ComponentSize
@@ -194,7 +194,12 @@ const handleChangePage = (type: 'prev' | 'next') => {
 // // Set default option
 watchEffect(() => {
   let defaultOption: Option | null = null
-  if (!form?.isVee && props.defaultValue) {
+  if (
+    !form?.isVee &&
+    props.defaultValue !== false &&
+    props.defaultValue !== undefined &&
+    props.defaultValue !== null
+  ) {
     defaultOption = [...props.options].find((option) => option.value === props.defaultValue) as Option
   } else if (veeValue.value) {
     defaultOption = [...props.options].find((option) => option.value === veeValue.value) as Option
