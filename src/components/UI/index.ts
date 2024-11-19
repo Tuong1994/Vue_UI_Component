@@ -1,9 +1,10 @@
-import * as Grid from './Grid'
+import * as Flex from './Flex'
 import * as Loading from './Loading'
 import * as Typography from './Typography'
 import * as Carousel from './Carousel'
 import * as UList from './List'
 import * as Layout from './Layout'
+import Grid from './Grid/Grid.vue'
 import Section from './Section/Section.vue'
 import Avatar from './Avatar/Avatar.vue'
 import Accordion from './Accordion/Accordion.vue'
@@ -31,6 +32,7 @@ import InfoRow from './InfoRow/InfoRow.vue'
 import TypingText from './TypingText/TypingText.vue'
 
 export {
+  Flex,
   Grid,
   Loading,
   Typography,

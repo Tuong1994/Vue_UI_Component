@@ -2,7 +2,7 @@
 import { computed, withDefaults, watchEffect, toRefs, inject, type StyleValue } from 'vue'
 import type { ComponentJustify, ComponentAligns } from '@/common/type.ts'
 
-export interface GridRowProps {
+export interface FlexRowProps {
   rootClassName?: string
   rootStyle?: StyleValue
   justify?: ComponentJustify
@@ -10,7 +10,7 @@ export interface GridRowProps {
   gutters?: [number?, number?]
 }
 
-const props = withDefaults(defineProps<GridRowProps>(), {
+const props = withDefaults(defineProps<FlexRowProps>(), {
   rootClassName: '',
   justify: 'start',
   aligns: 'top',
@@ -19,11 +19,11 @@ const props = withDefaults(defineProps<GridRowProps>(), {
 
 const { rootStyle } = toRefs(props)
 
-const grid = inject('grid', null) as any
+const flex = inject('flex', null) as any
 
-const justifyClassName = computed<string>(() => `grid-row-${props.justify}`)
+const justifyClassName = computed<string>(() => `flex-row-${props.justify}`)
 
-const alignClassName = computed<string>(() => `grid-row-${props.aligns}`)
+const alignClassName = computed<string>(() => `flex-row-${props.aligns}`)
 
 const inlineStyle = computed<StyleValue>(() => {
   const style = rootStyle?.value as object
@@ -36,13 +36,13 @@ const inlineStyle = computed<StyleValue>(() => {
 
 watchEffect(() => {
   if (!props.gutters.length) return
-  if (props.gutters.length === 1) return grid?.addGutters(props.gutters[0] as number)
-  if (props.gutters.length === 2) return grid?.addGutters(props.gutters[0] as number, props.gutters[1])
+  if (props.gutters.length === 1) return flex?.addGutters(props.gutters[0] as number)
+  if (props.gutters.length === 2) return flex?.addGutters(props.gutters[0] as number, props.gutters[1])
 })
 </script>
 
 <template>
-  <div :style="inlineStyle" :class="['grid-row', justifyClassName, alignClassName, rootClassName]">
+  <div :style="inlineStyle" :class="['flex-row', justifyClassName, alignClassName, rootClassName]">
     <slot></slot>
   </div>
 </template>

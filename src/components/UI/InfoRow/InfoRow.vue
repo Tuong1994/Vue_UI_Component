@@ -2,21 +2,21 @@
 import { computed, withDefaults } from 'vue'
 import { UI } from '@/components'
 import type { ParagraphProps } from '../Typography/Paragraph.vue'
-import type { GridColProps } from '../Grid/Col.vue'
-import type { GridRowProps } from '../Grid/Row.vue'
+import type { FlexColProps } from '../Flex/Col.vue'
+import type { FlexRowProps } from '../Flex/Row.vue'
 import useLayoutStore from '../Layout/LayoutStore'
 
-const { Grid, Typography } = UI
+const { Flex, Typography } = UI
 
-const { Row, Col } = Grid
+const { FlexRow, FlexCol } = Flex
 
 const { Paragraph } = Typography
 
-export interface InfoRowProps extends GridRowProps {
+export interface InfoRowProps extends FlexRowProps {
   labelProps?: ParagraphProps
   textProps?: ParagraphProps
-  labelSpanProps?: GridColProps
-  textSpanProps?: GridColProps
+  labelSpanProps?: FlexColProps
+  textSpanProps?: FlexColProps
   hasColon?: boolean
 }
 
@@ -26,12 +26,12 @@ const layout = useLayoutStore()
 
 const themeClassName = computed<string>(() => `info-row-${layout.theme}`)
 
-const labelSpanDefaultProps = computed<GridColProps>(() => ({
+const labelSpanDefaultProps = computed<FlexColProps>(() => ({
   span: 6,
   ...props.labelSpanProps
 }))
 
-const textSpanDefaultProps = computed<GridColProps>(() => ({
+const textSpanDefaultProps = computed<FlexColProps>(() => ({
   span: 16,
   ...props.textSpanProps
 }))
@@ -45,16 +45,16 @@ const textDefaultProps = computed<ParagraphProps>(() => ({ strong: true, ...prop
 </script>
 
 <template>
-  <Row v-bind="props" :rootClassName="`info-row ${themeClassName}`">
-    <Col v-bind="labelSpanDefaultProps">
+  <FlexRow v-bind="props" :rootClassName="`info-row ${themeClassName}`">
+    <FlexCol v-bind="labelSpanDefaultProps">
       <Paragraph v-bind="labelDefaultProps">
         <slot name="label"></slot>
       </Paragraph>
-    </Col>
-    <Col v-bind="textSpanDefaultProps">
+    </FlexCol>
+    <FlexCol v-bind="textSpanDefaultProps">
       <Paragraph v-bind="textDefaultProps">
         <slot name="text"></slot>
       </Paragraph>
-    </Col>
-  </Row>
+    </FlexCol>
+  </FlexRow>
 </template>

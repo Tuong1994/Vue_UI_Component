@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-const useGridStore = defineStore('grid', () => {
+const useFlexStore = defineStore('grid', () => {
   const gutters = ref<[number?, number?]>([])
   const isPhone = ref<boolean>(false)
   const isTablet = ref<boolean>(false)
@@ -23,4 +23,4 @@ const useGridStore = defineStore('grid', () => {
   return { gutters, isPhone, isTablet, isLaptop, isDesktop, addGutters, addViewPoint }
 })
 
-export default useGridStore
+export default useFlexStore

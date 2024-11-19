@@ -1,19 +1,19 @@
 <script lang="ts" setup>
 import { watch, provide } from 'vue'
 import { useViewPoint } from '@/hooks'
-import useGridStore from './GridStore'
+import useFlexStore from './FlexStore'
 
 const { screenWidth, isPhone, isTablet, isLaptop, isDesktop } = useViewPoint()
 
-const grid = useGridStore()
+const flex = useFlexStore()
 
-if (grid) {
-  provide('grid', grid)
+if (flex) {
+  provide('flex', flex)
   
   watch(
     screenWidth,
     () => {
-      grid.addViewPoint(isPhone.value, isTablet.value, isLaptop.value, isDesktop.value)
+      flex.addViewPoint(isPhone.value, isTablet.value, isLaptop.value, isDesktop.value)
     },
     { immediate: true }
   )

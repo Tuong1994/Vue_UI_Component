@@ -5,7 +5,7 @@ import type { TableColumns, TableRowKey } from '@/components/UI/Table/type'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
 import { iconName } from '@/components/UI/Icon/constant'
 
-const { Section, Button, Image, Table, Divider, Tabs, Layout } = UI
+const { Section, Button, Image, Table, Divider, Tabs, Grid, Layout } = UI
 
 const { Container, Content } = Layout
 
@@ -146,7 +146,11 @@ const handleClick = () => {
         <Button @click="handleClick">Change mode</Button>
         <Divider />
 
-        <Tabs :items="tabItems">
+        <Grid :xs="2" :lg="6" :span="8">
+          <div v-for="item in 24">{{ item }}</div>
+        </Grid>
+
+        <!-- <Tabs :items="tabItems">
           <template #content="tab">
             <div v-if="tab.content.comName === 'item-1'">Content 1</div>
             <div v-if="tab.content.comName === 'item-2'">Content 2</div>
@@ -160,7 +164,8 @@ const handleClick = () => {
             <div v-if="tab.content.comName === 'item-2'">Content 2</div>
             <div v-if="tab.content.comName === 'item-3'">Content 3</div>
           </template>
-        </Tabs>
+        </Tabs> -->
+
         <!-- <Table
       hasRowSelection
       hasExpand

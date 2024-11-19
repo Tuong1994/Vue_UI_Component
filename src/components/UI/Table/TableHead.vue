@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="M">
-import { withDefaults, computed } from 'vue'
+import { withDefaults } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import type { TableColumns, TableRowKey } from './type.ts'
 import Button, { type ButtonProps } from '../Button/Button.vue'

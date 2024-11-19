@@ -2,9 +2,9 @@
 import { UI } from '@/components'
 import type { TableColor } from './type'
 
-const { Button, Space, Grid } = UI
+const { Button, Space, Flex } = UI
 
-const { Row, Col } = Grid
+const { FlexRow, FlexCol } = Flex
 
 interface TableFilterProps {
   color: TableColor
@@ -20,13 +20,13 @@ const handleCancelFilter = () => emits('onCancelFilter')
 </script>
 
 <template>
-  <Row rootClassName="table-fitler">
+  <FlexRow rootClassName="table-fitler">
     <slot name="filter"></slot>
-    <Col>
+    <FlexCol>
       <Space>
         <Button sizes="sm" :color="color" @click="handleFilter"> Save </Button>
         <Button sizes="sm" ghost @click="handleCancelFilter"> Cancel </Button>
       </Space>
-    </Col>
-  </Row>
+    </FlexCol>
+  </FlexRow>
 </template>
