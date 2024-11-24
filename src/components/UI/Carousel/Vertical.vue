@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, withDefaults, watchEffect, type StyleValue } from 'vue'
+import { ref, computed, withDefaults, watchEffect, toRefs, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import type { CarouselItems } from './type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
@@ -45,6 +45,8 @@ let interval: any
 
 const TRANSLATE_TYPE = 'vertical'
 
+const { items } = toRefs(props)
+
 const slidePos = ref<number>(0)
 
 const touchStartPos = ref<number>(0)
@@ -60,9 +62,9 @@ const clickSwiped = ref<boolean>(false)
 const manualStop = ref<boolean>(props.time !== undefined)
 
 const { translateFull, translatePartial, translateAnimation } = useCarousel({
-  items: props.items,
-  slideId: props.slideId,
-  slidePos
+  items,
+  slidePos,
+  slideId: props.slideId
 })
 
 const span = computed<number>(() => 100)

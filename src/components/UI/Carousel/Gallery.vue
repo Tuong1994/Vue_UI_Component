@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, watchEffect, toRefs, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
-import type { CarouselItems } from './type.ts'
 import { useRender } from '@/hooks'
+import type { CarouselItems } from './type.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import Image from '@/components/UI/Image/Image.vue'
 import useCarousel from './useCarousel.ts'
@@ -45,7 +45,7 @@ let interval: any
 
 const TRANSLATE_TYPE = 'horizontal'
 
-const { open } = toRefs(props)
+const { open, items } = toRefs(props)
 
 const emits = defineEmits(['onClose'])
 
@@ -66,9 +66,9 @@ const manualStop = ref<boolean>(props.time !== undefined)
 const showList = ref<boolean>(false)
 
 const { translateFull, translatePartial, translateAnimation } = useCarousel({
-  items: props.items,
-  slideId: props.slideId,
-  slidePos
+  slidePos,
+  items,
+  slideId: props.slideId
 })
 
 const render = useRender(open)

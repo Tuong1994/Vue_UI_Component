@@ -4,7 +4,7 @@ import type { CarouselItems } from './type'
 type TranslateType = 'horizontal' | 'vertical'
 
 type Params = {
-  items: CarouselItems
+  items: Ref<CarouselItems>
   slideId: string
   slidePos: Ref<number>
 }
@@ -16,7 +16,7 @@ const useCarousel = (args: Params) => {
 
   const translateFull = (pos: number, type: TranslateType) => {
     const translate = -pos * span.value
-    for (let i = 0; i < items.length; i++) {
+    for (let i = 0; i < items.value.length; i++) {
       const el = document.getElementById(`${slideId}-${i}`)
       if (el) {
         if (type === 'horizontal') el.style.transform = `translateX(${translate}%)`
@@ -28,7 +28,7 @@ const useCarousel = (args: Params) => {
   const translatePartial = (pos: number, type: TranslateType) => {
     const currentPos = -slidePos.value * span.value
     const translate = currentPos + pos
-    for (let i = 0; i < items.length; i++) {
+    for (let i = 0; i < items.value.length; i++) {
       const el = document.getElementById(`${slideId}-${i}`)
       if (el) {
         if (type === 'horizontal') el.style.transform = `translateX(${translate}%)`
@@ -38,7 +38,7 @@ const useCarousel = (args: Params) => {
   }
 
   const translateAnimation = (type: 'fast' | 'slow') => {
-    for (let i = Math.max(0, slidePos.value - 2); i < Math.min(items.length, slidePos.value + 3); i++) {
+    for (let i = Math.max(0, slidePos.value - 2); i < Math.min(items.value.length, slidePos.value + 3); i++) {
       const el = document.getElementById(`${slideId}-${i}`)
       if (el) {
         if (type === 'fast') el.style.transitionDuration = `0.1s`
