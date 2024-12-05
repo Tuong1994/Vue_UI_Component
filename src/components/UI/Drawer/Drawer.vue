@@ -39,7 +39,9 @@ const headFlexClassName = computed<string>(() => (slots.head !== undefined ? 'dr
 
 const fullClassName = computed<string>(() => (props.full ? 'drawer-full' : ''))
 
-const noHeadClassName = computed<string>(() => (slots.head === undefined ? 'drawer-body-height-full' : ''))
+const noHeadClassName = computed<string>(() =>
+  slots.head === undefined || !props.hasHead ? 'drawer-body-height-full' : ''
+)
 
 const handleClose = () => emits('onClose')
 </script>

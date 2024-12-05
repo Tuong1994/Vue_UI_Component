@@ -45,9 +45,6 @@
   .drawer-head-flex {
     justify-content: space-between;
   }
-  .drawer-body-height-full {
-    height: $h-screen;
-  }
   .drawer-body {
     padding: $p-2;
     height: calc($h-screen - $h-5);
@@ -59,6 +56,9 @@
   }
   @include respond(mdPhone) {
     width: calc($w-full - 20%);
+  }
+  .drawer-body-height-full {
+    height: $h-screen;
   }
 }
 
