@@ -180,9 +180,9 @@ watchEffect(() => {
   >
     <label
       :class="['upload-group', dragClassName, errorClassName, disabledClassName]"
-      @dragEnter="handleDrag"
-      @dragOver="handleDrag"
-      @dragLeave="handleDrag"
+      @dragenter="handleDrag"
+      @dragover="handleDrag"
+      @dragleave="handleDrag"
       @drop="handleDrop"
     >
       <UploadControl
