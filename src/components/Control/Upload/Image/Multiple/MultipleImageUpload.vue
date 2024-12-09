@@ -114,6 +114,7 @@ const handleChange = (e: Event) => {
   if (!target.files) return
   const imageFiles: File[] = Array.from(target.files)
   handleUpload(imageFiles)
+  target.value = ''
 }
 
 const handleDrag = (e: DragEvent) => {
