@@ -73,7 +73,7 @@ const showOptional = computed<boolean>(() => (props.required ? false : props.opt
 const sizeClassName = computed<string>(() => `checkbox-${controlSize.value}`)
 
 const colorClassName = computed<string>(() =>
-  isCheck.value ? `checkbox-checked-${controlColor.value}` : `checkbox-${controlColor.value}`
+  isCheck.value ? `checkbox-checked checkbox-checked-${controlColor.value}` : `checkbox-${controlColor.value}`
 )
 
 const gapClassName = computed<string>(() => (form?.isVee ? `checkbox-gap-${controlSize.value}` : ''))
@@ -135,7 +135,7 @@ watchEffect(() => {
       />
 
       <div class="group-checked">
-        <Icon v-if="isCheck" :iconName="iconName.CHECK" :size="iconSize" />
+        <Icon class="checked-icon" :iconName="iconName.CHECK" :size="iconSize" />
       </div>
 
       <div v-if="hasLabel" class="group-label">

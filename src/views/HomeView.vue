@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as yup from 'yup'
+import { ref } from 'vue'
 import { UI, Control } from '@/components'
 import type { TableColumns, TableRowKey } from '@/components/UI/Table/type'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
@@ -9,8 +10,20 @@ const { Section, Button, Image, Table, Divider, Tabs, Grid, Layout } = UI
 
 const { Container, Content } = Layout
 
-const { Form, Input, InputPassword, InputPhone, TextArea, Select, DatePicker, CheckBox, Radio, Upload } =
-  Control
+const {
+  Form,
+  Input,
+  InputPassword,
+  InputPhone,
+  TextArea,
+  Select,
+  SelectTag,
+  TreeSelect,
+  DatePicker,
+  CheckBox,
+  Radio,
+  Upload
+} = Control
 
 const { FileUpload, ImageUpload } = Upload
 
@@ -35,7 +48,7 @@ interface TableData {
 
 const initialValues: Data = {
   email: '',
-  password: '',
+  password: '123',
   phone: '',
   note: '',
   role: -1,
@@ -143,12 +156,14 @@ const handleClick = () => {
   <Container>
     <Content>
       <Section>
-        <Button @click="handleClick">Change mode</Button>
+        <Button color="blue" @click="handleClick">Change mode</Button>
         <Divider />
 
-        <Grid :xs="2" :lg="6" :span="8">
+        <Radio />
+
+        <!-- <Grid :xs="2" :lg="6" :span="8">
           <div v-for="item in 24">{{ item }}</div>
-        </Grid>
+        </Grid> -->
 
         <!-- <Tabs :items="tabItems">
           <template #content="tab">

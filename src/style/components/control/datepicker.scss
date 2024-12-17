@@ -20,7 +20,8 @@
       border: 0.5px solid $bg-gray;
       background: $bg-white;
       position: relative;
-      transition: all $transition-time-md $transition-fn;
+      transition: border-color $transition-time-sm $transition-fn,
+        background-color $transition-time-sm $transition-fn, box-shadow $transition-time-sm $transition-fn;
       .group-addon {
         display: flex;
         align-items: center;
@@ -368,18 +369,52 @@
   }
 }
 
+// Theme
+.datepicker-white {
+  .wrap-group {
+    background: $bg-white;
+  }
+  .wrap-calendar {
+    background: $bg-white;
+  }
+}
+
+.datepicker-dark {
+  .wrap-group {
+    background: $bg-dark !important;
+    .control-action {
+      &:hover path {
+        color: $text-white !important;
+      }
+    }
+  }
+  .wrap-calendar {
+    background: $bg-dark !important;
+    box-shadow: 0 0 10px $bg-black !important;
+    .select-dropdown {
+      background: $bg-dark !important;
+      box-shadow: 0 0 10px $bg-black !important;
+      .dropdown-item {
+        &:hover {
+          background: $bg-black !important;
+        }
+      }
+    }
+  }
+}
+
 // Color
 .datepicker-blue {
   .wrap-group {
     &:hover {
       border-color: $bg-blue;
     }
-    &:focus-within {
-      border-color: $bg-blue;
-    }
     .control-tags {
       background: $bg-blue;
     }
+  }
+  .wrap-group-dropdown {
+    box-shadow: 0 0 0 3px $bg-blue-rgba-sm !important;
   }
   .wrap-calendar {
     .date-item {
@@ -401,12 +436,13 @@
     &:hover {
       border-color: $bg-red;
     }
-    &:focus-within {
-      border-color: $bg-red;
-    }
+
     .control-tags {
       background: $bg-red;
     }
+  }
+  .wrap-group-dropdown {
+    box-shadow: 0 0 0 3px $bg-red-rgba-sm !important;
   }
   .wrap-calendar {
     .date-item {
@@ -428,12 +464,12 @@
     &:hover {
       border-color: $bg-green;
     }
-    &:focus-within {
-      border-color: $bg-green;
-    }
     .control-tags {
       background: $bg-green;
     }
+  }
+  .wrap-group-dropdown {
+    box-shadow: 0 0 0 3px $bg-green-rgba-sm !important;
   }
   .wrap-calendar {
     .date-item {
@@ -455,12 +491,12 @@
     &:hover {
       border-color: $bg-orange;
     }
-    &:focus-within {
-      border-color: $bg-orange;
-    }
     .control-tags {
       background: $bg-orange;
     }
+  }
+  .wrap-group-dropdown {
+    box-shadow: 0 0 0 3px $bg-orange-rgba-sm !important;
   }
   .wrap-calendar {
     .date-item {
@@ -482,12 +518,12 @@
     &:hover {
       border-color: $bg-yellow;
     }
-    &:focus-within {
-      border-color: $bg-yellow;
-    }
     .control-tags {
       background: $bg-yellow;
     }
+  }
+  .wrap-group-dropdown {
+    box-shadow: 0 0 0 3px $bg-yellow-rgba-sm !important;
   }
   .wrap-calendar {
     .date-item {
@@ -509,12 +545,12 @@
     &:hover {
       border-color: $bg-purple;
     }
-    &:focus-within {
-      border-color: $bg-purple;
-    }
     .control-tags {
       background: $bg-purple;
     }
+  }
+  .wrap-group-dropdown {
+    box-shadow: 0 0 0 3px $bg-purple-rgba-sm !important;
   }
   .wrap-calendar {
     .date-item {
@@ -536,12 +572,12 @@
     &:hover {
       border-color: $bg-pink;
     }
-    &:focus-within {
-      border-color: $bg-pink;
-    }
     .control-tags {
       background: $bg-pink;
     }
+  }
+  .wrap-group-dropdown {
+    box-shadow: 0 0 0 3px $bg-pink-rgba-sm !important;
   }
   .wrap-calendar {
     .date-item {
@@ -553,40 +589,6 @@
       .item-btn {
         background: $bg-pink !important;
         color: $text-white;
-      }
-    }
-  }
-}
-
-// Theme
-.datepicker-white {
-  .wrap-group {
-    background: $bg-white;
-  }
-  .wrap-calendar {
-    background: $bg-white;
-  }
-}
-
-.datepicker-dark {
-  .wrap-group {
-    background: $bg-deep-blue !important;
-    .control-action {
-      &:hover path {
-        color: $text-white !important;
-      }
-    }
-  }
-  .wrap-calendar {
-    background: $bg-deep-blue !important;
-    box-shadow: 0 0 10px $bg-black !important;
-    .select-dropdown {
-      background: $bg-deep-blue !important;
-      box-shadow: 0 0 10px $bg-black !important;
-      .dropdown-item {
-        &:hover {
-          background: $bg-black !important;
-        }
       }
     }
   }

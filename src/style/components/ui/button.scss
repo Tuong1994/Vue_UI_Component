@@ -6,38 +6,14 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  transition: all $transition-time-xs $transition-fn;
+  transition: opacity $transition-time-sm $transition-fn, background-color $transition-time-md $transition-fn,
+    box-shadow 0.1s $transition-fn;
   * {
     margin: 0;
     transition: all $transition-time-xs $transition-fn;
   }
-  &::after,
-  &::before {
-    content: '';
-    width: calc($w-full);
-    height: calc($h-full);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    transition: all $transition-time-xs $transition-fn;
-  }
-  &::after {
-    background: $bg-black-rgba-xs;
-    z-index: -1;
-  }
-  &::before {
-    background: $bg-white-rgba-xs;
-    z-index: 1;
-  }
-  &:hover::before {
-    opacity: 1;
-  }
-  &:active::after {
-    width: calc($w-full + 10px);
-    height: calc($h-full + 10px);
-    opacity: 1;
+  &:hover {
+    opacity: 0.8;
   }
   .button-loading-icon {
     margin-right: $m-1 - 0.5;
@@ -62,18 +38,10 @@
 // Shape
 .button-square {
   border-radius: $rounded;
-  &::after,
-  &::before {
-    border-radius: $rounded;
-  }
 }
 
 .button-round {
   border-radius: $rounded-xxl;
-  &::after,
-  &::before {
-    border-radius: $rounded-xxl;
-  }
 }
 
 // Size
@@ -101,64 +69,64 @@
 .button-blue {
   border-color: $bg-blue;
   background: $bg-blue;
-  &::after {
-    background: $bg-blue-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-blue-rgba-sm;
   }
 }
 
 .button-green {
   border-color: $bg-green;
   background: $bg-green;
-  &::after {
-    background: $bg-green-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-green-rgba-sm;
   }
 }
 
 .button-red {
   border-color: $bg-red;
   background: $bg-red;
-  &::after {
-    background: $bg-red-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-red-rgba-sm;
   }
 }
 
 .button-orange {
   border-color: $bg-orange;
   background: $bg-orange;
-  &::after {
-    background: $bg-orange-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-orange-rgba-sm;
   }
 }
 
 .button-yellow {
   border-color: $bg-yellow;
   background: $bg-yellow;
-  &::after {
-    background: $bg-yellow-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-yellow-rgba-sm;
   }
 }
 
 .button-purple {
   border-color: $bg-purple;
   background: $bg-purple;
-  &::after {
-    background: $bg-purple-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-purple-rgba-sm;
   }
 }
 
 .button-pink {
   border-color: $bg-pink;
   background: $bg-pink;
-  &::after {
-    background: $bg-pink-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-pink-rgba-sm;
   }
 }
 
 .button-black {
   border-color: $bg-black;
   background: $bg-black;
-  &::after {
-    background: $bg-black-rgba-xs;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-black-rgba-xs;
   }
 }
 
@@ -169,8 +137,8 @@
   path {
     color: $text-blue;
   }
-  &::after {
-    background: $bg-blue-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-blue-rgba-sm;
   }
 }
 
@@ -180,8 +148,8 @@
   path {
     color: $text-green;
   }
-  &::after {
-    background: $bg-green-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-green-rgba-sm;
   }
 }
 
@@ -191,8 +159,8 @@
   path {
     color: $text-red;
   }
-  &::after {
-    background: $bg-red-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-red-rgba-sm;
   }
 }
 
@@ -202,8 +170,8 @@
   path {
     color: $text-orange;
   }
-  &::after {
-    background: $bg-orange-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-orange-rgba-sm;
   }
 }
 
@@ -213,8 +181,8 @@
   path {
     color: $text-yellow;
   }
-  &::after {
-    background: $bg-yellow-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-yellow-rgba-sm;
   }
 }
 
@@ -224,8 +192,8 @@
   path {
     color: $text-purple;
   }
-  &::after {
-    background: $bg-purple-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-purple-rgba-sm;
   }
 }
 
@@ -235,8 +203,8 @@
   path {
     color: $text-pink;
   }
-  &::after {
-    background: $bg-pink-rgba-sm;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-pink-rgba-sm;
   }
 }
 
@@ -246,8 +214,8 @@
   path {
     color: $text-black;
   }
-  &::after {
-    background: $bg-black-rgba-xs;
+  &:active {
+    box-shadow: 0 0 0 3px $bg-black-rgba-xs;
   }
 }
 
@@ -259,10 +227,6 @@
   * {
     color: $text-blue;
   }
-  &::after,
-  &::before {
-    content: unset;
-  }
   &:hover {
     opacity: 0.6;
   }
@@ -273,10 +237,6 @@
   user-select: none;
   cursor: not-allowed;
   opacity: 0.6;
-  &::after,
-  &::before {
-    content: unset;
-  }
 }
 
 // Disabled
@@ -287,9 +247,5 @@
   border-color: $bg-gray;
   * {
     color: $text-gray;
-  }
-  &::after,
-  &::before {
-    content: unset;
   }
 }

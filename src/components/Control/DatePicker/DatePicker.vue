@@ -172,6 +172,7 @@ watchEffect(() => {
         :showResetIcon="showResetIcon"
         :hasAddonBefore="hasAddonBefore"
         :hasAddonAfter="hasAddonAfter"
+        :dropdown="dropdown"
         :format="format"
         :iconSize="iconSize"
         @onDropdown="handleDropdown"

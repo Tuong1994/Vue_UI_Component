@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { withDefaults, useSlots, type StyleValue } from 'vue'
+import { withDefaults, useSlots, type StyleValue, computed } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
 import Icon from '@/components/UI/Icon/Icon.vue'
 import moment from 'moment'
@@ -9,6 +9,7 @@ interface DatePickerControlProps {
   inputStyle?: StyleValue
   hasAddonBefore: boolean
   hasAddonAfter: boolean
+  dropdown: boolean
   format: string
   showResetIcon: boolean
   selectedDate: Date | null
@@ -23,13 +24,15 @@ const emits = defineEmits(['onDropdown', 'onResetInput'])
 
 const slots = useSlots()
 
+const dropdownClassName = computed<string>(() => (props.dropdown ? 'wrap-group-dropdown' : ''))
+
 const handleDropdown = () => emits('onDropdown')
 
 const handleResetInput = () => emits('onResetInput')
 </script>
 
 <template>
-  <div ref="controlRef" class="wrap-group" @click="handleDropdown">
+  <div ref="controlRef" :class="['wrap-group', dropdownClassName]" @click="handleDropdown">
     <div v-if="hasAddonBefore" class="group-addon group-addon-before">
       <slot name="addonBefore"></slot>
     </div>
