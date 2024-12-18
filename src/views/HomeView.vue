@@ -153,19 +153,15 @@ const handleClick = () => {
 </script>
 
 <template>
-  <Container>
-    <Content>
-      <Section>
-        <Button color="blue" @click="handleClick">Change mode</Button>
-        <Divider />
+  <Section>
+    <Button color="blue" @click="handleClick">Change mode</Button>
+    <Divider />
 
-        <Radio />
-
-        <!-- <Grid :xs="2" :lg="6" :span="8">
+    <!-- <Grid :xs="2" :lg="6" :span="8">
           <div v-for="item in 24">{{ item }}</div>
         </Grid> -->
 
-        <!-- <Tabs :items="tabItems">
+    <!-- <Tabs :items="tabItems">
           <template #content="tab">
             <div v-if="tab.content.comName === 'item-1'">Content 1</div>
             <div v-if="tab.content.comName === 'item-2'">Content 2</div>
@@ -181,7 +177,7 @@ const handleClick = () => {
           </template>
         </Tabs> -->
 
-        <!-- <Table
+    <!-- <Table
       hasRowSelection
       hasExpand
       hasPagination
@@ -194,7 +190,7 @@ const handleClick = () => {
       </template>
     </Table> -->
 
-        <!-- <Form
+    <!-- <Form
           :initialValues="initialValues"
           :autoFocusValidation="false"
           @onFinish="(value) => console.log(value)"
@@ -231,7 +227,5 @@ const handleClick = () => {
           <Radio>Male</Radio>
           <Button type="submit">Submit</Button>
         </Form> -->
-      </Section>
-    </Content>
-  </Container>
+  </Section>
 </template>
