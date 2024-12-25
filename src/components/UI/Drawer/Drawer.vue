@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, withDefaults, toRefs, useSlots, type StyleValue } from 'vue'
 import { iconName } from '@/components/UI/Icon/constant.ts'
-import { useRender } from '@/hooks'
+import { useOverflow, useRender } from '@/hooks'
 import Icon from '@/components/UI/Icon/Icon.vue'
 
 export interface DrawerProps {
@@ -28,6 +28,8 @@ const emits = defineEmits(['onClose'])
 const { open } = toRefs(props)
 
 const render = useRender(open)
+
+useOverflow(open)
 
 const slots = useSlots()
 
