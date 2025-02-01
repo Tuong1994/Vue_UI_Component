@@ -98,12 +98,12 @@ const inlineStyle = computed<StyleValue>(() => {
     :class="['skeleton', 'skeleton-button', shapeClassName, rootClassName]"
   ></div>
 
-  <div v-if="type === 'paragraph'" class="skeleton-paragraph">
+  <div v-if="type === 'paragraph'" :class="['skeleton-paragraph', rootClassName]">
     <div
       v-for="(_, idx) in paragraphLines"
       :key="idx"
       :style="inlineStyle"
-      :class="['skeleton', 'skeleton-paragraph-line', shapeClassName, rootClassName]"
+      :class="['skeleton', 'skeleton-paragraph-line', shapeClassName]"
     ></div>
   </div>
 </template>
