@@ -197,7 +197,7 @@ const handleClick = () => {
       </template>
     </Table> -->
 
-    <Form
+    <!-- <Form
       :initialValues="initialValues"
       :autoFocusValidation="false"
       @onFinish="(value: Data) => console.log({data: inputValue})"
@@ -245,6 +245,6 @@ const handleClick = () => {
       <CheckBox>Male</CheckBox>
       <Radio>Male</Radio>
       <Button type="submit">Submit</Button>
-    </Form>
+    </Form> -->
   </Section>
 </template>
