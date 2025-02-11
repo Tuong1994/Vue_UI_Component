@@ -15,6 +15,7 @@ const {
   Input,
   InputPassword,
   InputPhone,
+  InputNumber,
   TextArea,
   Select,
   SelectTag,
@@ -36,6 +37,8 @@ interface Data {
   note: string
   gender: string
   role: number
+  point: number
+  tags: string | number[]
   birthday: Date
 }
 
@@ -48,15 +51,19 @@ interface TableData {
 
 const initialValues: Data = {
   email: '',
-  password: '123',
+  password: '',
   phone: '',
   note: '',
   role: -1,
   gender: '',
+  tags: [],
+  point: 0,
   birthday: new Date()
 }
 
 const layout = useLayoutStore()
+
+const inputValue = ref<any>('')
 
 const dataSource: TableData[] = [
   {
@@ -190,42 +197,54 @@ const handleClick = () => {
       </template>
     </Table> -->
 
-    <!-- <Form
-          :initialValues="initialValues"
-          :autoFocusValidation="false"
-          @onFinish="(value) => console.log(value)"
-        >
-          <MultipleImageUpload />
+    <Form
+      :initialValues="initialValues"
+      :autoFocusValidation="false"
+      @onFinish="(value: Data) => console.log({data: inputValue})"
+    >
+      <MultipleImageUpload />
 
-          <FileUpload />
-          <Input name="email" :rule="yup.string().required('This field is required')">
-            <template #label>Email</template>
-          </Input>
-          <InputPassword name="password" :rule="yup.string().required('This field is required')">
-            <template #label>Password</template>
-          </InputPassword>
-          <InputPhone name="phone" :rule="yup.string().required('This field is required')">
-            <template #label>Phone</template>
-          </InputPhone>
-          <Select
-            name="role"
-            :rule="yup.number().min(1, 'This field is required')"
-            :options="[
-              { label: 'admin', value: 1 },
-              { label: 'user', value: 2 }
-            ]"
-          >
-            <template #label>Role</template>
-          </Select>
-          <DatePicker name="birthday">
-            <template #label>Birthday</template>
-          </DatePicker>
-          <TextArea name="note" :rule="yup.string().required('This field is required')">
-            <template #label>Note</template>
-          </TextArea>
-          <CheckBox>Male</CheckBox>
-          <Radio>Male</Radio>
-          <Button type="submit">Submit</Button>
-        </Form> -->
+      <FileUpload />
+      <Input name="email">
+        <template #label>Email</template>
+      </Input>
+      <InputPassword name="password">
+        <template #label>Password</template>
+      </InputPassword>
+      <InputPhone name="phone">
+        <template #label>Phone</template>
+      </InputPhone>
+      <Select
+        name="role"
+        :options="[
+          { label: 'admin', value: 1 },
+          { label: 'user', value: 2 }
+        ]"
+      >
+        <template #label>Role</template>
+      </Select>
+      <SelectTag
+        name="tags"
+        :options="[
+          { label: 'tag 1', value: 1 },
+          { label: 'tag 2', value: 2 },
+          { label: 'tag 3', value: 3 }
+        ]"
+      >
+        <template #label>Tags</template>
+      </SelectTag>
+      <InputNumber name="point">
+        <template #label>Point</template>
+      </InputNumber>
+      <DatePicker name="birthday">
+        <template #label>Birthday</template>
+      </DatePicker>
+      <TextArea name="note">
+        <template #label>Note</template>
+      </TextArea>
+      <CheckBox>Male</CheckBox>
+      <Radio>Male</Radio>
+      <Button type="submit">Submit</Button>
+    </Form>
   </Section>
 </template>

@@ -61,7 +61,7 @@ const layout = useLayoutStore()
 
 const t = useLangStore()
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'onBlur'])
 
 const inputRef = ref<HTMLInputElement | null>(null)
 
@@ -114,11 +114,19 @@ const iconSize = computed<number>(() => {
 const handleChange = (e: Event) => {
   const value = (e.target as HTMLInputElement).value
   const inputValue = value.replace(ONLY_DIGIT_REGEX, '')
-  if (form?.isVee) return setValue(inputValue)
+  if (form?.isVee) setValue(inputValue)
   emits('update:modelValue', inputValue)
 }
 
-const handleClearInput = () => (form?.isVee ? setValue('') : emits('update:modelValue', ''))
+const handleBlur = (e: FocusEvent) => {
+  if (form?.isVee) veeOnBlur(e)
+  emits('onBlur', e)
+}
+
+const handleClearInput = () => {
+  if (form?.isVee) setValue('')
+  emits('update:modelValue', '')
+}
 
 watchEffect(() => {
   if (!form?.autoFocusValidation) return
@@ -163,7 +171,7 @@ watchEffect(() => {
             :placeholder="controlPlaceholder"
             :class="['control-box', inputClassName]"
             @input="handleChange"
-            @blur="veeOnBlur"
+            @blur="handleBlur"
           />
 
           <div v-if="showClearIcon" class="control-action" @click="handleClearInput">

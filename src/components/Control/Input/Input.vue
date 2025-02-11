@@ -8,6 +8,7 @@ import Icon from '@/components/UI/Icon/Icon.vue'
 import NoteMessage from '@/components/UI/NoteMessage/NoteMessage.vue'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
 import useLangStore from '@/stores/LangStore'
+import type { FormStore } from '../Form/FormStore'
 
 export interface InputProps {
   rootClassName?: string
@@ -47,7 +48,6 @@ const name = toRef(props, 'name')
 const {
   value: veeValue,
   errorMessage,
-  handleChange: veeOnChange,
   handleBlur: veeOnBlur,
   setValue
 } = useField(name, !props.disabled ? props.rule : undefined, {
@@ -60,7 +60,7 @@ const layout = useLayoutStore()
 
 const t = useLangStore()
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'onBlur'])
 
 const inputRef = ref<HTMLInputElement | null>(null)
 
@@ -110,12 +110,19 @@ const iconSize = computed<number>(() => {
 
 const handleChange = (e: Event) => {
   const value = (e.target as HTMLInputElement).value
+  if (form?.isVee) setValue(value)
   emits('update:modelValue', value)
 }
 
-const handleClearInput = () => (form?.isVee ? setValue('') : emits('update:modelValue', ''))
+const handleBlur = (e: FocusEvent) => {
+  if(form?.isVee) veeOnBlur(e)
+  emits('onBlur', e)
+}
 
-const onChangeFn = form?.isVee ? veeOnChange : handleChange
+const handleClearInput = () => {
+  if (form?.isVee) setValue('')
+  emits('update:modelValue', '')
+}
 
 watchEffect(() => {
   if (!form?.autoFocusValidation) return
@@ -158,8 +165,8 @@ watchEffect(() => {
             :placeholder="controlPlaceholder"
             :disabled="controlDisabled"
             :class="['control-box', inputClassName]"
-            @input="onChangeFn"
-            @blur="veeOnBlur"
+            @input="handleChange"
+            @blur="handleBlur"
           />
 
           <div v-if="showClearIcon" class="control-action" @click="handleClearInput">

@@ -1,7 +1,24 @@
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { ComponentSize } from '@/common/type'
 import type { ControlColor, ControlShape } from '../type'
+
+export interface FormStore {
+  isVee: Ref<boolean>;
+  autoFocusValidation: Ref<boolean>;
+  formData: Ref<any>;
+  formColor: Ref<ControlColor>;
+  formSize: Ref<ComponentSize>;
+  formShape: Ref<ControlShape>;
+  formDisabled: Ref<boolean>;
+  formActive: () => void;
+  bindData: (data: any) => void;
+  changeSize: (size: ComponentSize) => void;
+  changeColor: (color: ControlColor) => void;
+  changeShape: (shape: ControlShape) => void;
+  disabledForm: (disabled: boolean) => void;
+  disabledAutoFocus: (autoFocused: boolean) => void;
+}
 
 const useFormStore = defineStore('form', () => {
   const isVee = ref<boolean>(false)
