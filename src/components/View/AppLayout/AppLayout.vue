@@ -9,7 +9,9 @@ const { Container, Body, Side, Content } = Layout
   <Container>
    <Header />
     <Body>
-      <Side collapsable> Side content </Side>
+      <Side> 
+        
+      </Side>
       <Content>
         <slot></slot>
       </Content>

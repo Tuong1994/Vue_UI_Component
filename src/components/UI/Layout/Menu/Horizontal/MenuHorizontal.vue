@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, withDefaults, type StyleValue } from 'vue'
 import type { MenuItems } from '../type.ts'
+import type { LayoutColor } from '../../type.ts'
 import MenuHorizontalItem from './MenuHorizontalItem.vue'
-import useLayoutStore, { type LayoutColor } from '@/components/UI/Layout/LayoutStore.ts'
+import useLayoutStore from '@/components/UI/Layout/LayoutStore.ts'
 
 export interface MenuHorizontalProps {
   rootClassName?: string

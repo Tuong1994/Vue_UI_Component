@@ -1,4 +1,14 @@
 const common_en = {
+  header: {
+    mode: {
+      light: 'Light',
+      dark: 'Dark'
+    },
+    translate: {
+      vn: 'Vietnamese',
+      en: 'English'
+    }
+  },
   form: {
     label: {
       account: 'Account',

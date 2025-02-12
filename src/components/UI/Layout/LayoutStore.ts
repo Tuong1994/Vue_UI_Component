@@ -1,17 +1,14 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { ComponentColor } from '@/common/type'
-
-export type LayoutTheme = 'dark' | 'light'
-
-export type LayoutColor = Exclude<ComponentColor, 'white' | 'gray'>
+import { ELayoutTheme } from './enum'
+import type { LayoutColor, LayoutTheme } from './type'
 
 const useLayoutStore = defineStore('layout', () => {
   const shrinked = ref<boolean>(false)
   const isLayout = ref<boolean>(false)
   const showSide = ref<boolean>(false)
   const resizeContent = ref<boolean>(false)
-  const theme = ref<LayoutTheme>('light')
+  const theme = ref<LayoutTheme>(ELayoutTheme.LIGHT)
   const color = ref<LayoutColor>('blue')
 
   const switchTheme = (type: LayoutTheme) => (theme.value = type)

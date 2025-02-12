@@ -17,10 +17,10 @@ const { FlexRow, FlexCol } = Flex
       </FlexCol>
       <FlexCol :span="6">
         <FlexRow>
-          <FlexCol :span="12">
+          <FlexCol :span="10">
             <HeaderMode />
           </FlexCol>
-          <FlexCol :span="12">
+          <FlexCol :span="14">
             <HeaderTranslate />
           </FlexCol>
         </FlexRow>

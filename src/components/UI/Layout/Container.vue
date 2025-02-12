@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { withDefaults, watchEffect, type StyleValue } from 'vue'
-import useLayoutStore, { type LayoutTheme, type LayoutColor } from './LayoutStore.ts'
+import { ELayoutTheme } from './enum.ts'
+import type { LayoutColor, LayoutTheme } from './type.ts'
+import useLayoutStore from './LayoutStore.ts'
 
 export interface LayoutContainerProps {
   rootClassName?: string
@@ -11,7 +13,7 @@ export interface LayoutContainerProps {
 
 const props = withDefaults(defineProps<LayoutContainerProps>(), {
   rootClassName: '',
-  theme: 'light',
+  theme: ELayoutTheme.LIGHT,
   color: 'blue'
 })
 

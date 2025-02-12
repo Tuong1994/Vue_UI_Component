@@ -5,6 +5,7 @@ import { UI, Control } from '@/components'
 import type { TableColumns, TableRowKey } from '@/components/UI/Table/type'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
 import { iconName } from '@/components/UI/Icon/constant'
+import { ELayoutTheme } from '@/components/UI/Layout/enum'
 
 const { Section, Button, Image, Table, Divider, Tabs, Grid, Layout } = UI
 
@@ -153,17 +154,10 @@ const tabItems = [
   { id: 'item-3', label: 'Item 3', comName: 'item-3', labelIcon: iconName.USER }
 ]
 
-const handleClick = () => {
-  if (layout.theme === 'dark') return layout.switchTheme('light')
-  layout.switchTheme('dark')
-}
 </script>
 
 <template>
   <Section>
-    <Button color="blue" @click="handleClick">Change mode</Button>
-    <Divider />
-
     <!-- <Grid :xs="2" :lg="6" :span="8">
           <div v-for="item in 24">{{ item }}</div>
         </Grid> -->

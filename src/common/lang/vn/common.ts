@@ -1,4 +1,14 @@
 const common_vn = {
+  header: {
+    mode: {
+      light: 'Sáng',
+      dark: 'Tối'
+    },
+    translate: {
+      vn: 'Tiếng Việt',
+      en: 'Tiếng Anh'
+    }
+  },
   form: {
     label: {
       account: 'Tài khoản',

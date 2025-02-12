@@ -59,7 +59,7 @@ import {
   faHeart,
   faHardDrive,
   faLayerGroup,
-  faMoon
+  faMoon,
 } from '@fortawesome/free-solid-svg-icons'
 
 export const iconList = () => {
