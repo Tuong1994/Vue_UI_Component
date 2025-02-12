@@ -1,0 +1,15 @@
+.side-menu {
+  padding: $p-1 $p-2;
+  .menu-divider {
+    margin: $m-1 0;
+  }
+  .menu-item {
+    padding: $p-1;
+    border-radius: $rounded;
+    cursor: pointer;
+    transition: background-color $transition-time-xs $transition-fn;
+    &:hover {
+        background: $bg-gray;
+    }
+  }
+}
