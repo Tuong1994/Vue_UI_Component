@@ -7,15 +7,15 @@ import type { ItemChild } from './type'
 const { Paragraph } = Typography
 
 interface SideMenuItemProps {
-  item: ItemChild
+  item: ItemChild;
 }
 
 defineProps<SideMenuItemProps>()
 </script>
 
 <template>
-  <RouterLink :to="String(item.path)" class="menu-item">
-    <Paragraph>
+  <RouterLink :to="String(item.path)" class="group-item group-item-selected">
+    <Paragraph :size="13">
       {{ item.label }}
     </Paragraph>
   </RouterLink>

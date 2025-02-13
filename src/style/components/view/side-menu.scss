@@ -1,15 +1,39 @@
 .side-menu {
   padding: $p-1 $p-2;
-  .menu-divider {
-    margin: $m-1 0;
+  .menu-group {
+    margin-bottom: $m-2;
+    .group-category {
+      padding: 0 $p-1;
+    }
+    .group-divider {
+      margin: $m-1 0;
+    }
+    .group-item {
+      display: block;
+      padding: $p-1 / 2 $p-1;
+      margin: $m-1 / 2 0;
+      border-radius: $rounded;
+      cursor: pointer;
+      transition: background-color $transition-time-sm $transition-fn;
+      &:hover {
+        background: $bg-slate;
+      }
+    }
+    .group-item-selected {
+      background: $bg-green-rgba-sm;
+      p {
+        color: $text-green;
+      }
+    }
   }
-  .menu-item {
-    padding: $p-1;
-    border-radius: $rounded;
-    cursor: pointer;
-    transition: background-color $transition-time-xs $transition-fn;
-    &:hover {
-        background: $bg-gray;
+}
+
+.side-menu-dark {
+  .menu-group {
+    .group-item {
+      &:hover {
+        background: $bg-black;
+      }
     }
   }
 }

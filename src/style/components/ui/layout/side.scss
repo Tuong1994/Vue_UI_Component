@@ -9,8 +9,10 @@
   .side-content {
     height: $h-full;
     padding: $p-2 0;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
+    &:hover {
+      overflow-y: auto;
+    }
   }
   .side-action {
     width: $w-10 * 2.5;

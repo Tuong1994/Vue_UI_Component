@@ -4,7 +4,7 @@ import { Icon } from '@/components/UI'
 import { Select } from '@/components/Control'
 import { iconName } from '@/components/UI/Icon/constant'
 import { ELayoutTheme } from '@/components/UI/Layout/enum'
-import type { SelectOptions } from '@/components/Control/type'
+import type { ControlColor, SelectOptions } from '@/components/Control/type'
 import useLayoutStore from '@/components/UI/Layout/LayoutStore'
 import useLangStore from '@/stores/LangStore'
 
@@ -24,8 +24,9 @@ const handleSelect = (theme: ELayoutTheme) => layout.switchTheme(theme)
   <Select
     :hasClear="false"
     :hasSearch="false"
-    :defaultValue="layout.theme"
     :options="options"
+    :defaultValue="layout.theme"
+    :color="layout.color as ControlColor"
     @onChangeSelect="handleSelect"
   >
     <template #addonBefore>
