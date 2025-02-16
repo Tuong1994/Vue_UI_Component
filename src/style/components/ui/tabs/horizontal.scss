@@ -236,19 +236,19 @@
     background: $bg-black;
     .head-item {
       .item-inner {
-        background: $bg-deep-blue;
+        background: $bg-dark;
       }
     }
     .head-item-active {
       .item-inner {
         box-shadow: 0 0 5px $bg-black;
         &:hover {
-          background: $bg-deep-blue;
+          background: $bg-dark;
         }
       }
     }
   }
   .tabs-horizontal-content {
-    background: $bg-deep-blue;
+    background: $bg-dark;
   }
 }

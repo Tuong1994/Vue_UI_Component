@@ -14,7 +14,7 @@
   .input-group {
     display: flex;
     align-items: center;
-    border: 0.5px solid $bg-gray;
+    border: 0.5px solid $bg-slate;
     background: $bg-white;
     transition: background-color $transition-time-md $transition-fn,
       border-color $transition-time-md $transition-fn, box-shadow $transition-time-sm $transition-fn;
@@ -24,12 +24,12 @@
       justify-content: center;
     }
     .group-addon-before {
-      border-right: 0.5px solid $bg-gray;
+      border-right: 0.5px solid $bg-slate;
       padding-right: $p-1;
       margin-right: $m-1;
     }
     .group-addon-after {
-      border-left: 0.5px solid $bg-gray;
+      border-left: 0.5px solid $bg-slate;
       padding-left: $p-1;
       margin-left: $m-1;
     }
