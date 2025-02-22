@@ -1,7 +1,7 @@
 import type { ComponentColor, ComponentShape } from '@/common/type'
 import type { RuleExpression } from 'vee-validate'
 
-export type ControlColor = Exclude<ComponentColor, 'black' | 'white' | 'gray'>
+export type ControlColor = Exclude<ComponentColor, 'white' | 'gray'>
 
 export type ControlShape = Exclude<ComponentShape, 'circle'>
 

@@ -22,4 +22,4 @@ export type TableExpand = {
   props?: any
 }
 
-export type TableColor = Exclude<ComponentColor, "red" | "black" | "white" | "gray">;
+export type TableColor = Exclude<ComponentColor, "white" | "gray">;
